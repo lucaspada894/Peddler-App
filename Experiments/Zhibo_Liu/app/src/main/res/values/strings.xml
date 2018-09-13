@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyExperiment</string>
+    <string name="title_activity_signup_page">SignupPage</string>
+    <string name="title_activity_chat_page">ChatPage</string>
 </resources>
