@@ -1,4 +1,4 @@
-package peddler.coms309.petercody.peddler;
+package coms309.peddler;
 
 import android.content.Intent;
 import android.net.Uri;
