@@ -1,4 +1,4 @@
-package com.example.lucaspadafora.peddler;
+package pp7.peddler;
 
 import org.junit.Test;
 
