@@ -1,13 +1,16 @@
-package peddler.coms309.petercody.peddler;
+package com.coms309.peddler;
 
 import android.content.Intent;
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import static java.lang.Math.E;
+import com.coms309.peddler.ListItemActivity;
+import com.coms309.peddler.SignupActivity;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
