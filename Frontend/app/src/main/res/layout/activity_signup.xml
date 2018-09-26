@@ -66,12 +66,12 @@
             android:layout_marginStart="50dp"
             android:text="Submit"/>
 
-        <com.stripe.android.view.CardInputWidget
-            android:id="@+id/card_input_widget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="30dp"/>
+        <!--<com.stripe.android.view.CardInputWidget-->
+            <!--android:id="@+id/card_input_widget"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginStart="30dp"/>-->
 
     </LinearLayout>
 

@@ -14,7 +14,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_item);
+        setContentView(R.layout.activity_signup);
 
         Button imageBtn = findViewById(R.id.image_btn);
         imageBtn.setOnClickListener(this);

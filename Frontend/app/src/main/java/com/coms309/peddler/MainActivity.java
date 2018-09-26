@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button signupBtn = findViewById(R.id.sign_up);
         signupBtn.setOnClickListener(this);
+
+        Button requestPageBtn = findViewById(R.id.request_page);
+        requestPageBtn.setOnClickListener(this);
     }
 
 
@@ -31,10 +34,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         switch (v.getId()) {
             case R.id.list_item:
+                Log.d("poop", "onClick: list item");
                 startActivity(new Intent(MainActivity.this, ListItemActivity.class));
+                break;
             case R.id.sign_up:
                 Log.d("poop", "onClick: sign up");
                 startActivity(new Intent(MainActivity.this, SignupActivity.class));
+                break;
+            case R.id.request_page:
+                Log.d("poop", "onClick:  request page");
+                startActivity(new Intent(MainActivity.this, JsonRequestActivity.class));
+                break;
         }
         return;
     }

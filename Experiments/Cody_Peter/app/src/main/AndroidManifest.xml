@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListItemActivity"
-            android:label="List Item">
+            android:name=".SignupActivity"
+            android:label="Sign Up">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

@@ -13,15 +13,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button listItem = findViewById(R.id.list_item);
-        listItem.setOnClickListener(this);
+        Button signUpBtn = findViewById(R.id.sign_up);
+        signUpBtn.setOnClickListener(this);
     }
 
 
     public void onClick(View v)
     {
-        if (v.getId() == R.id.list_item) {
-            startActivity(new Intent(MainActivity.this, ListItemActivity.class));
+
+        if (v.getId() == R.id.sign_up) {
+            startActivity(new Intent(MainActivity.this, SignupActivity.class));
         }
         return;
     }
