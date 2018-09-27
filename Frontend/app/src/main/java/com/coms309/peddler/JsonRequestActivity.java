@@ -65,10 +65,10 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
     /**
      * Making json object request
      * */
-    private void makeJsonObjReq() {
+    private void makeJsonObjReq(String path) {
         showProgressDialog();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
-                Const.JSON_OBJECT_URL, null,
+                Const.JSON_OBJECT_URL + path, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -87,9 +87,9 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error: " + error.getMessage());
-                System.out.println("error: " + error.getMessage());
-                hideProgressDialog();
+                        Log.d(TAG, "Error: " + error.getMessage());
+                        System.out.println("error: " + error.getMessage());
+                        hideProgressDialog();
             }
         });
 //        {
@@ -156,7 +156,7 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnJsonObj:
-                makeJsonObjReq();
+                makeJsonObjReq("/user/all");
                 break;
             case R.id.btnJsonArray:
                 makeJsonArryReq();

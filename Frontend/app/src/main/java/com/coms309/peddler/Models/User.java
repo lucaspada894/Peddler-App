@@ -3,12 +3,14 @@ package com.coms309.peddler.Models;
 public class User {
     private String id;
     private String name;
-    private String category;
+    private String email;
+    private String password;
 
-    public User(String id, String name, String category) {
+    public User(String id, String name, String email, String password) {
         this.id = id;
         this.name = name;
-        this.category = category;
+        this.email = email;
+        this.password = password;
     }
 
     public String getID() {
@@ -17,7 +19,10 @@ public class User {
     public String getName() {
         return name;
     }
-    public String getCategory() {
-        return category;
+    public String getEmail() {
+        return email;
+    }
+    public String getPassword() {
+        return password;
     }
 }
