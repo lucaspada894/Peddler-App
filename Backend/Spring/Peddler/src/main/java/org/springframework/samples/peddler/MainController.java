@@ -11,17 +11,18 @@ import org.springframework.samples.peddler.Users;
 import org.springframework.samples.peddler.UserRepository;
 
 @Controller
-@RequestMapping(path="/demo")
+@RequestMapping(path="/user")
 public class MainController {
 	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@GetMapping(path="/add")
-	public @ResponseBody String addNewUser(@RequestParam String name, @RequestParam String email) {
+	public @ResponseBody String addNewUser(@RequestParam String name, @RequestParam String email,@RequestParam String password) {
 		Users n = new Users();
 		n.setName(name);
 		n.setEmail(email);
+		n.setPassword(password);
 		userRepository.save(n);
 		return "Saved";
 	}
@@ -29,5 +30,13 @@ public class MainController {
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<Users> getAllUsers() {
 		return userRepository.findAll();
+	}
+	
+	
+	@RequestMapping("/delete")
+	public String deleteUsers(@RequestParam Integer id) {
+		userRepository.deleteById(id);
+		return id + " Deleted";
+		
 	}
 }
