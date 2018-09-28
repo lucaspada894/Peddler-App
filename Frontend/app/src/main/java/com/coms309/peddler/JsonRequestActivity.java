@@ -152,6 +152,8 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
 
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
