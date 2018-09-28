@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.app.AppController;
@@ -67,88 +69,50 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 startActivityForResult(pickPhoto , 1);
             case R.id.submit_btn:
                 validateForm();
-                makeJsonObjReq("users/all");
+                makeJsonArryReq("/users/all");
         }
         return;
     }
 
-    private void makeJsonObjReq(String path) {
+    private void makeJsonArryReq(String path) {
         showProgressDialog();
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                Const.JSON_OBJECT_URL + path, null,
-                new Response.Listener<JSONObject>() {
-
+        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL + path,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
-                        try {
-                            String id = "";
-                            String name = "";
-                            String email = "";
-                            String password = "";
-                            JSONArray keys = response.names();
-                            JSONArray values = response.toJSONArray(keys);
-                            for(int i=0; i<values.length(); i++){
-                                if (keys.getString(i).equals("id")){
-                                    id = values.getString(i);
-                                }
-                                else if (keys.getString(i).equals("name")){
-                                    name = values.getString(i);
-                                }
-                                else if (keys.getString(i).equals("email")){
-                                    email = values.getString(i);
-                                }
-                                else if (keys.getString(i).equals("password")){
-                                    password = values.getString(i);
-                                }
+                    public void onResponse(JSONArray response) {
+                        String id = "";
+                        String name = "";
+                        String email = "";
+                        String password = "";
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject userObject = (JSONObject) response.get(i);
+                                id = userObject.getString("id");
+                                name = userObject.getString("name");
+                                email = userObject.getString("email");
+                                password = userObject.getString("password");
                                 users.add(new User(id, name, email, password));
+                            } catch (org.json.JSONException e) {
+
                             }
-                            Log.d(TAG, id + " " + name + " " + email + " " + password);
-                        } catch (org.json.JSONException e) {
-                            Log.d(TAG, "problem");
                         }
-                        hideProgressDialog();
-                        attemptSignIn();
+                        for (int i = 0; i < users.size(); i++) {
+                            Log.d(TAG, "onResponse: " + users.get(i).getName());
+                        }
                     }
                 }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error: " + error.getMessage());
-                System.out.println("error: " + error.getMessage());
-                hideProgressDialog();
-            }
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            VolleyLog.d(TAG, "Error: " + error.getMessage());
+                            //hideProgressDialog();
+                        }
         });
-//        {
-//
-//            /**
-//             * Passing some request headers
-//             * */
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Content-Type", "application/json");
-//                return headers;
-//            }
-//
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("name", "Androidhive");
-//                params.put("email", "abc@androidhive.info");
-//                params.put("pass", "password123");
-//
-//                return params;
-//            }
-//
-//        };
 
         // Adding request to request queue
-        Log.d("poop", jsonObjReq.getUrl());
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
 
         // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
 
     private void attemptSignIn() {

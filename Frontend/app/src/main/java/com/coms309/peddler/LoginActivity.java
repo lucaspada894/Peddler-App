@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivityForResult(pickPhoto , 1);
             case R.id.submit_btn:
                 //validateForm();
-                makeJsonObjReq("/users/all");
+                makeJsonObjReq("/user/all");
         }
         return;
     }
