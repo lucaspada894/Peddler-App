@@ -1,3 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:inputType="none|textAutoCorrect"
+            android:hint="First Name:" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:hint="Last Name:"/>
+
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:text="Submit"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
+
+
+
+
+class.java
+
 package com.coms309.peddler;
 
 import android.app.ProgressDialog;
@@ -47,34 +97,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Login Button
-        Button loginb = (Button) findViewById(R.id.LoginB);
-        loginb.setOnClickListener(this);
 
-        //Sign-up Text
-        TextView su = (TextView) findViewById(R.id.SignupT);
-        su.setOnClickListener(this);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
 
+        submitBtn = findViewById(R.id.submit_btn);
+        submitBtn.setOnClickListener(this);
     }
 
     public void onClick(View v)
     {
         switch (v.getId()) {
-
-            //Login implementation:
-            case R.id.LoginB:
-
+            case R.id.profile_image_btn:
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto , 1);
+            case R.id.submit_btn:
                 //validateForm();
                 makeJsonArryReq("/user/all");
-
-                //Go to sign up page.
-            case R.id.SignupT:
-
-                pageSwitch(SignupActivity.class);
-
         }
         return;
-
     }
 
     private void makeJsonArryReq(String path) {
@@ -160,15 +202,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (pDialog.isShowing())
             pDialog.hide();
     }
-
-
-    //Helper Method to switch between activities.
-    private void pageSwitch(Class obj) {
-
-        Intent intent = new Intent(this, obj);
-        startActivity(intent);
-
-    }
-
 
 }
