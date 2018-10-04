@@ -14,9 +14,19 @@ public class Projects {
 	private Integer id;
 	private String title;
 	private String major;
-	private String details;
+	private String description;
+	private Integer userID;
 	
-	
+
+
+	public Integer getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -41,12 +51,12 @@ public class Projects {
 		this.major = major;
 	}
 
-	public String getDetails() {
-		return details;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDetails(String details) {
-		this.details = details;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 

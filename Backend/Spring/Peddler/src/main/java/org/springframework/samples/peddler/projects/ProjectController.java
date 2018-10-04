@@ -15,17 +15,20 @@ import org.springframework.samples.peddler.projects.ProjectRepository;
 public class ProjectController {
 	
 	@Autowired
-	private ProjectRepository projectRepository;
+	public ProjectRepository projectRepository;
 	
 	@GetMapping(path="/add")
-	public @ResponseBody String addNewUser(@RequestParam String title, @RequestParam String major,@RequestParam String details) {
+	public @ResponseBody String addNewProject(@RequestParam String title, @RequestParam String major,@RequestParam String description,@RequestParam Integer userID) {
 		Projects n = new Projects();
 		n.setTitle(title);
 		n.setMajor(major);
-		n.setDetails(details);
+		n.setDescription(description);
+		n.setUserID(userID);
 		projectRepository.save(n);
 		return "Saved";
 	}
+	
+	
 	
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<Projects> getAllUsers() {
