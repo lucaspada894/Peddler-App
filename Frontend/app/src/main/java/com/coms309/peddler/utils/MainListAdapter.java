@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.R;
 
+import java.util.ArrayList;
+
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyViewHolder> {
-    private String[] mDataset;
+    private ArrayList<Project> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -24,7 +27,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MainListAdapter(String[] myDataset) {
+    public MainListAdapter(ArrayList<Project> myDataset) {
         mDataset = myDataset;
     }
 
@@ -47,13 +50,13 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.titleText.setText(mDataset[position]);
+        holder.titleText.setText(mDataset.get(position).getName());
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }

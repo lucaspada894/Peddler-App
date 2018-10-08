@@ -76,7 +76,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void makeJsonArryReq(String path) {
         showProgressDialog();
-        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL + path,
+        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -103,7 +103,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            VolleyLog.d(TAG, "Error: " + error.getMessage());
+                            Log.d(TAG, "Error: " + error.getMessage());
                             //hideProgressDialog();
                         }
         });

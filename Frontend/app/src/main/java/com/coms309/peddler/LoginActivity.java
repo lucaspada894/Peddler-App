@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
-        pDialog.setCancelable(false);
+        pDialog.setCancelable(true);
     }
 
     public void onClick(View v)
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void makeJsonArryReq(String path) {
         showProgressDialog();
-        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL + path,
+        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             try {
                                 JSONObject userObject = (JSONObject) response.get(i);
                                 id = userObject.getString("id");
-                                name = userObject.getString("name");
+                                name = userObject.getString("firstName");
                                 email = userObject.getString("email");
                                 password = userObject.getString("password");
                                 users.add(new User(id, name, email, password));
@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         users.add(new User("poop", "poop", "poop", "poop"));
                         if (users.size() > 0) {
                             attemptSignIn();
+                            hideProgressDialog();
                         } else {
                             Toast.makeText(getApplicationContext(), "Failed to retrieve account credentials", Toast.LENGTH_LONG).show();
                         }
@@ -128,6 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to retrieve account credentials", Toast.LENGTH_LONG).show();
                 }
+                hideProgressDialog();
                 Toast.makeText(getApplicationContext(), "Failed to retrieve account credentials", Toast.LENGTH_LONG).show();
             }
         });
