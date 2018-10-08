@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         for (int i = 0; i < users.size(); i++) {
                             Log.d(TAG, "onResponse: " + users.get(i).getFirstName());
                         }
-                        //users.add(new User("poop", "poop", "poop", "poop"));
+                        users.add(new User("poop", "poop", "poop"));
                         if (users.size() > 0) {
                             attemptSignIn();
                             hideProgressDialog();

@@ -21,6 +21,12 @@ public class User {
         this.year = year;
     }
 
+    public User(String id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
+
     public String getID() {
         return id;
     }
