@@ -81,23 +81,31 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onResponse(JSONArray response) {
                         String id = "";
-                        String name = "";
                         String email = "";
+                        String firstName = "";
+                        String lastName = "";
                         String password = "";
+                        String phoneNumber = "";
+                        String university = "";
+                        String year = "";
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject userObject = (JSONObject) response.get(i);
                                 id = userObject.getString("id");
-                                name = userObject.getString("name");
                                 email = userObject.getString("email");
+                                firstName = userObject.getString("firstName");
+                                lastName = userObject.getString("lastName");
                                 password = userObject.getString("password");
-                                users.add(new User(id, name, email, password));
+                                phoneNumber = userObject.getString("phoneNumber");
+                                university = userObject.getString("university");
+                                year = userObject.getString("year");
+                                users.add(new User(id, email, firstName, lastName, password, phoneNumber, university, year));
                             } catch (org.json.JSONException e) {
 
                             }
                         }
                         for (int i = 0; i < users.size(); i++) {
-                            Log.d(TAG, "onResponse: " + users.get(i).getName());
+                            Log.d(TAG, "onResponse: " + users.get(i).getFirstName());
                         }
                     }
                 }, new Response.ErrorListener() {
