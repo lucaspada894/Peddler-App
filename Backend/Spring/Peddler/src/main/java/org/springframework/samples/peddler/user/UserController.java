@@ -20,7 +20,7 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
-	private boolean loginStatus = false;
+	public boolean loginStatus = false;
 	private int currentUser;
 	
 	

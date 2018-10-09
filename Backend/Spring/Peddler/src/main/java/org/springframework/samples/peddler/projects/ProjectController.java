@@ -34,4 +34,16 @@ public class ProjectController {
 	public @ResponseBody Iterable<Projects> getAllUsers() {
 		return projectRepository.findAll();
 	}
-}
+	
+	
+	@GetMapping(path="/delete")
+	public @ResponseBody String deleteProject(@RequestParam int id, @RequestParam int userid) {
+		projectRepository.deleteProject(id, userid);
+		return "project" + projectRepository.getTitle(userid) + "deleted"; 	
+	}
+	
+	@GetMapping(path="/edit")
+	public @ResponseBody void editProject(@RequestParam int userid) {
+		
+	}
+}	
