@@ -72,15 +72,16 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto , 1);
             case R.id.submit_btn:
-                validateForm();
-                //postInfo();
+                //validateForm();
+                postInfo("email", "password");
         }
         return;
     }
 
     private void postInfo(String email, String password) {
-        String url = JSON_OBJECT_URL_SERVER + "/user/add";
-        final StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+        String url = JSON_OBJECT_URL_SERVER + "/user/add/?firstName=cody&lastName=peter&email=email.com&phoneNumber=1112223333&year=senior&university=ISU&password=pass";
+        url = "http://proj309-pp-07.misc.iastate.edu:8080/user/add?firstName=cody&lastName=peter&email=email.com&phoneNumber=1112223333&year=senior&university=ISU&password=pass";
+        final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -92,25 +93,25 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Error.Response", error.getMessage());
                 }
-            })
-        {
-            @Override
-            protected Map<String, String> getParams()
-            {
-          //      /user/add?firstName=&lastName=&email=&phoneNumber=&password=&phoneNumber=&year=&university=&password=
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("firstName", "class test");
-                params.put("lastName", "class test");
-                params.put("email", "class test");
-                params.put("phoneNumber", "class test");
-                params.put("password", "class test");
-                params.put("year", "class test");
-                params.put("university", "class test");
-                params.put("password", "class test");
-
-                return params;
-            }
-        };
+            });
+//        {
+//            @Override
+//            protected Map<String, String> getParams()
+//            {
+//          //      /user/add?firstName=&lastName=&email=&phoneNumber=&password=&phoneNumber=&year=&university=&password=
+//                Map<String, String>  params = new HashMap<String, String>();
+//                params.put("firstName", "class test");
+//                params.put("lastName", "class test");
+//                params.put("email", "class test");
+//                params.put("phoneNumber", "class test");
+//                params.put("password", "class test");
+//                params.put("year", "class test");
+//                params.put("university", "class test");
+//                params.put("password", "class test");
+//
+//                return params;
+//            }
+//        };
         AppController.getInstance().addToRequestQueue(postRequest, tag_json_arry);
 
         // Cancelling request
