@@ -36,7 +36,7 @@ import static com.coms309.peddler.utils.Const.JSON_OBJECT_URL_SERVER;
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imageview;
-    TextView firstName, lastName, email, password;
+    TextView firstName, lastName, email, phoneNumber, year, password;
     Button imageBtn, submitBtn;
     private ProgressDialog pDialog;
 
@@ -56,6 +56,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         firstName = findViewById(R.id.first_name);
         lastName = findViewById(R.id.last_name);
         email = findViewById(R.id.email);
+        phoneNumber = findViewById(R.id.phoneN);
+        year = findViewById(R.id.grade);
+        password = findViewById(R.id.pass);
 
         imageBtn = findViewById(R.id.profile_image_btn);
         imageBtn.setOnClickListener(this);
@@ -79,8 +82,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void postInfo(String email, String password) {
-        String url = JSON_OBJECT_URL_SERVER + "/user/add/?firstName=cody&lastName=peter&email=email.com&phoneNumber=1112223333&year=senior&university=ISU&password=pass";
-        url = "http://proj309-pp-07.misc.iastate.edu:8080/user/add?firstName=cody&lastName=peter&email=email.com&phoneNumber=1112223333&year=senior&university=ISU&password=pass";
+        String url = JSON_OBJECT_URL_SERVER + "/user/add?";
+        url = "http://proj309-pp-07.misc.iastate.edu:8080/user/add";
+        url += "?firstName=" + firstName.getText().toString() + "&lastName=" + lastName.getText().toString();
+        url += "&email=" + this.email.getText().toString() + "&phoneNumber=" + phoneNumber.getText().toString();
+        url += "&year=" + year.getText().toString() + "&university=ISU&password=" + this.password.getText().toString();
         final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
             new Response.Listener<String>() {
                 @Override
@@ -94,24 +100,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     Log.d("Error.Response", error.getMessage());
                 }
             });
-//        {
-//            @Override
-//            protected Map<String, String> getParams()
-//            {
-//          //      /user/add?firstName=&lastName=&email=&phoneNumber=&password=&phoneNumber=&year=&university=&password=
-//                Map<String, String>  params = new HashMap<String, String>();
-//                params.put("firstName", "class test");
-//                params.put("lastName", "class test");
-//                params.put("email", "class test");
-//                params.put("phoneNumber", "class test");
-//                params.put("password", "class test");
-//                params.put("year", "class test");
-//                params.put("university", "class test");
-//                params.put("password", "class test");
-//
-//                return params;
-//            }
-//        };
         AppController.getInstance().addToRequestQueue(postRequest, tag_json_arry);
 
         // Cancelling request
