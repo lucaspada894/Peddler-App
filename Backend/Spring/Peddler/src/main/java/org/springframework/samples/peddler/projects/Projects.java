@@ -16,6 +16,7 @@ public class Projects {
 	private String major;
 	private String description;
 	private Integer userID;
+	private Integer ownerID;
 	
 
 

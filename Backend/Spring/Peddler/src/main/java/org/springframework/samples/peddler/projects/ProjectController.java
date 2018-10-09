@@ -42,8 +42,13 @@ public class ProjectController {
 		return "project" + projectRepository.getTitle(userid) + "deleted"; 	
 	}
 	
-	@GetMapping(path="/edit")
-	public @ResponseBody void editProject(@RequestParam int userid) {
-		
+	@GetMapping(path="/editDesc")
+	public @ResponseBody void editProjectDesc(@RequestParam int id, @RequestParam int userid) {
+		projectRepository.editProjectDesc(id, userid);
+	}
+	
+	@GetMapping(path="/editTitle")
+	public @ResponseBody void editProjectTitle(@RequestParam int id, @RequestParam int userid) {
+		projectRepository.editProjectTitle(id, userid);
 	}
 }	
