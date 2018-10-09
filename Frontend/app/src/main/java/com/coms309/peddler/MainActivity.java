@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.coms309.peddler.ListItemActivity;
 import com.coms309.peddler.Models.Group;
 import com.coms309.peddler.Models.Project;
@@ -28,6 +30,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import static com.coms309.peddler.utils.Const.JSON_OBJECT_URL_SERVER;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //String data[] = {"poop1", "poop2", "poop3"};
         // specify an adapter (see also next example)
         makeJsonArryReq("/project/all");
+        postInfo();
     }
 
     private void makeJsonArryReq(String path) {
@@ -105,6 +110,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
+    private void postInfo() {
+        String url = JSON_OBJECT_URL_SERVER + "/user/add?";
+        url = "http://proj309-pp-07.misc.iastate.edu:8080/project/add?";
+        url += "title=" + "newprojtest" + "&major=" + "coms";
+        url += "&description=" + "exdescription" + "&userID=" + 125;
+        final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                });
+        AppController.getInstance().addToRequestQueue(postRequest, tag_json_arry);
+
+        // Cancelling request
+        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
+    }
 
     public void onClick(View v)
     {
