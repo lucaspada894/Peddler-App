@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
@@ -28,6 +29,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import static com.coms309.peddler.utils.Const.JSON_OBJECT_URL_SERVER;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,47 +73,45 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 startActivityForResult(pickPhoto , 1);
             case R.id.submit_btn:
                 validateForm();
-                makeJsonArryReq("/users/all");
+                //postInfo();
         }
         return;
     }
 
-    private void makeJsonArryReq(String path) {
-        showProgressDialog();
-        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL + path,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        String id = "";
-                        String name = "";
-                        String email = "";
-                        String password = "";
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject userObject = (JSONObject) response.get(i);
-                                id = userObject.getString("id");
-                                name = userObject.getString("name");
-                                email = userObject.getString("email");
-                                password = userObject.getString("password");
-                                users.add(new User(id, name, email, password));
-                            } catch (org.json.JSONException e) {
+    private void postInfo(String email, String password) {
+        String url = JSON_OBJECT_URL_SERVER + "/user/add";
+        final StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("Response", response);
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Error.Response", error.getMessage());
+                }
+            })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+          //      /user/add?firstName=&lastName=&email=&phoneNumber=&password=&phoneNumber=&year=&university=&password=
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("firstName", "class test");
+                params.put("lastName", "class test");
+                params.put("email", "class test");
+                params.put("phoneNumber", "class test");
+                params.put("password", "class test");
+                params.put("year", "class test");
+                params.put("university", "class test");
+                params.put("password", "class test");
 
-                            }
-                        }
-                        for (int i = 0; i < users.size(); i++) {
-                            Log.d(TAG, "onResponse: " + users.get(i).getName());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            VolleyLog.d(TAG, "Error: " + error.getMessage());
-                            //hideProgressDialog();
-                        }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(postRequest, tag_json_arry);
 
         // Cancelling request
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
