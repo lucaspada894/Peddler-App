@@ -1,0 +1,41 @@
+/user:
+	/add?firstName=&lastName=&email=&phoneNumber=&year=&university=&password=       //adds a new user and its corresponding info
+        —————————————————————————————————————————————————————————————————————————
+	/all   									        //returns all users and their info
+	——————————————————————————————————————————————————————————————————————
+	/deleteUser?email=&password     						//deletes a user given their email and password
+	—————————————————————————————————————————————————————————————————————
+	/login?email=&password=								//logs in a user
+	—————————————————————————————————————————————————————————————————————
+	/logout										//logs out a user
+	—————————————————————————————————————————————————————————————————————
+	/editEmail?newEmail=								//changes the email of the logged in user
+	—————————————————————————————————————————————————————————————————————
+	/editFirstName?newFirstName=							//changes the first name of the logged in user
+	—————————————————————————————————————————————————————————————————————
+	/editLastName?newLastName=							//changes the last name of the logged in user
+	—————————————————————————————————————————————————————————————————————
+	/editUniversity?newUniversity=							//changes the university of the logged in user
+	—————————————————————————————————————————————————————————————————————
+	/editPassword?newPhoneNumber=						        //changes the password of the logged in user
+	—————————————————————————————————————————————————————————————————————
+	/editPassword?newYear=								//changes the password of the logged in user
+	—————————————————————————————————————————————————————————————————————
+	/editPassword?oldPassword=&oldPassword2=&newPassword=			//changes the password of the logged in user, double verification for password
+	—————————————————————————————————————————————————————————————————————
+
+
+/project:
+	/add?title=&major=&description=&userId=&ownerId=				//adds a new project and the users id
+	—————————————————————————————————————————————————————————————————————
+	/all										//returns all the projects and their info
+	—————————————————————————————————————————————————————————————————————
+	/myProjects?userId=								//returns the projects belonging to a user
+	—————————————————————————————————————————————————————————————————————
+	/delete?projId=&userId=								//deletes the project given the users id and the project id
+	—————————————————————————————————————————————————————————————————————
+	/editDesc?newDesc=&projId=&userId=						//changes the description of a project
+	—————————————————————————————————————————————————————————————————————	
+	/editTitle?newTitle=&projId=&userId=						//changes the title of a project
+	—————————————————————————————————————————————————————————————————————
+	

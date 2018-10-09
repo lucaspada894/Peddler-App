@@ -12,25 +12,42 @@ public interface ProjectRepository extends CrudRepository<Projects, Integer> {
 	
  
 	
-@Transactional
-@Modifying
-@Query("SELECT FROM Projects p WHERE p.id =:id")
-String getTitle(@Param("userid") int userid);	
+	
+@Transactional(readOnly = true)
+Iterable<Projects> findProjectsByUserID(@Param("userID") Integer userID);	
+	
+
+
+@Query("SELECT title FROM Projects p WHERE p.userID =:userId")
+@Transactional(readOnly = true)
+String getTitle(@Param("userId") Integer userId);
+
+
+
 	
 @Transactional
 @Modifying
-@Query("DELETE FROM Projects p WHERE p.id =:id AND p.userid =:userid")
-void deleteProject(@Param("id") int id, @Param("userid") int userid);
+@Query("DELETE FROM Projects p WHERE p.id =:projId AND p.userID =:userId")
+void deleteProject(@Param("projId") Integer projId, @Param("userId") Integer userId);
+
+
+
 
 @Transactional
-@Modifying
-@Query("UPDATE Projects p SET description =:description WHERE p.id =:id AND p.userid =:userid")
-void editProjectDesc(@Param("id") int id, @Param("userid") int userid);
+@Modifying(clearAutomatically = true)
+@Query("UPDATE Projects p SET p.description =:newDescription  WHERE p.id =:projId AND p.userID =:userId")
+void editProjectDescription(@Param("newDescription") String newDescription, @Param("projId") Integer projID, @Param("userId") Integer userid);
+
+
+
 
 @Transactional
-@Modifying
-@Query("UPDATE Projects p SET title =:title WHERE p.id =:id AND p.userid =:userid")
-void editProjectTitle(@Param("id") int id, @Param("userid") int userid);
+@Modifying(clearAutomatically = true)
+@Query("UPDATE Projects p SET p.title =:newTitle WHERE p.id =:projId AND p.userID =:userId")
+void editProjectTitle(@Param("newTitle") String newTitle, @Param("projId") Integer projId, @Param("userId") Integer userId);
+
+
+
 }
 
 //add FROM * PROJECTS WHERE UserID = userid

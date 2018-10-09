@@ -17,48 +17,45 @@ public class Projects {
 	private String description;
 	private Integer userID;
 	private Integer ownerID;
-	
-
-
-	public Integer getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Integer userID) {
-		this.userID = userID;
-	}
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 	public String getMajor() {
 		return major;
 	}
-
 	public void setMajor(String major) {
 		this.major = major;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public Integer getUserID() {
+		return userID;
+	}
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
+	public Integer getOwnerID() {
+		return ownerID;
+	}
+	public void setOwnerID(Integer ownerID) {
+		this.ownerID = ownerID;
+	}
+	
+
+
 
 
 	
