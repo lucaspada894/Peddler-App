@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(mLayoutManager);
         //String data[] = {"poop1", "poop2", "poop3"};
         // specify an adapter (see also next example)
-        makeJsonArryReq("/myProjects?userId=125");
+        makeJsonArryReq("/project/myProjects?userId=125");
 
         //postInfo();
     }
