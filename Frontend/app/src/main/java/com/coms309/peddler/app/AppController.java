@@ -7,12 +7,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.coms309.peddler.Models.User;
 import com.coms309.peddler.utils.LruBitmapCache;
 
 public class AppController extends Application {
 
 	public static final String TAG = AppController.class
 			.getSimpleName();
+	public User CurrentUser;
 
 	private RequestQueue mRequestQueue;
 	private ImageLoader mImageLoader;

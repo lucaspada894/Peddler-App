@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private User CurrentUser;
 
     private Button listItem, signupBtn, requestPageBtn;
 
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.CurrentUser = AppController.getInstance().CurrentUser;
 
         listItem = findViewById(R.id.list_item_btn);
         listItem.setOnClickListener(this);
@@ -69,8 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(mLayoutManager);
         //String data[] = {"poop1", "poop2", "poop3"};
         // specify an adapter (see also next example)
-        makeJsonArryReq("/project/myProjects?userId=125");
-
+        makeJsonArryReq("/project/myProjects?userId=" + AppController.getInstance().CurrentUser.getID());
         //postInfo();
     }
 
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
         url = "http://proj309-pp-07.misc.iastate.edu:8080/project/add?";
         url += "title=" + "newprojtest" + "&major=" + "coms";
-        url += "&description=" + "exdescription" + "&userID=" + 125 + "&ownerID=" + 125;
+        url += "&description=" + "exdescription" + "&userID=" + CurrentUser.getID() + "&ownerID=" + 125;
         final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

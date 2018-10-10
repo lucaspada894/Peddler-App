@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             attemptSignIn();
                             hideProgressDialog();
                         } else {
+                            hideProgressDialog();
                             Toast.makeText(getApplicationContext(), "Failed to retrieve account credentials", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -158,6 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (tempEmail.equals(currentEmail) && tempPass.equals(currentPass)) {
                 Log.d(TAG, "attemptSignIn: success");
                 pageSwitch(MainActivity.class);
+                AppController.getInstance().CurrentUser = this.users.get(i);
             }
         }
     }
