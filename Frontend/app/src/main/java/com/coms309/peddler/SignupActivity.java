@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -92,6 +93,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onResponse(String response) {
                     Log.d("Response", response);
+                    Toast.makeText(getApplicationContext(), "Created account sign in", Toast.LENGTH_LONG).show();
+
                 }
             },
             new Response.ErrorListener() {

@@ -1,14 +1,18 @@
 package com.coms309.peddler;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Project> projects = new ArrayList<>();
 
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private String m_Text = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listItem = findViewById(R.id.list_item_btn);
         listItem.setOnClickListener(this);
 
-        signupBtn = findViewById(R.id.sign_up);
-        signupBtn.setOnClickListener(this);
-
-        requestPageBtn = findViewById(R.id.request_page);
-        requestPageBtn.setOnClickListener(this);
 
         mRecyclerView = findViewById(R.id.main_recycle);
         // use this setting to improve performance if you know that changes
@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        //String data[] = {"poop1", "poop2", "poop3"};
         // specify an adapter (see also next example)
-        makeJsonArryReq("/project/myProjects?userId=" + AppController.getInstance().CurrentUser.getID());
+        Log.d("user id", CurrentUser.getID());
+        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
         //postInfo();
     }
 
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         String id = "";
                         String name = "";
                         Log.d("response", response.toString());
+                        projects.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject userObject = (JSONObject) response.get(i);
@@ -113,16 +114,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
-    private void postInfo() {
+    private void postInfo(String projTitle) {
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
         url = "http://proj309-pp-07.misc.iastate.edu:8080/project/add?";
-        url += "title=" + "newprojtest" + "&major=" + "coms";
-        url += "&description=" + "exdescription" + "&userID=" + CurrentUser.getID() + "&ownerID=" + 125;
+        url += "title=" + projTitle + "&major=" + "coms";
+        url += "&description=" + "exdescription" + "&userID=" + CurrentUser.getID() + "&ownerID=" + CurrentUser.getID();
         final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d("Response", response);
+                        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
                     }
                 },
                 new Response.ErrorListener() {
@@ -140,17 +142,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v)
     {
         switch (v.getId()) {
-            case R.id.list_item:
-                Log.d("poop", "onClick: list item");
-                startActivity(new Intent(MainActivity.this, ListItemActivity.class));
-                break;
-            case R.id.sign_up:
-                Log.d("poop", "onClick: sign up");
-                startActivity(new Intent(MainActivity.this, SignupActivity.class));
-                break;
-            case R.id.request_page:
-                Log.d("poop", "onClick:  request page");
-                startActivity(new Intent(MainActivity.this, JsonRequestActivity.class));
+            case R.id.list_item_btn:
+//                Log.d("poop", "onClick: list item");
+//                startActivity(new Intent(MainActivity.this, ListItemActivity.class));
+                Log.d("list item", "clicked");
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Enter new project name");
+
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        m_Text = input.getText().toString();
+                        postInfo(m_Text);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
                 break;
         }
         return;
