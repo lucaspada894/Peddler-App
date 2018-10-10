@@ -85,14 +85,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onResponse(JSONArray response) {
                         String id = "";
                         String name = "";
+                        String desc = "";
                         Log.d("response", response.toString());
                         projects.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
-                                JSONObject userObject = (JSONObject) response.get(i);
-                                id = userObject.getString("id");
-                                name = userObject.getString("title");
-                                projects.add(new Project(id, name));
+                                JSONObject responseObject = (JSONObject) response.get(i);
+                                id = responseObject.getString("id");
+                                name = responseObject.getString("title");
+                                desc = responseObject.getString("description");
+                                projects.add(new Project(id, name, desc));
                             } catch (org.json.JSONException e) {
 
                             }

@@ -20,9 +20,11 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView titleText;
+        public TextView descText;
         public MyViewHolder(View v) {
             super(v);
             titleText = v.findViewById(R.id.item_name);
+            descText = v.findViewById(R.id.item_desc);
         }
     }
 
@@ -51,7 +53,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.titleText.setText(mDataset.get(position).getName());
-
+        holder.descText.setText(mDataset.get(position).getDesc());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
