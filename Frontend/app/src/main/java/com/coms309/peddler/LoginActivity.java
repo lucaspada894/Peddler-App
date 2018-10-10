@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void makeJsonArryReq(String path) {
-        showProgressDialog();
+        //showProgressDialog();
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                         for (int i = 0; i < users.size(); i++) {
-                            Log.d(TAG, "onResponse: " + users.get(i).getFirstName());
+                            Log.d(TAG, "onResponse: " + users.get(i).getFirstName() + " id: " + users.get(i).getID());
                         }
                         users.add(new User("poop", "poop", "poop"));
                         if (users.size() > 0) {

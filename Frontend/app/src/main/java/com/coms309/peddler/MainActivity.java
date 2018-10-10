@@ -69,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(mLayoutManager);
         //String data[] = {"poop1", "poop2", "poop3"};
         // specify an adapter (see also next example)
-        makeJsonArryReq("/project/all");
-        postInfo();
+        makeJsonArryReq("/myProjects?userId=125");
+
+        //postInfo();
     }
 
     private void makeJsonArryReq(String path) {
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
         url = "http://proj309-pp-07.misc.iastate.edu:8080/project/add?";
         url += "title=" + "newprojtest" + "&major=" + "coms";
-        url += "&description=" + "exdescription" + "&userID=" + 125;
+        url += "&description=" + "exdescription" + "&userID=" + 125 + "&ownerID=" + 125;
         final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
