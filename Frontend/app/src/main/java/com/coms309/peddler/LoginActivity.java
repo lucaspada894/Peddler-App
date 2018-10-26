@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String tempPass = this.users.get(i).getPassword();
             if (tempEmail.equals(currentEmail) && tempPass.equals(currentPass)) {
                 Log.d(TAG, "attemptSignIn: success");
-                pageSwitch(MainActivity.class);
+                pageSwitch(MenuPage.class);
                 AppController.getInstance().CurrentUser = this.users.get(i);
             }
         }
