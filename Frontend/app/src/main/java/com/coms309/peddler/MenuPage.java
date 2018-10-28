@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class MenuPage extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView projBtn, messBtn, markBtn, lessBtn;
+    private ImageView projBtn, messBtn, markBtn, lessBtn, persBtn;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -41,11 +41,13 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         messBtn = findViewById(R.id.MessBtn);
         markBtn = findViewById(R.id.MarkBtn);
         lessBtn = findViewById(R.id.LessBtn);
+        persBtn = findViewById(R.id.PersBtn);
 
         projBtn.setOnClickListener(this);
         messBtn.setOnClickListener(this);
         markBtn.setOnClickListener(this);
         lessBtn.setOnClickListener(this);
+        persBtn.setOnClickListener(this);
 
         this.CurrentUser = AppController.getInstance().CurrentUser;
 
@@ -58,7 +60,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         mRecyclerView.setLayoutManager(mLayoutManager);
         // specify an adapter (see also next example)
         Log.d("user id", CurrentUser.getID());
-        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+        makeJsonArryReq("/project/all");
 
     }
 
@@ -68,6 +70,10 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
 
             case R.id.ProjBtn:
                 pageSwitch(MainActivity.class);
+                break;
+
+            case R.id.PersBtn:
+                pageSwitch(ProfilePage.class);
                 break;
 
         }
