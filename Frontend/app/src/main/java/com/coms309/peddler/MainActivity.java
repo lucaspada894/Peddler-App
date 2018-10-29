@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
-        //this.CurrentUser = AppController.getInstance().CurrentUser;
+        if (AppController.getInstance().CurrentUser == null) {
+            AppController.getInstance().CurrentUser = new User("test", "test", "test");
+        }
+        this.CurrentUser = AppController.getInstance().CurrentUser;
         //Log.d("user id", CurrentUser.getID());
         //makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
         //postInfo();
