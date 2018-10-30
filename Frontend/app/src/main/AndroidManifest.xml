@@ -57,9 +57,10 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".MenuPage" />
-        <activity android:name=".ProfilePage"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+        <activity
+            android:name=".ProfilePage"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".FirendList"></activity>
     </application>
 
 </manifest>
