@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //helper stuff
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
-    String TAG = "sign up";
+    String TAG = "Log In";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                         for (int i = 0; i < users.size(); i++) {
-                            Log.d(TAG, "onResponse: " + users.get(i).getFirstName() + " id: " + users.get(i).getID());
+                            Log.d(TAG, "onResponse: " + users.get(i).getEmail() + " id: " + users.get(i).getID() + "pass: " + users.get(i).getPassword());
                         }
                         users.add(new User("poop", "poop", "poop"));
                         if (users.size() > 0) {
@@ -153,6 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void attemptSignIn() {
         String currentEmail = username.getText().toString();
         String currentPass = password.getText().toString();
+        Log.d("attempt sign in ", currentEmail + " " + currentPass);
         for (int i = 0; i < this.users.size(); i++) {
             String tempEmail = this.users.get(i).getEmail();
             String tempPass = this.users.get(i).getPassword();

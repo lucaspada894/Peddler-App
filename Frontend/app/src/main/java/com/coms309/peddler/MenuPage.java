@@ -65,22 +65,16 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void onClick(View v){
-
         switch(v.getId()){
-
             case R.id.PersBtn:
                 pageSwitch(ProfilePage.class);
                 break;
-
             case R.id.ProjBtn:
                 pageSwitch(MainActivity.class);
                 break;
-
             case R.id.MessBtn:
                 pageSwitch(FirendList.class);
                 break;
-
-
         }
 
     }
