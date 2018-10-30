@@ -1,4 +1,4 @@
-package com.coms309.peddler;
+package com.coms309.peddler.Home;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 
 import org.json.JSONArray;

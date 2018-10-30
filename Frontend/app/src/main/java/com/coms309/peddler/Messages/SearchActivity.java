@@ -1,4 +1,4 @@
-package com.coms309.peddler;
+package com.coms309.peddler.Messages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.SearchView;
 
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
+import com.coms309.peddler.R;
 
 import java.util.ArrayList;
 

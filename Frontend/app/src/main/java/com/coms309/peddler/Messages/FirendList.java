@@ -1,4 +1,4 @@
-package com.coms309.peddler;
+package com.coms309.peddler.Messages;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.GeneralAdapter;
 
@@ -38,31 +39,24 @@ public class FirendList extends AppCompatActivity {
         userList = (ListView) findViewById(R.id.listview);
         adpt = new GeneralAdapter(FirendList.this, names, convs, icons);
         userList.setAdapter(adpt);
-
     }
 
 
     //Request List of users
     private static void userRequest(){
-
         String link = "http://proj309-pp-07.misc.iastate.edu:8080/user/all";
 
         final JsonArrayRequest userReq = new JsonArrayRequest(link, new Response.Listener<JSONArray>() {
 
             public void onResponse(JSONArray r) {
-
-                try{
-
+                try {
                     for(int i = 0; i < r.length(); i ++){
-
                         JSONObject jsobj = r.getJSONObject(i);
 
                         names.add(jsobj.getString("firstName") + " " + jsobj.getString("lastName"));
                         adpt.notifyDataSetChanged();
-
                     }
-
-                }catch (org.json.JSONException e){
+                } catch (org.json.JSONException e) {
 
                 }
 
@@ -72,12 +66,11 @@ public class FirendList extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("main page", "Error: " + error.getMessage());
-
             }
 
         });
-        AppController.getInstance().addToRequestQueue(userReq, tag_json_arry);
 
+        AppController.getInstance().addToRequestQueue(userReq, tag_json_arry);
     }
 
 

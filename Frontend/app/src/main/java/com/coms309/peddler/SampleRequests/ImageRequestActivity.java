@@ -1,20 +1,11 @@
-package com.coms309.peddler;
+package com.coms309.peddler.SampleRequests;
 
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.android.volley.Cache;
-import com.android.volley.Cache.Entry;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.coms309.peddler.app.AppController;
-import com.coms309.peddler.utils.Const;
-
-import java.io.UnsupportedEncodingException;
 
 public class ImageRequestActivity extends Activity {
 
