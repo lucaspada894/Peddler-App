@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView.LayoutManager mLayoutManager;
     private User CurrentUser;
 
-    private Button listItem, signupBtn, requestPageBtn;
+    private Button listItem, webSocket, signupBtn, requestPageBtn;
 
     private ArrayList<Project> projects = new ArrayList<>();
 
@@ -57,11 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.CurrentUser = AppController.getInstance().CurrentUser;
-
         listItem = findViewById(R.id.list_item_btn);
         listItem.setOnClickListener(this);
-
+        webSocket = findViewById(R.id.web_socket);
+        webSocket.setOnClickListener(this);
 
         mRecyclerView = findViewById(R.id.main_recycle);
         // use this setting to improve performance if you know that changes
@@ -70,9 +69,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        // specify an adapter (see also next example)
-        Log.d("user id", CurrentUser.getID());
-        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+
+        if (AppController.getInstance().CurrentUser == null) {
+            AppController.getInstance().CurrentUser = new User("test", "test", "test");
+        }
+        this.CurrentUser = AppController.getInstance().CurrentUser;
+        //Log.d("user id", CurrentUser.getID());
+        //makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
         //postInfo();
     }
 
@@ -171,7 +174,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 builder.show();
                 break;
+            case R.id.web_socket:
+                Log.d("websocket:", "go to websocket");
+                pageSwitch(WebSocket.class);
+                break;
         }
         return;
+    }
+
+    //Helper Method to switch between activities.
+    private void pageSwitch(Class obj) {
+        Intent intent = new Intent(this, obj);
+        startActivity(intent);
     }
 }
