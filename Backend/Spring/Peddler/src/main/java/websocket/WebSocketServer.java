@@ -32,14 +32,13 @@ public class WebSocketServer {
     private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
     @OnOpen
     public void onOpen(
-    	      Session session, 
-    	      @PathParam("username") String username) throws IOException {
+    	      Session session 
+    	      ) throws IOException {
         logger.info("Entered into Open");
 		this.session = session;
         chatEndpoints.add(this);
-        users.put(session.getId(), username);
         
-        String message="User:" + username +"Has Joined the Chat";
+        String message="User:" + "Has Joined the Chat";
         	broadcast(message);
 		
     }
