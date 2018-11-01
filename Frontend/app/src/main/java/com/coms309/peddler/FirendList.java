@@ -41,7 +41,6 @@ public class FirendList extends AppCompatActivity {
 
     }
 
-
     //Request List of users
     private static void userRequest(){
 

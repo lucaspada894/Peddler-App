@@ -17,11 +17,7 @@ public class Users {
 	private String phoneNumber;
 	private String year;
 	private String university;
-	private String password;
-
-
-
-	
+	private String password;	
 	
 	public String getPhoneNumber() {
 		return phoneNumber;
