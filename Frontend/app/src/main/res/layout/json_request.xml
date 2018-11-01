@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="1dp"
     android:paddingTop="16dp"
-    tools:context=".MainActivity" >
+    tools:context=".Home.MainActivity" >
 
     <Button
         android:id="@+id/btnJsonObj"

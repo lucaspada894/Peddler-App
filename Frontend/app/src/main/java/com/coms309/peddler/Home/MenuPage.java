@@ -1,4 +1,4 @@
-package com.coms309.peddler;
+package com.coms309.peddler.Home;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +12,10 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.coms309.peddler.Messages.FirendList;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
+import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
 import com.coms309.peddler.utils.MainListAdapter;
@@ -65,22 +67,16 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void onClick(View v){
-
         switch(v.getId()){
-
             case R.id.PersBtn:
                 pageSwitch(ProfilePage.class);
                 break;
-
             case R.id.ProjBtn:
                 pageSwitch(MainActivity.class);
                 break;
-
             case R.id.MessBtn:
                 pageSwitch(FirendList.class);
                 break;
-
-
         }
 
     }

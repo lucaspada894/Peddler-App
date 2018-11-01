@@ -19,15 +19,17 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
+        <activity android:name=".Home.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
              <!--<intent-filter>-->
              <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -40,34 +42,42 @@
             android:label="List Item">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Home.MainActivity" />
         </activity>
         <activity
-            android:name=".WebSocket"
+            android:name=".Messages.WebSocket"
             android:label="Web Socket">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Home.MainActivity" />
         </activity>
         <activity
-            android:name=".SignupActivity"
+            android:name=".Login.SignupActivity"
             android:label="Sign Up">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Home.MainActivity" />
         </activity>
         <activity
-            android:name=".JsonRequestActivity"
+            android:name=".SampleRequests.JsonRequestActivity"
             android:label="JSON Request">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Home.MainActivity" />
         </activity>
-        <activity android:name=".MenuPage" />
+        <activity android:name=".Home.MenuPage" />
         <activity
-            android:name=".ProfilePage"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".FirendList"></activity>
+            android:name=".Home.ProfilePage"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity android:name=".Messages.FirendList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
     </application>
 
 </manifest>

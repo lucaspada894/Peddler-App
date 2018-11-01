@@ -1,4 +1,4 @@
-package com.coms309.peddler;
+package com.coms309.peddler.SampleRequests;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,21 +9,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class JsonRequestActivity extends Activity implements OnClickListener {
 

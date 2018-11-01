@@ -1,4 +1,4 @@
-package com.coms309.peddler;
+package com.coms309.peddler.Messages;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.coms309.peddler.Models.User;
+import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 
 import org.java_websocket.client.WebSocketClient;

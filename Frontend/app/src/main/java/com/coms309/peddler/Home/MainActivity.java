@@ -1,9 +1,8 @@
-package com.coms309.peddler;
+package com.coms309.peddler.Home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,11 +19,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.coms309.peddler.ListItemActivity;
-import com.coms309.peddler.Models.Group;
+import com.coms309.peddler.Messages.WebSocket;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
-import com.coms309.peddler.SignupActivity;
+import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
 import com.coms309.peddler.utils.MainListAdapter;
@@ -32,7 +30,6 @@ import com.coms309.peddler.utils.MainListAdapter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.coms309.peddler.utils.Const.JSON_OBJECT_URL_SERVER;

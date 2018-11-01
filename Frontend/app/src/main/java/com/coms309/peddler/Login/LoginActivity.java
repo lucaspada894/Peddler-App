@@ -1,8 +1,7 @@
-package com.coms309.peddler;
+package com.coms309.peddler.Login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,18 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.coms309.peddler.Home.MenuPage;
 import com.coms309.peddler.Models.User;
+import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
 
@@ -29,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //helper stuff
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
-    String TAG = "sign up";
+    String TAG = "Log In";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                         for (int i = 0; i < users.size(); i++) {
-                            Log.d(TAG, "onResponse: " + users.get(i).getFirstName() + " id: " + users.get(i).getID());
+                            Log.d(TAG, "onResponse: " + users.get(i).getEmail() + " id: " + users.get(i).getID() + "pass: " + users.get(i).getPassword());
                         }
                         users.add(new User("poop", "poop", "poop"));
                         if (users.size() > 0) {
@@ -153,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void attemptSignIn() {
         String currentEmail = username.getText().toString();
         String currentPass = password.getText().toString();
+        Log.d("attempt sign in ", currentEmail + " " + currentPass);
         for (int i = 0; i < this.users.size(); i++) {
             String tempEmail = this.users.get(i).getEmail();
             String tempPass = this.users.get(i).getPassword();
