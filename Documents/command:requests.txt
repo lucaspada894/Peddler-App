@@ -39,3 +39,15 @@
 	/editTitle?newTitle=&projId=&userId=						//changes the title of a project
 	—————————————————————————————————————————————————————————————————————
 	
+/tutor
+	/add?userID=&tutorTitle=&tutorSubject=&tutorDescription=&tutorTimes=				//adds a new project and the users id
+	—————————————————————————————————————————————————————————————————————
+	/all										//returns all the projects and their info
+	—————————————————————————————————————————————————————————————————————
+
+
+/product
+	/add?userID=&productName=&productDescription=&productCondition=&productPrice=				//adds a new project and the users id
+	—————————————————————————————————————————————————————————————————————
+	/all										//returns all the projects and their info
+	—————————————————————————————————————————————————————————————————————
