@@ -36,5 +36,6 @@ public class ProjectController {
 	public @ResponseBody String deleteProjects(@RequestParam int id) {
 		projectRepository.deleteById(id);
 		return "Deleted";
+		
 	}
 }
