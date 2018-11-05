@@ -27,6 +27,12 @@ public class User {
         this.password = password;
     }
 
+    public User(String firstName, String lastName, String id, boolean is) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getID() {
         return id;
     }
