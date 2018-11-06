@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import org.springframework.samples.peddler.messaging.Messages;
+import org.springframework.samples.peddler.projects.Projects;
 import org.springframework.samples.peddler.messaging.MessageRepository;
 
 @Controller
@@ -54,6 +55,11 @@ public class MessageController {
 			receivedMessages.add(s.getActualMessage());
 		}
 		return receivedMessages;
+	}
+	
+	@GetMapping(path = "/all")
+	public @ResponseBody Iterable<Messages> getAllMessages() {
+		return messageRepo.findAll();
 	}
 	
 	
