@@ -48,6 +48,7 @@ void editProjectTitle(@Param("newTitle") String newTitle, @Param("projId") Integ
 
 
 
+
 }
 
 //add FROM * PROJECTS WHERE UserID = userid

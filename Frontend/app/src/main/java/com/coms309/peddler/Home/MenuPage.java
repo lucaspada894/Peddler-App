@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.coms309.peddler.Messages.FirendList;
+import com.coms309.peddler.Messages.FriendList;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
@@ -77,7 +77,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 break;
 
             case R.id.MessBtn:
-                pageSwitch(FirendList.class);
+                pageSwitch(FriendList.class);
                 break;
 
             case R.id.MarkBtn:
