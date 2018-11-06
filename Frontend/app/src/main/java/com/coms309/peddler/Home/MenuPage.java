@@ -71,12 +71,23 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
             case R.id.PersBtn:
                 pageSwitch(ProfilePage.class);
                 break;
+
             case R.id.ProjBtn:
                 pageSwitch(MainActivity.class);
                 break;
+
             case R.id.MessBtn:
                 pageSwitch(FirendList.class);
                 break;
+
+            case R.id.MarkBtn:
+                pageSwitch(MarketPage.class);
+                break;
+
+            case R.id.LessBtn:
+                pageSwitch(LessonPage.class);
+                break;
+
         }
 
     }
