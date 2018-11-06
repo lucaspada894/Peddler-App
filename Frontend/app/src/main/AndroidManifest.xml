@@ -29,19 +29,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
-<<<<<<< HEAD
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-=======
              <!--<intent-filter>-->
                  <!--<action android:name="android.intent.action.MAIN" />-->
                  <!--<category android:name="android.intent.category.LAUNCHER" />-->
              <!--</intent-filter>-->
->>>>>>> d15b3d94d3c5d2b00509eed575f5c7207fe2f454
         </activity>
         <activity
             android:name=".ListItemActivity"
@@ -88,17 +79,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
         </activity>
-<<<<<<< HEAD
         <activity android:name=".Home.MarketPage" />
         <activity android:name=".Home.LessonPage"></activity>
-=======
         <activity android:name=".Messages.MessagePage"
             android:label="Messages">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Messages.FriendList" />
         </activity>
->>>>>>> d15b3d94d3c5d2b00509eed575f5c7207fe2f454
     </application>
 
 </manifest>
