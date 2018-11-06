@@ -27,13 +27,16 @@ import com.coms309.peddler.utils.GeneralAdapter;
 public class FriendList extends AppCompatActivity {
 
     //Fields
+    private User CurrentUser;
+
     int[] icons = {R.drawable.pers_icon};
     static ArrayList<String> convs = new ArrayList<>();
     static ArrayList<String> names = new ArrayList<>();
     static ArrayList<User> users = new ArrayList<>();
     static GeneralAdapter adpt;
-    static String tag_json_arry = "jarray_req";
     ListView userList;
+
+    static String tag_json_arry = "jarray_req";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +49,13 @@ public class FriendList extends AppCompatActivity {
         userList = (ListView) findViewById(R.id.listview);
         adpt = new GeneralAdapter(FriendList.this, names, convs, icons);
         userList.setAdapter(adpt);
+        if (AppController.getInstance().CurrentUser == null) {
+            AppController.getInstance().CurrentUser = new User("-1000", "test", "test");
+        }
+        this.CurrentUser = AppController.getInstance().CurrentUser;
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("click", "stuff: " + users.get(i).getFirstName());
                 pageSwitch(MessagePage.class, users.get(i));
             }
         });
@@ -62,13 +68,8 @@ public class FriendList extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         String id = "";
-                        String email = "";
                         String firstName = "";
                         String lastName = "";
-                        String password = "";
-                        String phoneNumber = "";
-                        String university = "";
-                        String year = "";
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject userObject = (JSONObject) response.get(i);
@@ -137,6 +138,8 @@ public class FriendList extends AppCompatActivity {
     private void pageSwitch(Class obj, User temp) {
         Intent intent = new Intent(this, obj);
         intent.putExtra("USER_NAME", temp.getFirstName() + " " + temp.getLastName());
+        intent.putExtra("USER_ID", CurrentUser.getID());
+        intent.putExtra("REC_ID", temp.getID());
         startActivity(intent);
     }
 }
