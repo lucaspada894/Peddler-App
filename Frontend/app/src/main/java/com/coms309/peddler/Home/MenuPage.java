@@ -100,7 +100,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 break;
 
             case R.id.LessBtn:
-                //pageSwitch(LessonPage.class);
+                pageSwitch(LessonPage.class);
                 break;
 
         }
