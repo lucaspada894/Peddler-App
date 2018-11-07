@@ -75,120 +75,48 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         sendBtn = findViewById(R.id.textSend);
         sendBtn.setOnClickListener(this);
 
-<<<<<<< HEAD
-//        Message testMess = new Message("testSenderID","testRecID", "Hello, welcome to Peddler!");
-//        messageList.add(testMess);
-
 //        Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
-//        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID);
-//        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID);
 
-        getServerRes();
-=======
->>>>>>> ef045a19d6c591c86201c069d7c53794faa13912
         mMessageRecycler = (RecyclerView) findViewById(R.id.messList);
         mMessageAdapter = new ChatAdapter(this, messageList);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMessageRecycler.setHasFixedSize(true);
         mMessageRecycler.setAdapter(mMessageAdapter);
 
-<<<<<<< HEAD
-=======
         //Initializing
         Bundle extras = getIntent().getExtras();
-        if (extras !=null) {
+        if (extras != null) {
             this.setTitle(extras.getString("USER_NAME"));
             this.currentUserID = extras.getString("USER_ID");
             this.recipientUserID = extras.getString("REC_ID");
         }
-
-
 
         Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
         makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
         makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
         makeJsonArryReq("/message/all", true);
         connectToWebsocket();
->>>>>>> ef045a19d6c591c86201c069d7c53794faa13912
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.textSend:
-<<<<<<< HEAD
-
                 String sent_s = messBox.getText().toString();
-                Message sent_m = new Message("userID","testRecID", sent_s);
-                getServerRes();
+                Message sent_m = new Message("userID", "testRecID", sent_s);
 
                 messageList.add(sent_m);
                 messBox.setText("");
                 messageList.add(temp);
-                mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0? 0 :messageList.size()  - 2, 2);
+                mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0 ? 0 : messageList.size() - 2, 2);
                 mMessageRecycler.smoothScrollToPosition(messageList.size() - 1);
 
                 break;
 
         }
 
-    }
-
-    //WebSocket Communication (Client<->Server).
-    private void getServerRes() {
-
-        Draft[] drafts = {new Draft_6455()};
-        String w = WEBSOCKET_URL;
-        w += currUser.getID();
-
-        Log.d("websocket url", w);
-        try {
-
-            Log.d("Socket:", "Trying socket");
-            cc = new WebSocketClient(new URI(w), (Draft) drafts[0]) {
-                @Override
-                public void onMessage(String message) {
-
-                    Log.d("", "run() returned: " + message);
-
-                    //? First-time call temp will not be updated.
-                    //? This socket block appears to be called multiple times during run, so has to access server message separately.
-                    temp = new Message("testSenderID","testRecID", "Server: " + message);
-
-                }
-
-                @Override
-                public void onOpen(ServerHandshake handshake) {
-
-                    Log.d("OPEN", "run() returned: " + "is connecting");
-
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
-
-                    Log.d("CLOSE", "onClose() returned: " + reason);
-
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Log.d("Exception:", e.toString());
-                }
-            };
-        } catch (URISyntaxException e) {
-            Log.d("Exception:", e.getMessage().toString());
-            e.printStackTrace();
-        }
-        cc.connect();
-
-=======
-                cc.send(formattedMessage(messageField.getText().toString()));
-                break;
-        }
->>>>>>> ef045a19d6c591c86201c069d7c53794faa13912
     }
 
     private String formattedMessage(String msg) {
@@ -207,15 +135,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         return result;
     }
 
-<<<<<<< HEAD
-
-
-
-
-    private void makeJsonArryReq(String path) {
-=======
     private void makeJsonArryReq(String path, final boolean currentUser) {
->>>>>>> ef045a19d6c591c86201c069d7c53794faa13912
         //showProgressDialog();
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
@@ -233,12 +153,12 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
                                 Log.d("response msg:", msgObject.toString());
                                 if (currentUser) {
                                     messagesFromUser.add(new Message(msgObject.getString("creatorId"),
-                                                                     msgObject.getString("recipientId"),
-                                                                     msgObject.getString("message")));
+                                            msgObject.getString("recipientId"),
+                                            msgObject.getString("message")));
                                 } else {
                                     messagesFromRecipient.add(new Message(msgObject.getString("creatorId"),
-                                                                          msgObject.getString("recipientId"),
-                                                                          msgObject.getString("message")));
+                                            msgObject.getString("recipientId"),
+                                            msgObject.getString("message")));
                                 }
                             } catch (org.json.JSONException e) {
 
@@ -256,9 +176,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         // Cancelling request
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
-<<<<<<< HEAD
-}
-=======
+
 
     void filterMessages(ArrayList<Message> toRecMsg, ArrayList<Message> fromRecMsg) {
         for (int i = 0; i < toRecMsg.size(); i++) {
@@ -326,4 +244,3 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         cc.connect();
     }
 }
->>>>>>> ef045a19d6c591c86201c069d7c53794faa13912

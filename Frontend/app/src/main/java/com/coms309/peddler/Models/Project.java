@@ -1,19 +1,22 @@
 package com.coms309.peddler.Models;
 
-public class Project {
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class Project implements Serializable {
     private String id;
     private String name;
     private String desc;
-    private User users[];
 
-    public Project(String id, String name, String desc, User users[]) {
+    public Project(String id, String name, String desc) {
         this.id = id;
         this.name = name;
         this.desc = desc;
-        this.users = users;
     }
 
-    public Project(String id, String name, String desc) {
+    public Project(String id, String name, String desc, String owner_id, ArrayList<String> users, ArrayList<Message> requests) {
+        //super(owner_id, users, requests);
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -27,8 +30,5 @@ public class Project {
     }
     public String getDesc() {
         return desc;
-    }
-    public User[] getUsers() {
-        return users;
     }
 }
