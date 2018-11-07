@@ -18,6 +18,7 @@ public class Users {
 	private String year;
 	private String university;
 	private String password;	
+	private String notification;
 	
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -81,6 +82,14 @@ public class Users {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public void setNotification(String notification) {
+		this.notification = notification;
+	}
+	
+	public String getNotification() {
+		return this.notification;
 	}
 
 

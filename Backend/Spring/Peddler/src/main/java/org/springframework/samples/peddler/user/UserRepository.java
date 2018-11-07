@@ -130,6 +130,8 @@ public interface UserRepository extends CrudRepository<Users, Integer> {
     @Query("SELECT id FROM Projects t WHERE t.userID =:userID")
     @Transactional(readOnly = true)
     Iterable<Integer> findProjectID(@Param("userID")Integer userID);
+    
+
 
     
     

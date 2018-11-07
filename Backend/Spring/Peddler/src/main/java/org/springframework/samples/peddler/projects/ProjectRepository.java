@@ -1,17 +1,20 @@
 package org.springframework.samples.peddler.projects;
 
-
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Entity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.peddler.projects.Projects;
+import org.springframework.samples.peddler.user.Users;
 
 public interface ProjectRepository extends CrudRepository<Projects, Integer> {
 	
  
-	
+
 	
 @Transactional(readOnly = true)
 Iterable<Projects> findProjectsByUserID(@Param("userID") Integer userID);	
@@ -48,14 +51,21 @@ void editProjectTitle(@Param("newTitle") String newTitle, @Param("projId") Integ
 
 @Transactional
 @Modifying
-@Query("UPDATE Projects p set p.requesterId = :requester_id WHERE p.id =:id")
-void setNewRequest(@Param("requester_id") int requester_id, @Param("id") int id);
+@Query("UPDATE Projects p SET p.requesterId =:requesterId WHERE p.id =:id")
+void setNewRequest(@Param("requesterId") int requesterId, @Param("id") int id);
 
 @Transactional
 @Modifying
-@Query("UPDATE Projects p SET p.requestStatus =:request_status WHERE p.userID =:userId")
-void setRequestStatus(@Param("request_status") boolean request_status, @Param("userId") int userId);
+@Query("UPDATE Projects p SET p.requestStatus =:request_status WHERE p.id =:id")
+void setRequestStatus(@Param("request_status") boolean request_status, @Param("id") int id);
 
+@Transactional
+@Modifying
+@Query("UPDATE Users u SET u.notification =:notification WHERE u.id =:id ")
+void setRequestNotification(@Param("notification") String notification, @Param("id") int id);
+
+@Query("SELECT u FROM Users u WHERE u.id =:id")
+Users fetchUser(@Param("id") int id);
 
 @Query("SELECT id FROM Projects t WHERE t.title LIKE CONCAT('%',:query,'%') OR t.description LIKE CONCAT('%',:query,'%') OR t.major LIKE CONCAT('%',:query,'%')")
 Iterable<Integer> findProjectsWithPartOfName(@Param("query") String query);

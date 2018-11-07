@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.samples.peddler.projects.Projects;
+import org.springframework.samples.peddler.user.UserRepository;
 import org.springframework.samples.peddler.tutors.Tutors;
 import org.springframework.samples.peddler.projects.ProjectRepository;
 
@@ -80,15 +81,16 @@ public class ProjectController {
     
     @Transactional
     @RequestMapping(path="/requestAction")
-    public @ResponseBody String requestAction(@RequestParam boolean request_status, @RequestParam int owner_id) {
-    	projectRepository.setRequestStatus(request_status, owner_id);
+    public @ResponseBody String requestAction(@RequestParam boolean request_status, @RequestParam int project_id) {
+    	projectRepository.setRequestStatus(request_status, project_id);
     	return "request accepted!";
     }
     
     @Transactional
     @RequestMapping(path="/sendRequest")
-    	public @ResponseBody String sendRequest(@RequestParam int requester_id, @RequestParam int project_id) {
-    		projectRepository.setNewRequest(requester_id, project_id);
+    	public @ResponseBody String sendRequest(@RequestParam int requesterId, @RequestParam int projectId) {
+    		projectRepository.setNewRequest(requesterId, projectId);
+    		projectRepository.setRequestNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + " wishes to join your project!", requesterId);
     		return "request to join sent!";
     	}
     
