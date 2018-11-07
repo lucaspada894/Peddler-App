@@ -74,7 +74,7 @@ public class CreateProduct extends AppCompatActivity implements View.OnClickList
 
             case R.id.create_btn:
                 postItem();
-                pageSwitch(MarketPage.class);
+                //pageSwitch(MarketPage.class);
                 break;
 
 

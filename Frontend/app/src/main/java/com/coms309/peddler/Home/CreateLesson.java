@@ -62,7 +62,7 @@ public class CreateLesson extends AppCompatActivity implements View.OnClickListe
 
             case R.id.create_btn:
                 postItem();
-                pageSwitch(LessonPage.class);
+                //pageSwitch(LessonPage.class);
                 break;
 
 

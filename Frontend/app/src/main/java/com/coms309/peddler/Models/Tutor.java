@@ -1,6 +1,8 @@
 package com.coms309.peddler.Models;
 
-public class Tutor {
+import java.io.Serializable;
+
+public class Tutor implements Serializable {
 
     private Integer tutorID;
     private Integer userID;

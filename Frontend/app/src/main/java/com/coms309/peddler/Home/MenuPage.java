@@ -15,10 +15,13 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.coms309.peddler.Messages.FriendList;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
+import com.coms309.peddler.Project.JoinableActivity;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
 import com.coms309.peddler.utils.MainListAdapter;
+import com.coms309.peddler.utils.RecyclerItemClickListener;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -60,7 +63,19 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+            @Override public void onItemClick(View view, int position) {
+                pageSwitch(JoinableActivity.class, projects.get(position));
+            }
+            @Override public void onLongItemClick(View view, int position) {
+                // do whatever
+            }
+        }));
         // specify an adapter (see also next example)
+        if (AppController.getInstance().CurrentUser == null) {
+            AppController.getInstance().CurrentUser = new User("1000", "test", "test");
+        }
+        this.CurrentUser = AppController.getInstance().CurrentUser;
         Log.d("user id", CurrentUser.getID());
         makeJsonArryReq("/project/all");
 
@@ -132,8 +147,12 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
+    private void pageSwitch(Class obj, Project temp) {
+        Intent intent = new Intent(this, obj);
+        intent.putExtra("PROJ", temp);
+        startActivity(intent);
+    }
 
-    //Helper
     private void pageSwitch(Class obj) {
         Intent intent = new Intent(this, obj);
         startActivity(intent);

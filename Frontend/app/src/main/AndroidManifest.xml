@@ -21,10 +21,10 @@
 
         <activity android:name=".Login.LoginActivity">
 
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".Home.MainActivity">
             <meta-data
@@ -59,7 +59,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MainActivity" />
         </activity>
-        <activity android:name=".Home.MenuPage" />
+        <activity android:name=".Home.MenuPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Project.JoinableActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
         <activity
             android:name=".Home.ProfilePage"
             android:windowSoftInputMode="adjustPan">
@@ -70,11 +81,13 @@
         <activity
             android:name=".Messages.FriendList"
             android:label="Friend List">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -96,7 +109,7 @@
         <activity
             android:name=".Home.CreateProduct"
             android:label="@string/title_activity_create_product"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
