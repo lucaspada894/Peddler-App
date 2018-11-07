@@ -29,10 +29,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
-             <!--<intent-filter>-->
-                 <!--<action android:name="android.intent.action.MAIN" />-->
-                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ListItemActivity"
@@ -81,7 +77,8 @@
                 android:value=".Home.MenuPage" />
         </activity>
         <activity android:name=".Home.MarketPage" />
-        <activity android:name=".Home.LessonPage"></activity>
+        <activity android:name=".Home.LessonPage" />
+
         <activity android:name=".Messages.MessagePage"
             android:label="Messages">
             <meta-data

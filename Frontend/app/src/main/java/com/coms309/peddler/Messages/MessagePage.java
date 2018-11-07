@@ -2,6 +2,8 @@ package com.coms309.peddler.Messages;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,11 +26,13 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.coms309.peddler.Models.Message;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
+import com.coms309.peddler.utils.ChatAdapter;
 import com.coms309.peddler.utils.Const;
 import com.coms309.peddler.utils.GeneralAdapter;
 
@@ -47,8 +51,14 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
     private EditText messageField;
 
     static String tag_json_arry = "jarray_req";
-
+    private ArrayList<Message> messageList = new ArrayList<>();
+    private RecyclerView mMessageRecycler;
+    private ChatAdapter mMessageAdapter;
+    private Button sendBtn;
+    private EditText messBox;
+    private User currUser;
     private WebSocketClient cc;
+    private Message tempRei;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +70,18 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
 
         messageField = findViewById(R.id.enterText);
 
+        currUser = AppController.getInstance().CurrentUser;
+        messBox = findViewById(R.id.enterText);
+        sendBtn = findViewById(R.id.textSend);
+        sendBtn.setOnClickListener(this);
+
+        mMessageRecycler = (RecyclerView) findViewById(R.id.messList);
+        mMessageAdapter = new ChatAdapter(this, messageList);
+        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mMessageRecycler.setHasFixedSize(true);
+        mMessageRecycler.setAdapter(mMessageAdapter);
+
+        //Initializing
         Bundle extras = getIntent().getExtras();
         if (extras !=null) {
             this.setTitle(extras.getString("USER_NAME"));
@@ -67,54 +89,39 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
             this.recipientUserID = extras.getString("REC_ID");
         }
 
+
+
         Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
         makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
         makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
-        connect_to_socket();
-    }
-
-    public void connect_to_socket() {
-        Draft[] drafts = {new Draft_6455()};
-        String w = WEBSOCKET_URL;
-        w += currentUserID;
-        Log.d("websocket url", w);
-        try {
-            Log.d("Socket:", "Trying socket");
-            cc = new WebSocketClient(new URI(w), (Draft) drafts[0]) {
-                @Override
-                public void onMessage(String message) {
-                    Log.d("", "run() returned: " + message);
-                }
-
-                @Override
-                public void onOpen(ServerHandshake handshake) {
-                    Log.d("OPEN", "run() returned: " + "is connecting");
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
-                    Log.d("CLOSE", "onClose() returned: " + reason);
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Log.d("Exception:", e.toString());
-                }
-            };
-        } catch (URISyntaxException e) {
-            Log.d("Exception:", e.getMessage().toString());
-            e.printStackTrace();
-        }
-        cc.connect();
+        connectToWebsocket();
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
             case R.id.textSend:
-                cc.send(messageField.getText().toString());
+                cc.send(formattedMessage(messageField.getText().toString()));
                 break;
         }
+    }
+
+    private String formattedMessage(String msg) {
+        String result = "";
+        String senderID = this.currentUserID;
+        String recID = this.recipientUserID;
+        while (senderID.length() < 6 || recID.length() < 6) {
+            if (senderID.length() < 6) {
+                senderID = "0" + senderID;
+            }
+            if (recID.length() < 6) {
+                recID = "0" + recID;
+            }
+        }
+        result += recID + senderID + "0" + msg;
+        return result;
     }
 
     private void makeJsonArryReq(String path, final boolean currentUser) {
@@ -189,6 +196,18 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
                         makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
                         makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
                     }
+
+                    //Update sent texts
+                    String sent_s = messBox.getText().toString();
+                    Message sent_m = new Message("userID","testRecID", sent_s);
+                    messageList.add(sent_m);
+
+                    //Update received texts
+                    Message temp = new Message("testSenderID","testRecID", "Server: " + message);
+                    messageList.add(temp);
+
+                    mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0? 0 :messageList.size()  - 2, 2);
+
                 }
 
                 @Override

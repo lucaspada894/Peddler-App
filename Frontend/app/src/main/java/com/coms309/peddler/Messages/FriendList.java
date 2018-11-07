@@ -50,7 +50,7 @@ public class FriendList extends AppCompatActivity {
         adpt = new GeneralAdapter(FriendList.this, names, convs, icons);
         userList.setAdapter(adpt);
         if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("-1000", "test", "test");
+            AppController.getInstance().CurrentUser = new User("1000", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

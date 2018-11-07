@@ -8,28 +8,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.coms309.peddler.Models.Message;
+import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
+import com.coms309.peddler.app.AppController;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 /**
- * ChatAdapter provides adaptation to chatting pages.
+ * ChatAdapter provides adaptation for chat/message pages.
  */
 public class ChatAdapter extends RecyclerView.Adapter {
 
     //Fields
     private Context currCtxt;
-    private List messList;
+    private ArrayList<Message> messList;
     private static final int NOW_SEND = 1;
     private static final int JUST_REICEIVED = 2;
+    private User curr;
 
 
     //Initializing
-    public ChatAdapter(Context context, List messageList) {
+    public ChatAdapter(Context context, ArrayList<Message> messageList) {
 
         currCtxt = context;
         messList = messageList;
+        curr = AppController.getInstance().CurrentUser;
 
     }
 
@@ -41,11 +49,24 @@ public class ChatAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewType(int pos) {
 
-        return 0;
+        Message temp = messList.get(pos);
+
+        if(temp.getSenderID().equals("userID")){
+
+            return NOW_SEND;
+
+        }
+        else{
+
+            return JUST_REICEIVED;
+
+        }
+
     }
 
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view;
@@ -72,36 +93,28 @@ public class ChatAdapter extends RecyclerView.Adapter {
      * MUST-HAVE implementation, passes messages to the contents in corresponding ViewHolder.
      * @param holder
      * target viewHolder
-     * @param position
+     * @param pos
      * type of message (Receiving or Sending).
      */
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
+
+        Message temp = messList.get(pos);
 
         switch (holder.getItemViewType()) {
-//
-//            case NOW_SEND:
-//
-//                ((SentMessageHolder) holder).bind(message);
-//                break;
-//
-//            case JUST_REICEIVED:
-//
-//                ((ReceiverHolder) holder).bind(message);
-//                break;
-//
+            case NOW_SEND:
+
+                ((SendHolder) holder).inject(temp);
+                break;
+
+            case JUST_REICEIVED:
+
+                ((ReceiveHolder) holder).inject(temp);
+                break;
+
         }
 
     }
-
-
-
-
-
-
-
-
-
 
     //ViewHolders for both receiving and sending messages --- STARTS
 
@@ -109,22 +122,30 @@ public class ChatAdapter extends RecyclerView.Adapter {
     private class ReceiveHolder extends RecyclerView.ViewHolder {
 
         //Fields
-        private TextView messRei, timeRei, nameRei;
-        private ImageView iconRei;
+        TextView messRei, timeRei, nameRei;
+        ImageView iconRei;
 
 
         //Initializing
-        private ReceiveHolder(View itemView) {
+        ReceiveHolder(View itemView) {
 
             super(itemView);
-            messRei = (TextView) itemView.findViewById(R.id.persConv);
-            timeRei = (TextView) itemView.findViewById(R.id.messTime);
-            nameRei = (TextView) itemView.findViewById(R.id.persName);
-            iconRei = (ImageView) itemView.findViewById(R.id.persIcon);
+            messRei = (TextView) itemView.findViewById(R.id.convRei);
+            timeRei = (TextView) itemView.findViewById(R.id.timeRei);
+            nameRei = (TextView) itemView.findViewById(R.id.nameRei);
+            iconRei = (ImageView) itemView.findViewById(R.id.iconRei);
 
         }
 
-        //to do...
+        //Filling messages in components.
+        void inject(Message mess){
+
+            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+            messRei.setText(mess.getMsg());
+            timeRei.setText(time);
+
+        }
 
     }
     //ViewHolder -> Receiving --- ENDS
@@ -134,19 +155,25 @@ public class ChatAdapter extends RecyclerView.Adapter {
     private class SendHolder extends RecyclerView.ViewHolder {
 
         //Fields
-        private TextView messRei, timeRei;
+        TextView messSen, timeSen;
 
 
         //Initializing
-        private SendHolder(View itemView) {
+        SendHolder(View itemView) {
 
             super(itemView);
-            messRei = (TextView) itemView.findViewById(R.id.persConv);
-            timeRei = (TextView) itemView.findViewById(R.id.messTime);
+            messSen = (TextView) itemView.findViewById(R.id.convSen);
+            timeSen = (TextView) itemView.findViewById(R.id.timeSen);
 
         }
 
-        //to do...
+        //Filling messages in components.
+        void inject(Message mess){
+            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+            messSen.setText(mess.getMsg());
+            timeSen.setText(time);
+        }
 
     }
     //ViewHolder -> Sending --- ENDS
