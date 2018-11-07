@@ -13,9 +13,6 @@ public interface MessageRepository extends CrudRepository<Messages, Integer>{
 	public Iterable<Messages> findAllByRecipientId(int recipientId);
 	public Iterable<Messages> findAllByCreatorId(int creatorId);
 	
-	@Transactional
-	@Modifying
-	@Query("UPDATE Projects p set p.requester_id = :requester_id WHERE p.owner_id =:owner_id")
-	void setNewRequest(@Param("requester_id") int requester_id, @Param("owner_id") int owner_id );
+	
 	
 }

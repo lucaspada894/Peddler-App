@@ -26,15 +26,12 @@ public class MessageController {
 		messages.setCreatorId(Integer.parseInt(message.substring(6, 12))); //still have to check for invalidId exception.
 		messages.setType(Integer.parseInt(message.substring(12, 13)));
 		
-		if(messages.getType() == 2) {
-			messageRepo.setNewRequest(messages.getCreatorId(), messages.getRecipientId());
-		}
 		
-		else if(messages.getType() == 1) {
+		
 		messages.setActualMessage(message.substring(13));
 		messages.setDate(new Timestamp(System.currentTimeMillis()));
 		messageRepo.save(messages);
-		}
+		
 		
 		
 		return "Saved";
