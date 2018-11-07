@@ -89,36 +89,7 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
                         hideProgressDialog();
             }
         });
-//        {
-//
-//            /**
-//             * Passing some request headers
-//             * */
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Content-Type", "application/json");
-//                return headers;
-//            }
-//
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("name", "Androidhive");
-//                params.put("email", "abc@androidhive.info");
-//                params.put("pass", "password123");
-//
-//                return params;
-//            }
-//
-//        };
-
-        // Adding request to request queue
-        Log.d("poop", jsonObjReq.getUrl());
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
     }
 
     /**

@@ -18,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.coms309.peddler.Messages.WebSocket;
 import com.coms309.peddler.Models.Project;
@@ -74,12 +75,12 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         //Log.d("user id", CurrentUser.getID());
-        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID(), true);
-        makeJsonArryReq("/project/fetchProject?projectId=" + CurrentUser.getProjectId(), false);
+        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+        getProjById("/project/fetchProject?projectId=" + CurrentUser.getProjectId());
         //postInfo();
     }
 
-    private void makeJsonArryReq(String path, final boolean eraseList) {
+    private void makeJsonArryReq(String path) {
         //showProgressDialog();
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
@@ -88,13 +89,8 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                         String id = "";
                         String name = "";
                         String desc = "";
-                        if (!eraseList) {
-                            Log.d("fetch", response.toString());
-                        }
+                        projects.clear();
                         Log.d("response", response.toString());
-                        if (eraseList) {
-                            projects.clear();
-                        }
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
@@ -115,13 +111,80 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("main page", "Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), "Failed to retrieve account credentials", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Failed to retrieve project from proj table", Toast.LENGTH_LONG).show();
             }
         });
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
+
+    private void getProjById(String path) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                Const.JSON_OBJECT_URL_SERVER + path, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response object", response.toString());
+                        try {
+                            projects.add(new Project(response.getString("id"), response.getString("title"), response.getString("description")));
+
+                        } catch (org.json.JSONException e) {
+
+                        }
+                        mAdapter = new MainListAdapter(projects);
+                        mRecyclerView.setAdapter(mAdapter);
+
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ppop", "Error: " + error.getMessage());
+                System.out.println("error: " + error.getMessage());
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+//    private void getProjById(String path) {
+//        //showProgressDialog();
+//        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
+//                new Response.Listener<JSONArray>() {
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        String projectID = "";
+//                        String year = "";
+//                        Log.d("update response: ", response.toString());
+//                        for (int i = 0; i < response.length(); i++) {
+//                            try {
+//                                JSONObject userObject = (JSONObject) response.get(i);
+//                                String userId = userObject.getString("id");
+//                                projectID = userObject.getString("projectID");
+//                                if (CurrentUser.getID().equals(userId)) {
+//                                    CurrentUser.setProjectID(projectID);
+//                                    Log.d("new project id: ", CurrentUser.getProjectId());
+//                                }
+//                            } catch (org.json.JSONException e) {
+//
+//                            }
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("menu update user", "Error: " + error.getMessage());
+//                // users.add(new User("poop", "poop", "poop", "poop"));
+//                Toast.makeText(getApplicationContext(), "Failed to update user", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
+//    }
+
+
+
 
     private void postInfo(String projTitle, String major, String desc) {
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
@@ -133,8 +196,8 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onResponse(String response) {
                         Log.d("Response", response);
-                        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID(), true);
-                        makeJsonArryReq("/project/fetchMembers?projectId=" + CurrentUser.getProjectId(), false);
+                        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+                        getProjById("/project/fetchMembers?projectId=" + CurrentUser.getProjectId());
                     }
                 },
                 new Response.ErrorListener() {

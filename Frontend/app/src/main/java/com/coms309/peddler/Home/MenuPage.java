@@ -9,9 +9,12 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.view.View;
 import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.coms309.peddler.Messages.FriendList;
 import com.coms309.peddler.Messages.MessagePage;
 import com.coms309.peddler.Models.Project;
@@ -24,6 +27,7 @@ import com.coms309.peddler.utils.MainListAdapter;
 import com.coms309.peddler.utils.RecyclerItemClickListener;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
