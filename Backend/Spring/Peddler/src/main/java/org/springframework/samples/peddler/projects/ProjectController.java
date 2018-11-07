@@ -57,7 +57,7 @@ public class ProjectController {
 	
 	
     @Transactional
-	@RequestMapping(path="/delete")
+	@GetMapping(path="/delete")
 	public @ResponseBody String deleteProject(@RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.deleteProject(projId, userId);
 		return "project " + projectRepository.getTitle(userId) + " deleted"; 	
@@ -66,7 +66,7 @@ public class ProjectController {
     
 	
     @Transactional
-	@RequestMapping("/editDesc")
+	@GetMapping("/editDesc")
 	public @ResponseBody String editProjectDesc( @RequestParam String newDesc, @RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.editProjectDescription(newDesc, projId, userId);
 		return "description changed";
@@ -75,14 +75,14 @@ public class ProjectController {
     
     
     @Transactional
-	@RequestMapping(path="/editTitle")
+	@GetMapping(path="/editTitle")
 	public @ResponseBody String editProjectTitle(@RequestParam String newTitle, @RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.editProjectTitle(newTitle, projId, userId);
 		return "title changed";
 	}
     
     @Transactional
-    @RequestMapping(path="/requestAction")
+    @GetMapping(path="/requestAction")
     public @ResponseBody String requestAction(@RequestParam boolean requestStatus, @RequestParam int projectId) {
     	String status;
     	if(requestStatus) {
@@ -100,7 +100,7 @@ public class ProjectController {
     }
     
     @Transactional
-    @RequestMapping(path="/sendRequest")
+    @GetMapping(path="/sendRequest")
     	public @ResponseBody String sendRequest(@RequestParam int requesterId, @RequestParam int projectId) {
     		projectRepository.setNewRequest(requesterId, projectId);
     		Projects p = projectRepository.fetchProject(projectId);
