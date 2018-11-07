@@ -79,17 +79,17 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         switch (holder.getItemViewType()) {
-
-            case NOW_SEND:
-
-                ((SentMessageHolder) holder).bind(message);
-                break;
-
-            case JUST_REICEIVED:
-
-                ((ReceivedMessageHolder) holder).bind(message);
-                break;
-
+//
+//            case NOW_SEND:
+//
+//                ((SentMessageHolder) holder).bind(message);
+//                break;
+//
+//            case JUST_REICEIVED:
+//
+//                ((ReceiverHolder) holder).bind(message);
+//                break;
+//
         }
 
     }
