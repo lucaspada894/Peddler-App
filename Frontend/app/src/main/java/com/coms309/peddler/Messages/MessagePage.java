@@ -197,11 +197,10 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
                     }
                     receivedMessages.add(message);
                     Log.d("received message: ", receivedMessages.toString());
-                    //Update received texts
-                    temp = new Message("testSenderID","testRecID", "Server: " + message);
-                    messageList.add(temp);
-                    mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0 ? 0 : messageList.size() - 2, 2);
-                    mMessageRecycler.smoothScrollToPosition(messageList.size() - 1);
+//                    temp = new Message("testSenderID","testRecID", "Server: " + message);
+//                    messageList.add(temp);
+                    //mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0 ? 0 : messageList.size() - 2, 2);
+                    //mMessageRecycler.smoothScrollToPosition(messageList.size() - 1);
                 }
 
                 @Override

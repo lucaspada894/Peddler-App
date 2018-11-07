@@ -74,11 +74,12 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         }));
         // specify an adapter (see also next example)
         if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("135", "test", "test");
+            AppController.getInstance().CurrentUser = new User("125", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         Log.d("user id", CurrentUser.getID());
         makeJsonArryReq("/project/all");
+        updateUser("/user/all");
     }
 
     public void onClick(View v){
@@ -155,6 +156,40 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
 
         // Cancelling request
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
+    }
+
+    private void updateUser(String path) {
+        //showProgressDialog();
+        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        String projectID = "";
+                        String year = "";
+                        Log.d("update response: ", response.toString());
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject userObject = (JSONObject) response.get(i);
+                                String userId = userObject.getString("id");
+                                projectID = userObject.getString("projectID");
+                                if (CurrentUser.getID().equals(userId)) {
+                                    CurrentUser.setProjectID(projectID);
+                                    Log.d("new project id: ", CurrentUser.getProjectId());
+                                }
+                            } catch (org.json.JSONException e) {
+
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("menu update user", "Error: " + error.getMessage());
+                // users.add(new User("poop", "poop", "poop", "poop"));
+                Toast.makeText(getApplicationContext(), "Failed to update user", Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
 

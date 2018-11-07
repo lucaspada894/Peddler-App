@@ -84,7 +84,7 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
 
     public void acceptRequest() {
         Log.d("accept request url: ", Const.SERVER_URL + "/project/requestAction?requestStatus=" + true + "&projectId=" + currentProj.getID());
-        final StringRequest postRequest = new StringRequest(Request.Method.GET, Const.SERVER_URL + "/project/sendRequest?requesterId=" + CurrentUser.getID() + "&projectId=" + currentProj.getID(),
+        final StringRequest postRequest = new StringRequest(Request.Method.GET, Const.SERVER_URL + "/project/requestAction?requestStatus=" + true + "&projectId=" + currentProj.getID(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

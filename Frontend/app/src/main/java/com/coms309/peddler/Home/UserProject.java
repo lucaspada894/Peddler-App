@@ -74,13 +74,13 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         //Log.d("user id", CurrentUser.getID());
-        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID(), true);
+        makeJsonArryReq("/project/fetchMembers?projectId=" + CurrentUser.getProjectId(), false);
         //postInfo();
     }
 
-    private void makeJsonArryReq(String path) {
+    private void makeJsonArryReq(String path, final boolean eraseList) {
         //showProgressDialog();
-
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -88,8 +88,13 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                         String id = "";
                         String name = "";
                         String desc = "";
+                        if (!eraseList) {
+                            Log.d("fetch", response.toString());
+                        }
                         Log.d("response", response.toString());
-                        projects.clear();
+                        if (eraseList) {
+                            projects.clear();
+                        }
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
@@ -128,7 +133,8 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onResponse(String response) {
                         Log.d("Response", response);
-                        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+                        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID(), true);
+                        makeJsonArryReq("/project/fetchMembers?projectId=" + CurrentUser.getProjectId(), false);
                     }
                 },
                 new Response.ErrorListener() {
