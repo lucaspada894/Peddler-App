@@ -13,14 +13,14 @@ import com.coms309.peddler.R;
 
 
 /**
- * GeneralAdapter provides corresponding adaptation for FirendList.
+ * LessonAdapter provides corresponding adaptation for LessonPage.
  */
-public class GeneralAdapter extends ArrayAdapter<String> {
+public class LessonAdapter extends ArrayAdapter<String> {
 
     //Fields
     private int[] icons;
     private ArrayList<String> names;
-    private ArrayList<String> convs;
+    private ArrayList<String> descriptions;
     private Context currCtxt;
 
 
@@ -30,18 +30,18 @@ public class GeneralAdapter extends ArrayAdapter<String> {
         //Fields
         ImageView ic;
         TextView na;
-        TextView nc;
+        TextView ds;
 
     }
 
 
     //Initializing
-    public GeneralAdapter(Context context, ArrayList<String> n, ArrayList<String> c, int[] i){
+    public LessonAdapter(Context context, ArrayList<String> n, ArrayList<String> c, int[] i){
 
-        super(context, R.layout.friends_row);
+        super(context, R.layout.lessons_row);
         icons = i;
         names = n;
-        convs = c;
+        descriptions = c;
         currCtxt = context;
 
     }
@@ -67,12 +67,12 @@ public class GeneralAdapter extends ArrayAdapter<String> {
         if(targetV == null) {
 
             LayoutInflater currInfltr = (LayoutInflater) currCtxt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            targetV = currInfltr.inflate(R.layout.friends_row, parent, false);
+            targetV = currInfltr.inflate(R.layout.lessons_row, parent, false);
 
             //res look-up
-            vc.ic = (ImageView) targetV.findViewById(R.id.persIcon);
-            vc.na = (TextView) targetV.findViewById(R.id.persName);
-            vc.nc = (TextView) targetV.findViewById(R.id.persConv);
+            vc.ic = (ImageView) targetV.findViewById(R.id.lessIcon);
+            vc.na = (TextView) targetV.findViewById(R.id.lessName);
+            vc.ds = (TextView) targetV.findViewById(R.id.lessDes);
             targetV.setTag(vc);
 
         }
@@ -83,7 +83,7 @@ public class GeneralAdapter extends ArrayAdapter<String> {
         }
         vc.ic.setImageResource(icons[0]);
         vc.na.setText(names.get(pos));
-        vc.nc.setText(convs.get(0));
+        vc.ds.setText(descriptions.get(pos));
 
         return targetV;
 

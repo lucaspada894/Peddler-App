@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Home.LessonPage">
+    android:layout_height="match_parent">
 
+<<<<<<< HEAD
+    <ListView
+        android:id="@+id/lesslist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+</RelativeLayout>
+=======
     <LinearLayout
         android:layout_width="384dp"
         android:layout_height="528dp"
@@ -59,3 +65,4 @@
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+>>>>>>> ef045a19d6c591c86201c069d7c53794faa13912
