@@ -75,7 +75,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         this.CurrentUser = AppController.getInstance().CurrentUser;
         //Log.d("user id", CurrentUser.getID());
         makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID(), true);
-        makeJsonArryReq("/project/fetchMembers?projectId=" + CurrentUser.getProjectId(), false);
+        makeJsonArryReq("/project/fetchProject?projectId=" + CurrentUser.getProjectId(), false);
         //postInfo();
     }
 

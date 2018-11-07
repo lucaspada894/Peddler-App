@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -51,6 +52,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
     private ChatAdapter mMessageAdapter;
     private Button sendBtn;
     private EditText messBox;
+    private TextView recievedMsg;
     private User currUser;
     private WebSocketClient cc;
     private Message temp = new Message("", "", "");
@@ -69,22 +71,24 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
             this.recipientUserID = extras.getString("REC_ID");
         }
 
+        recievedMsg = findViewById(R.id.list_messages);
+
         currUser = AppController.getInstance().CurrentUser;
         messBox = findViewById(R.id.enterText);
         sendBtn = findViewById(R.id.textSend);
         sendBtn.setOnClickListener(this);
 //        Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
 
-        mMessageRecycler = (RecyclerView) findViewById(R.id.messList);
-        mMessageAdapter = new ChatAdapter(this, messageList);
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mMessageRecycler.setHasFixedSize(true);
-        mMessageRecycler.setAdapter(mMessageAdapter);
+//        mMessageRecycler = (RecyclerView) findViewById(R.id.messList);
+//        mMessageAdapter = new ChatAdapter(this, messageList);
+//        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+//        mMessageRecycler.setHasFixedSize(true);
+//        mMessageRecycler.setAdapter(mMessageAdapter);
 
         Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
 //        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID);
 //        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID);
-        makeJsonArryReq("/message/all");
+        //makeJsonArryReq("/message/all");
         connectToWebsocket();
     }
 
@@ -97,12 +101,12 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
             case R.id.textSend:
                 String sent_s = messBox.getText().toString();
                 cc.send(sent_s);
-                Message sent_m = new Message("userID", "testRecID", sent_s);
-
-                messageList.add(sent_m);
-                messBox.setText("");
-                mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0 ? 0 : messageList.size() - 2, 2);
-                mMessageRecycler.smoothScrollToPosition(messageList.size() - 1);
+//                Message sent_m = new Message("userID", "testRecID", sent_s);
+//
+//                messageList.add(sent_m);
+//                messBox.setText("");
+//                mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0 ? 0 : messageList.size() - 2, 2);
+//                mMessageRecycler.smoothScrollToPosition(messageList.size() - 1);
 
                 break;
 
@@ -197,6 +201,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
                     }
                     receivedMessages.add(message);
                     Log.d("received message: ", receivedMessages.toString());
+                    recievedMsg.setText(recievedMsg.getText() + "\n" + message);
 //                    temp = new Message("testSenderID","testRecID", "Server: " + message);
 //                    messageList.add(temp);
                     //mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0 ? 0 : messageList.size() - 2, 2);
