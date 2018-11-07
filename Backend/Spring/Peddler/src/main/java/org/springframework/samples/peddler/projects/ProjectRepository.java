@@ -46,6 +46,16 @@ void editProjectDescription(@Param("newDescription") String newDescription, @Par
 @Query("UPDATE Projects p SET p.title =:newTitle WHERE p.id =:projId AND p.userID =:userId")
 void editProjectTitle(@Param("newTitle") String newTitle, @Param("projId") Integer projId, @Param("userId") Integer userId);
 
+@Transactional
+@Modifying
+@Query("UPDATE Projects p set p.requesterId = :requester_id WHERE p.id =:id")
+void setNewRequest(@Param("requester_id") int requester_id, @Param("id") int id);
+
+@Transactional
+@Modifying
+@Query("UPDATE Projects p SET p.requestStatus =:request_status WHERE p.userID =:userId")
+void setRequestStatus(@Param("request_status") boolean request_status, @Param("userId") int userId);
+
 
 @Query("SELECT id FROM Projects t WHERE t.title LIKE CONCAT('%',:query,'%') OR t.description LIKE CONCAT('%',:query,'%') OR t.major LIKE CONCAT('%',:query,'%')")
 Iterable<Integer> findProjectsWithPartOfName(@Param("query") String query);

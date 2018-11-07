@@ -17,11 +17,11 @@ public class Messages {
 	
 	private int creatorId;
 	private Timestamp createDate;
-	private String message;
+	private String messageBody;
 	private String actualMessage;
 	private int recipientId;
 	private int type;
-
+	
 	
 	public int getId() {
 		return id;
@@ -51,12 +51,12 @@ public class Messages {
 		return createDate;
 	}
 	
-	public String getMessage() {
-		return message;
+	public String getMessageBody() {
+		return messageBody;
 	}
 	
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMessageBody(String message) {
+		this.messageBody = message;
 	}
 	
 	public void setCreatorId(int id) {

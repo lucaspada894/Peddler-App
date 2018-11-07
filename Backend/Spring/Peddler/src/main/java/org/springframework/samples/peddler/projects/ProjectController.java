@@ -78,6 +78,21 @@ public class ProjectController {
 		return "title changed";
 	}
     
+    @Transactional
+    @RequestMapping(path="/requestAction")
+    public @ResponseBody String requestAction(@RequestParam boolean request_status, @RequestParam int owner_id) {
+    	projectRepository.setRequestStatus(request_status, owner_id);
+    	return "request accepted!";
+    }
+    
+    @Transactional
+    @RequestMapping(path="/sendRequest")
+    	public @ResponseBody String sendRequest(@RequestParam int requester_id, @RequestParam int project_id) {
+    		projectRepository.setNewRequest(requester_id, project_id);
+    		return "request to join sent!";
+    	}
+    
+    
     
 	@GetMapping(path="/search")
 	public @ResponseBody Iterable<Projects> searchProjects(@RequestParam String search) {
