@@ -57,9 +57,12 @@ void setNewRequest(@Param("requester_id") int requester_id, @Param("id") int id)
 void setRequestStatus(@Param("request_status") boolean request_status, @Param("owner_id") int owner_id);
 
 
+@Query("SELECT id FROM Projects t WHERE t.title LIKE CONCAT('%',:query,'%') OR t.description LIKE CONCAT('%',:query,'%') OR t.major LIKE CONCAT('%',:query,'%')")
+Iterable<Integer> findProjectsWithPartOfName(@Param("query") String query);
+
 
 
 }
 
-//add FROM * PROJECTS WHERE UserID = userid
+
 	

@@ -12,13 +12,21 @@ public class Tutors {
 	
 	private Integer tutorID;
 	private Integer userID;
-	private Integer sharedID;
 	private String tutorTitle;
 	private String tutorSubject;
 	private String tutorDescription;
 	private String tutorTimes;
+	private Integer tutorRequest;
 	
 	
+	public Integer getTutorRequest() {
+		return tutorRequest;
+	}
+
+	public void setTutorRequest(Integer tutorRequest) {
+		this.tutorRequest = tutorRequest;
+	}
+
 	public Integer getTutorID() {
 		return tutorID;
 	}
@@ -35,13 +43,6 @@ public class Tutors {
 		this.userID = userID;
 	}
 	
-	public Integer getSharedID() {
-		return sharedID;
-	}
-	
-	public void setSharedID(Integer sharedID) {
-		this.sharedID = sharedID;
-	}
 	
 	public String getTutorTitle() {
 		return tutorTitle;
