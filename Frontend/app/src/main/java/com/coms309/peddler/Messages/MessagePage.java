@@ -94,6 +94,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
         makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
         makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
+        makeJsonArryReq("/message/all", true);
         connectToWebsocket();
     }
 
