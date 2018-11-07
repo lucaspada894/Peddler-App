@@ -21,7 +21,7 @@
 	—————————————————————————————————————————————————————————————————————
 	/editPassword?newYear=								//changes the password of the logged in user
 	—————————————————————————————————————————————————————————————————————
-	/editPassword?oldPassword=&oldPassword2=&newPassword=			//changes the password of the logged in user, double verification for password
+	/editPassword?oldPassword=&oldPassword2=&newPassword=				//changes the password of the logged in user, double verification for password
 	—————————————————————————————————————————————————————————————————————
 
 
@@ -38,16 +38,60 @@
 	—————————————————————————————————————————————————————————————————————	
 	/editTitle?newTitle=&projId=&userId=						//changes the title of a project
 	—————————————————————————————————————————————————————————————————————
+	/requestAction?request_status=&project_id=					//request status is boolean, project id is int; used to accept or deny request; 
+	—————————————————————————————————————————————————————————————————————
+	/sendRequest?requesterId=&projectId=						//sends a join request to the project owner; requester id is the user signed in making request
+	—————————————————————————————————————————————————————————————————————
+	/search?search=									//search the project database
+	—————————————————————————————————————————————————————————————————————		
+
 	
 /tutor
-	/add?userID=&tutorTitle=&tutorSubject=&tutorDescription=&tutorTimes=				//adds a new project and the users id
+	/add?userID=&tutorTitle=&tutorSubject=&tutorDescription=&tutorTimes=		//adds a new project and the users id
 	—————————————————————————————————————————————————————————————————————
 	/all										//returns all the projects and their info
 	—————————————————————————————————————————————————————————————————————
+	/request?tutorID=&userID=							//sends a join request to the tutor from the logged in user(userID)
+	—————————————————————————————————————————————————————————————————————
+	/search?search=									//searches the tutor database 
+	—————————————————————————————————————————————————————————————————————
+	/myLessons?userID=								//using the logged in users id, finds their lessons
 
 
 /product
-	/add?userID=&productName=&productDescription=&productCondition=&productPrice=				//adds a new project and the users id
+	/add?userID=&productName=&productDescription=&productCondition=&productPrice=	//adds a new project and the users id
 	—————————————————————————————————————————————————————————————————————
 	/all										//returns all the projects and their info
 	—————————————————————————————————————————————————————————————————————
+	/search?search=									//search the marketplace for products
+	—————————————————————————————————————————————————————————————————————
+	/myProducts?userID=								//finds the users products
+	—————————————————————————————————————————————————————————————————————
+
+
+/message
+	/add?message=									//adds message
+	—————————————————————————————————————————————————————————————————————
+	/getBySender?creatorId=								//
+	—————————————————————————————————————————————————————————————————————
+	/getByReceiver?recipientId=							//
+	—————————————————————————————————————————————————————————————————————
+	/all										//
+	—————————————————————————————————————————————————————————————————————
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

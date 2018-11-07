@@ -35,14 +35,15 @@ import java.util.ArrayList;
 import static com.coms309.peddler.utils.Const.JSON_OBJECT_URL_SERVER;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class UserProject extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private User CurrentUser;
 
-    private Button listItem, webSocket, signupBtn, requestPageBtn;
+    private Button listItem, webSocket;
+    private EditText titleTxt, majorTxt, descTxt;
 
     private ArrayList<Project> projects = new ArrayList<>();
 
@@ -56,8 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         listItem = findViewById(R.id.list_item_btn);
         listItem.setOnClickListener(this);
-        webSocket = findViewById(R.id.web_socket);
-        webSocket.setOnClickListener(this);
+        titleTxt = findViewById(R.id.title_text);
+        majorTxt = findViewById(R.id.major_text);
+        descTxt = findViewById(R.id.desc_text);
 
         mRecyclerView = findViewById(R.id.main_recycle);
         // use this setting to improve performance if you know that changes
@@ -116,11 +118,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
-    private void postInfo(String projTitle) {
+    private void postInfo(String projTitle, String major, String desc) {
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
         url = "http://proj309-pp-07.misc.iastate.edu:8080/project/add?";
-        url += "title=" + projTitle + "&major=" + "coms";
-        url += "&description=" + "exdescription" + "&userID=" + CurrentUser.getID() + "&ownerID=" + CurrentUser.getID();
+        url += "title=\"" + projTitle + "\"&major=\"" + major;
+        url += "\"&description=\"" + desc + "\"&userID=" + CurrentUser.getID() + "&ownerID=" + CurrentUser.getID();
         final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -145,35 +147,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         switch (v.getId()) {
             case R.id.list_item_btn:
+                String title = titleTxt.getText().toString();
+                String major = majorTxt.getText().toString();
+                String desc = descTxt.getText().toString();
+                if (title != null && major != null && desc != null){
+                    postInfo(title, major, desc);
+                }
 //                Log.d("poop", "onClick: list item");
 //                startActivity(new Intent(MainActivity.this, ListItemActivity.class));
-                Log.d("list item", "clicked");
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Enter new project name");
-
-                final EditText input = new EditText(this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        m_Text = input.getText().toString();
-                        postInfo(m_Text);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-                break;
-            case R.id.web_socket:
-                Log.d("websocket:", "go to websocket");
-                pageSwitch(WebSocket.class);
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("Enter new project name");
+//
+//                final EditText input = new EditText(this);
+//                input.setInputType(InputType.TYPE_CLASS_TEXT);
+//                builder.setView(input);
+//
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        m_Text = input.getText().toString();
+//                        postInfo(m_Text);
+//                    }
+//                });
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//                builder.show();
                 break;
         }
         return;

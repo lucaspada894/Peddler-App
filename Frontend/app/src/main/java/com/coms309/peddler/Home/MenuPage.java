@@ -88,7 +88,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 break;
 
             case R.id.ProjBtn:
-                pageSwitch(MainActivity.class);
+                pageSwitch(UserProject.class);
                 break;
 
             case R.id.MessBtn:
