@@ -11,7 +11,7 @@ import com.coms309.peddler.Models.User;
 
 import java.util.ArrayList;
 
-public class JoinableActivity extends AppCompatActivity {
+public class JoinableActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView projectIcon;
     private User CurrentUser;
@@ -27,6 +27,13 @@ public class JoinableActivity extends AppCompatActivity {
         if(extras !=null) {
             currentProj = (Project) extras.getSerializable("PROJ");
             this.setTitle(currentProj.getName());
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            //case
         }
     }
 }
