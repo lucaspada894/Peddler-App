@@ -65,7 +65,7 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_lesson_page);
 
         //Initializing
-        makeJsonArryReq("/tutor/all");
+        update("/tutor/all");
         search = findViewById(R.id.search_text);
         search_btn = findViewById(R.id.button);
         search_btn.setOnClickListener(this);
@@ -81,6 +81,25 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
 //        mLayoutManager = new LinearLayoutManager(this);
 //        mRecyclerView.setLayoutManager(mLayoutManager);
 
+        /*userList = findViewById(R.id.lessons);
+        adptMark = new LessonAdapter(LessonPage.this, namesMark, convsMark, icons);
+        userList.setAdapter(adptMark);
+        if (AppController.getInstance().CurrentUser == null) {
+            AppController.getInstance().CurrentUser = new User("-1000", "test", "test");
+        }
+        this.CurrentUser = AppController.getInstance().CurrentUser;
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                pageSwitch(MessagePage.class, usersMark.get(i));
+            }
+        });*/
+    }
+
+
+    public void update(String path) {
+        makeJsonArryReq(path);
+
         userList = findViewById(R.id.lessons);
         adptMark = new LessonAdapter(LessonPage.this, namesMark, convsMark, icons);
         userList.setAdapter(adptMark);
@@ -94,6 +113,14 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
                 pageSwitch(MessagePage.class, usersMark.get(i));
             }
         });
+
+    }
+
+    public void clear() {
+        convsMark.clear();
+        namesMark.clear();
+        usersMark.clear();
+
     }
 
     private void makeJsonArryReq(String path) {
@@ -155,7 +182,8 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
         switch(v.getId()) {
             case R.id.button:
                 String query = search.getText().toString();
-                makeJsonArryReq("/tutor/search/?search=" + query);
+                clear();
+                update("/tutor/search/?search=" + query);
                 break;
 
             case R.id.create_lesson:
@@ -163,7 +191,8 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.my_lessons:
-                makeJsonArryReq("/tutor/myLessons/?userID=" + AppController.getInstance().CurrentUser.getID());
+                clear();
+                update("/tutor/myLessons/?userID=" + AppController.getInstance().CurrentUser.getID());
                 break;
         }
 

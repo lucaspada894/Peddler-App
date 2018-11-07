@@ -65,7 +65,8 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_market_page);
 
         //Initializing
-        makeJsonArryReq("/product/all");
+        //makeJsonArryReq("/product/all");
+        update("/product/all");
         searchproText = findViewById(R.id.searchpro_text);
         searchProduct = findViewById(R.id.search_product);
         searchProduct.setOnClickListener(this);
@@ -81,6 +82,25 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
 //        mLayoutManager = new LinearLayoutManager(this);
 //        mRecyclerView.setLayoutManager(mLayoutManager);
 
+       /* marketList = findViewById(R.id.products);
+        adptMark = new MarketAdapter(MarketPage.this, namesMark, convsMark, icons);
+        marketList.setAdapter(adptMark);
+        if (AppController.getInstance().CurrentUser == null) {
+            AppController.getInstance().CurrentUser = new User("-1000", "test", "test");
+        }
+        this.CurrentUser = AppController.getInstance().CurrentUser;
+        marketList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                pageSwitch(MessagePage.class, usersMark.get(i));
+            }
+        });*/
+    }
+
+
+    public void update(String path) {
+        makeJsonArryReq(path);
+
         marketList = findViewById(R.id.products);
         adptMark = new MarketAdapter(MarketPage.this, namesMark, convsMark, icons);
         marketList.setAdapter(adptMark);
@@ -94,6 +114,13 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
                 pageSwitch(MessagePage.class, usersMark.get(i));
             }
         });
+    }
+
+    public void clear() {
+        convsMark.clear();
+        namesMark.clear();
+        usersMark.clear();
+
     }
 
     private void makeJsonArryReq(String path) {
@@ -155,7 +182,8 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
         switch(v.getId()) {
             case R.id.search_product:
                 String query = searchproText.getText().toString();
-                makeJsonArryReq("/product/search/?search=" + query);
+                clear();
+                update("/product/search/?search=" + query);
                 break;
 
             case R.id.create_product:
@@ -163,7 +191,8 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.my_products:
-                makeJsonArryReq("/product/myProducts/?userID=" + AppController.getInstance().CurrentUser.getID());
+                clear();
+               update("/product/myProducts/?userID=" + AppController.getInstance().CurrentUser.getID());
                 break;
         }
 
