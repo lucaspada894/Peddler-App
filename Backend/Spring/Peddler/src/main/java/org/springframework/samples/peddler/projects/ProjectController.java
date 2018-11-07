@@ -1,5 +1,7 @@
 package org.springframework.samples.peddler.projects;
 
+import java.util.ArrayList;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.samples.peddler.projects.Projects;
+import org.springframework.samples.peddler.tutors.Tutors;
 import org.springframework.samples.peddler.projects.ProjectRepository;
 
 @Controller
@@ -73,6 +76,16 @@ public class ProjectController {
 	public @ResponseBody String editProjectTitle(@RequestParam String newTitle, @RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.editProjectTitle(newTitle, projId, userId);
 		return "title changed";
+	}
+    
+    
+	@GetMapping(path="/search")
+	public @ResponseBody Iterable<Projects> searchProjects(@RequestParam String search) {
+		String[] words = search.split(" ");
+		
+		Iterable<Integer> tutorIDs =  projectRepository.findProjectsWithPartOfName(search);
+
+		return projectRepository.findAllById(tutorIDs);
 	}
     
     

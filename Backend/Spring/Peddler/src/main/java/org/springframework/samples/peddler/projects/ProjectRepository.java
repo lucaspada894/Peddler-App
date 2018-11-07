@@ -47,9 +47,12 @@ void editProjectDescription(@Param("newDescription") String newDescription, @Par
 void editProjectTitle(@Param("newTitle") String newTitle, @Param("projId") Integer projId, @Param("userId") Integer userId);
 
 
+@Query("SELECT id FROM Projects t WHERE t.title LIKE CONCAT('%',:query,'%') OR t.description LIKE CONCAT('%',:query,'%') OR t.major LIKE CONCAT('%',:query,'%')")
+Iterable<Integer> findProjectsWithPartOfName(@Param("query") String query);
+
 
 
 }
 
-//add FROM * PROJECTS WHERE UserID = userid
+
 	

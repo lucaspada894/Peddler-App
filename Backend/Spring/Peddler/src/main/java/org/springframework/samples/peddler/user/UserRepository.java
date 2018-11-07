@@ -3,7 +3,6 @@ package org.springframework.samples.peddler.user;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
