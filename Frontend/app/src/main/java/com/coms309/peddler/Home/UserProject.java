@@ -89,7 +89,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                         String id = "";
                         String name = "";
                         String desc = "";
-                        projects.clear();
+                        //projects.clear();
                         Log.d("response", response.toString());
                         for (int i = 0; i < response.length(); i++) {
                             try {
