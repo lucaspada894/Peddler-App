@@ -41,15 +41,9 @@ import static com.coms309.peddler.utils.Const.WEBSOCKET_URL;
 public class MessagePage extends AppCompatActivity implements View.OnClickListener {
 
     //Fields
-    static ArrayList<Message> messagesFromUser = new ArrayList<>();
-    static ArrayList<Message> messagesFromRecipient = new ArrayList<>();
-
+    static ArrayList<String> messages = new ArrayList<>();
     static String currentUserID;
     static String recipientUserID;
-
-    private Button sendMsg;
-    private EditText messageField;
-
     static String tag_json_arry = "jarray_req";
     private ArrayList<Message> messageList = new ArrayList<>();
     private RecyclerView mMessageRecycler;
@@ -60,21 +54,24 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
     private WebSocketClient cc;
     private Message temp = new Message("", "", "");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
 
-        sendMsg = findViewById(R.id.textSend);
-        sendMsg.setOnClickListener(this);
-
-        messageField = findViewById(R.id.enterText);
+        //Initializing
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            this.setTitle(extras.getString("USER_NAME"));
+            this.currentUserID = extras.getString("USER_ID");
+            this.recipientUserID = extras.getString("REC_ID");
+        }
 
         currUser = AppController.getInstance().CurrentUser;
         messBox = findViewById(R.id.enterText);
         sendBtn = findViewById(R.id.textSend);
         sendBtn.setOnClickListener(this);
-
 //        Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
 
         mMessageRecycler = (RecyclerView) findViewById(R.id.messList);
@@ -83,21 +80,14 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         mMessageRecycler.setHasFixedSize(true);
         mMessageRecycler.setAdapter(mMessageAdapter);
 
-        //Initializing
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            this.setTitle(extras.getString("USER_NAME"));
-            this.currentUserID = extras.getString("USER_ID");
-            this.recipientUserID = extras.getString("REC_ID");
-        }
-
         Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
-        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
-        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
-        makeJsonArryReq("/message/all", true);
+//        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID);
+//        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID);
+        makeJsonArryReq("/message/all");
         connectToWebsocket();
     }
 
+    //Send Text -> Websocket
     @Override
     public void onClick(View v) {
 
@@ -135,31 +125,28 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         return result;
     }
 
-    private void makeJsonArryReq(String path, final boolean currentUser) {
+    private void makeJsonArryReq(String path) {
         //showProgressDialog();
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         String id = "";
-                        if (currentUser) {
-                            messagesFromUser.clear();
-                        } else {
-                            messagesFromRecipient.clear();
-                        }
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject msgObject = (JSONObject) response.get(i);
                                 Log.d("response msg:", msgObject.toString());
-                                if (currentUser) {
-                                    messagesFromUser.add(new Message(msgObject.getString("creatorId"),
-                                            msgObject.getString("recipientId"),
-                                            msgObject.getString("message")));
-                                } else {
-                                    messagesFromRecipient.add(new Message(msgObject.getString("creatorId"),
-                                            msgObject.getString("recipientId"),
-                                            msgObject.getString("message")));
-                                }
+//                                if (currentUser) {
+//                                    messagesFromUser.add(new Message(msgObject.getString("creatorId"),
+//                                            msgObject.getString("recipientId"),
+//                                            msgObject.getString("message")));
+//                                } else {
+//                                    messagesFromRecipient.add(new Message(msgObject.getString("creatorId"),
+//                                            msgObject.getString("recipientId"),
+//                                            msgObject.getString("message")));
+//                                }
+                                JSONObject userObject = (JSONObject) response.get(i);
+                                Log.d("response msg:", userObject.toString());
                             } catch (org.json.JSONException e) {
 
                             }
@@ -169,14 +156,13 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("message page:", "Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), "Failed to retrieve any messages", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Failed to retrieve any friends", Toast.LENGTH_LONG).show();
             }
         });
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
         // Cancelling request
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
-
 
     void filterMessages(ArrayList<Message> toRecMsg, ArrayList<Message> fromRecMsg) {
         for (int i = 0; i < toRecMsg.size(); i++) {
@@ -205,8 +191,8 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
                 public void onMessage(String message) {
                     Log.d("", "run() returned: " + message);
                     if (message.toString().equals("SUCCESS")) {
-                        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
-                        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
+//                        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
+//                        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
                     }
 
                     //Update sent texts
@@ -219,7 +205,6 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
                     messageList.add(temp);
 
                     mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0? 0 :messageList.size()  - 2, 2);
-
                 }
 
                 @Override
