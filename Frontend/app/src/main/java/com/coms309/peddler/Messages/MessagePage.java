@@ -74,6 +74,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
         sendBtn.setOnClickListener(this);
 //        Log.d("message page:", "cur user id: [" + currentUserID + "], rec id: [" + recipientUserID + "]");
 
+        connectToWebsocket();
         mMessageRecycler = (RecyclerView) findViewById(R.id.messList);
         mMessageAdapter = new ChatAdapter(this, messageList);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -97,6 +98,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
                 String sent_s = messBox.getText().toString();
                 Message sent_m = new Message("userID", "testRecID", sent_s);
 
+                connectToWebsocket();
                 messageList.add(sent_m);
                 messBox.setText("");
                 messageList.add(temp);
@@ -195,16 +197,9 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
 //                        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
                     }
 
-                    //Update sent texts
-                    String sent_s = messBox.getText().toString();
-                    Message sent_m = new Message("userID","testRecID", sent_s);
-                    messageList.add(sent_m);
-
                     //Update received texts
-                    Message temp = new Message("testSenderID","testRecID", "Server: " + message);
-                    messageList.add(temp);
+                    temp = new Message("testSenderID","testRecID", "Server: " + message);
 
-                    mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0? 0 :messageList.size()  - 2, 2);
                 }
 
                 @Override

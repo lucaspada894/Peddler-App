@@ -96,7 +96,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 break;
 
             case R.id.MarkBtn:
-                //pageSwitch(MarketPage.class);
+                pageSwitch(MarketPage.class);
                 break;
 
             case R.id.LessBtn:

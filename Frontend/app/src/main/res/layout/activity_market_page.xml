@@ -6,28 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Home.MarketPage">
 
-<!--<<<<<<< HEAD-->
-    <!--<ListView-->
-        <!--android:id="@+id/marklist"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-    <!--</ListView>-->
-<!--=======-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="368dp"-->
-        <!--android:layout_height="495dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--tools:layout_editor_absoluteX="8dp"-->
-        <!--tools:layout_editor_absoluteY="8dp">-->
-<!--&gt;>>>>>> ef045a19d6c591c86201c069d7c53794faa13912-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/search_text"
+                android:id="@+id/searchpro_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -35,13 +20,13 @@
                 android:inputType="textPersonName" />
 
             <Button
-                android:id="@+id/search_btn"
+                android:id="@+id/search_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Search" />
 
             <Button
-                android:id="@+id/create_btn"
+                android:id="@+id/create_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create Product" />
@@ -52,14 +37,15 @@
                 android:layout_height="wrap_content"
                 android:text="My Products" />
 
-            <android.support.v7.widget.RecyclerView
+            <ListView
                 android:id="@+id/products"
-                android:layout_width="match_parent"
-                android:layout_height="292dp"
+                android:layout_width="368dp"
+                android:layout_height="387dp"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="99dp">
 
-            </android.support.v7.widget.RecyclerView>
+            </ListView>
+
         </LinearLayout>
     <!--</LinearLayout>-->
 </android.support.constraint.ConstraintLayout>
