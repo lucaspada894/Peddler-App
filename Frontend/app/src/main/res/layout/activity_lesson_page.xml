@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<<<<<<< HEAD
     <ListView
         android:id="@+id/lesslist"
         android:layout_width="match_parent"
@@ -10,3 +11,58 @@
     </ListView>
 
 </RelativeLayout>
+=======
+    <LinearLayout
+        android:layout_width="384dp"
+        android:layout_height="528dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
+            android:layout_width="398dp"
+            android:layout_height="522dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <EditText
+                android:id="@+id/search_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Search"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="101dp"
+                android:layout_height="wrap_content"
+                android:text="Search" />
+
+            <Button
+                android:id="@+id/create_lesson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Lesson" />
+
+            <Button
+                android:id="@+id/my_lessons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Lessons" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/lessons"
+                android:layout_width="368dp"
+                android:layout_height="387dp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="99dp">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
+>>>>>>> ef045a19d6c591c86201c069d7c53794faa13912

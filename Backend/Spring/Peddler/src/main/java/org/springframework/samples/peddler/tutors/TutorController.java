@@ -1,6 +1,11 @@
 package org.springframework.samples.peddler.tutors;
 
 
+import java.util.ArrayList;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +35,39 @@ public class TutorController {
 		return "Saved";
 	}
 	
+	
+	@Transactional
+	@RequestMapping(path="/request")
+	public @ResponseBody String requestTutor(@RequestParam Integer tutorID, @RequestParam Integer userID) {
+		tutorRepository.updateTutor(userID,tutorID);
+		
+		
+		return "Tutor Requested";
+	}
 
 	
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<Tutors> getAllTutors() {
 		return tutorRepository.findAll();
 	}
+	
+	
+	@GetMapping(path="/search")
+	public @ResponseBody Iterable<Tutors> searchTutors(@RequestParam String search) {
+		String[] words = search.split(" ");
+		ArrayList<Iterable<Integer>> all;
+		
+		Iterable<Integer> tutorIDs =  tutorRepository.findUsersWithPartOfName(search);
+
+		return tutorRepository.findAllById(tutorIDs);
+	}
+	
+	
+	@GetMapping(path="/myLessons")
+	public @ResponseBody Iterable<Tutors> getMyLessons(@RequestParam Integer userID) {
+		Iterable<Integer> tutorIDs = tutorRepository.myLessons(userID);
+		return tutorRepository.findAllById(tutorIDs);
+		
+	}
+
 }

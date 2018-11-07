@@ -1,5 +1,7 @@
 package org.springframework.samples.peddler.projects;
 
+import java.util.ArrayList;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.samples.peddler.projects.Projects;
+import org.springframework.samples.peddler.tutors.Tutors;
 import org.springframework.samples.peddler.projects.ProjectRepository;
 
 @Controller
@@ -73,6 +76,31 @@ public class ProjectController {
 	public @ResponseBody String editProjectTitle(@RequestParam String newTitle, @RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.editProjectTitle(newTitle, projId, userId);
 		return "title changed";
+	}
+    
+    @Transactional
+    @RequestMapping(path="/requestAction")
+    public @ResponseBody String requestAction(@RequestParam boolean request_status, @RequestParam int owner_id) {
+    	projectRepository.setRequestStatus(request_status, owner_id);
+    	return "request accepted!";
+    }
+    
+    @Transactional
+    @RequestMapping(path="/sendRequest")
+    	public @ResponseBody String sendRequest(@RequestParam int requester_id, @RequestParam int project_id) {
+    		projectRepository.setNewRequest(requester_id, project_id);
+    		return "request to join sent!";
+    	}
+    
+    
+    
+	@GetMapping(path="/search")
+	public @ResponseBody Iterable<Projects> searchProjects(@RequestParam String search) {
+		String[] words = search.split(" ");
+		
+		Iterable<Integer> tutorIDs =  projectRepository.findProjectsWithPartOfName(search);
+
+		return projectRepository.findAllById(tutorIDs);
 	}
     
     

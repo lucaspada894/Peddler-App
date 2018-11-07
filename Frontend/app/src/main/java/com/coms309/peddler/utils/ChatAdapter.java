@@ -102,7 +102,6 @@ public class ChatAdapter extends RecyclerView.Adapter {
         Message temp = messList.get(pos);
 
         switch (holder.getItemViewType()) {
-
             case NOW_SEND:
 
                 ((SendHolder) holder).inject(temp);
@@ -170,12 +169,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
         //Filling messages in components.
         void inject(Message mess){
-
             String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
             messSen.setText(mess.getMsg());
             timeSen.setText(time);
-
         }
 
     }
