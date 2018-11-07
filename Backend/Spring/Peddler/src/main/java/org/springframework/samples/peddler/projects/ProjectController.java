@@ -1,6 +1,7 @@
 package org.springframework.samples.peddler.projects;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +16,7 @@ import org.springframework.samples.peddler.projects.Projects;
 import org.springframework.samples.peddler.user.UserRepository;
 import org.springframework.samples.peddler.tutors.Tutors;
 import org.springframework.samples.peddler.projects.ProjectRepository;
+import org.springframework.samples.peddler.user.Users;
 
 @Controller
 @RequestMapping(path="/project")
@@ -55,7 +57,7 @@ public class ProjectController {
 	
 	
     @Transactional
-	@RequestMapping(path="/delete")
+	@GetMapping(path="/delete")
 	public @ResponseBody String deleteProject(@RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.deleteProject(projId, userId);
 		return "project " + projectRepository.getTitle(userId) + " deleted"; 	
@@ -64,7 +66,7 @@ public class ProjectController {
     
 	
     @Transactional
-	@RequestMapping("/editDesc")
+	@GetMapping("/editDesc")
 	public @ResponseBody String editProjectDesc( @RequestParam String newDesc, @RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.editProjectDescription(newDesc, projId, userId);
 		return "description changed";
@@ -73,27 +75,42 @@ public class ProjectController {
     
     
     @Transactional
-	@RequestMapping(path="/editTitle")
+	@GetMapping(path="/editTitle")
 	public @ResponseBody String editProjectTitle(@RequestParam String newTitle, @RequestParam Integer projId, @RequestParam Integer userId) {
 		projectRepository.editProjectTitle(newTitle, projId, userId);
 		return "title changed";
 	}
     
     @Transactional
-    @RequestMapping(path="/requestAction")
-    public @ResponseBody String requestAction(@RequestParam boolean request_status, @RequestParam int project_id) {
-    	projectRepository.setRequestStatus(request_status, project_id);
-    	return "request accepted!";
+    @GetMapping(path="/requestAction")
+    public @ResponseBody String requestAction(@RequestParam boolean requestStatus, @RequestParam int projectId) {
+    	String status;
+    	if(requestStatus) {
+    		status = "accepted";
+    	}
+    	else status = "declined";
+    	
+    	projectRepository.setRequestStatus(requestStatus, projectId);
+    	Projects p = projectRepository.fetchProject(projectId);
+    	projectRepository.setRequestNotification("you have been " + status +  " for project " + p.getTitle() + "!", p.getRequesterId());
+    	if(requestStatus) {
+    	projectRepository.setNewProjectId(projectId, p.getRequesterId());
+    	}
+    	return "request has been " + status;
     }
     
     @Transactional
-    @RequestMapping(path="/sendRequest")
+    @GetMapping(path="/sendRequest")
     	public @ResponseBody String sendRequest(@RequestParam int requesterId, @RequestParam int projectId) {
     		projectRepository.setNewRequest(requesterId, projectId);
-    		projectRepository.setRequestNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + " wishes to join your project!", requesterId);
+    		Projects p = projectRepository.fetchProject(projectId);
+    		projectRepository.setRequestNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + " wishes to join your project!", p.getUserID());
     		return "request to join sent!";
     	}
-    
+    @GetMapping(path="/fetchMembers")
+    public @ResponseBody Iterable<Users> fetchMembers(@RequestParam int projectId){
+    	return projectRepository.fetchProjectMembers(projectId);
+    }
     
     
 	@GetMapping(path="/search")

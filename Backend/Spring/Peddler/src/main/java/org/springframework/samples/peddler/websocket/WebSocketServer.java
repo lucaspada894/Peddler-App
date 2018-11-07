@@ -48,8 +48,7 @@ public class WebSocketServer {
         // Handle new messages
     	logger.info("Entered into Message: Got Message:"+message);
     	String echo="This is the received Text:"+message;
-    	sendMessageToPArticularUser(session,echo);
-    	//broadcast(message);
+    	broadcast(message);
     }
  
     @OnClose
