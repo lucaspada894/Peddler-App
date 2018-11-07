@@ -8,6 +8,9 @@ public class Project implements Serializable {
     private String id;
     private String name;
     private String desc;
+    String owner_id;
+    ArrayList<String> users;
+    ArrayList<Message> requests;
 
     public Project(String id, String name, String desc) {
         this.id = id;

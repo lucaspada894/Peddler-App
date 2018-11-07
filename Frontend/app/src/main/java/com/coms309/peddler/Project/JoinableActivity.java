@@ -23,6 +23,10 @@ public class JoinableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            currentProj = (Project) extras.getSerializable("PROJ");
+            this.setTitle(currentProj.getName());
+        }
     }
 }
