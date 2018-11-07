@@ -1,6 +1,7 @@
 package org.springframework.samples.peddler.projects;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -81,16 +82,25 @@ public class ProjectController {
     
     @Transactional
     @RequestMapping(path="/requestAction")
-    public @ResponseBody String requestAction(@RequestParam boolean request_status, @RequestParam int project_id) {
-    	projectRepository.setRequestStatus(request_status, project_id);
-    	return "request accepted!";
+    public @ResponseBody String requestAction(@RequestParam boolean requestStatus, @RequestParam int projectId) {
+    	String status;
+    	if(requestStatus) {
+    		status = "accepted";
+    	}
+    	else status = "declined";
+    	
+    	projectRepository.setRequestStatus(requestStatus, projectId);
+    	Projects p = projectRepository.fetchProject(projectId);
+    	projectRepository.setRequestNotification("you have been " + status +  " for project " + p.getTitle() + "!", p.getRequesterId());
+    	return "request has been " + status;
     }
     
     @Transactional
     @RequestMapping(path="/sendRequest")
     	public @ResponseBody String sendRequest(@RequestParam int requesterId, @RequestParam int projectId) {
     		projectRepository.setNewRequest(requesterId, projectId);
-    		projectRepository.setRequestNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + " wishes to join your project!", requesterId);
+    		Projects p = projectRepository.fetchProject(projectId);
+    		projectRepository.setRequestNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + " wishes to join your project!", p.getUserID());
     		return "request to join sent!";
     	}
     
