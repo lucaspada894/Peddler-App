@@ -65,6 +65,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Project.JoinableActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage"/>
+        </activity>
         <activity
             android:name=".Home.ProfilePage"
             android:windowSoftInputMode="adjustPan">
