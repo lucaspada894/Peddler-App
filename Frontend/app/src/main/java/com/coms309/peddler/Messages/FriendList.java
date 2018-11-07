@@ -46,7 +46,7 @@ public class FriendList extends AppCompatActivity {
         //Initializing
         makeJsonArryReq("/user/all");
         convs.add("W'sup bitch");
-        userList = (ListView) findViewById(R.id.listview);
+        userList = (ListView) findViewById(R.id.frilist);
         adpt = new GeneralAdapter(FriendList.this, names, convs, icons);
         userList.setAdapter(adpt);
         if (AppController.getInstance().CurrentUser == null) {

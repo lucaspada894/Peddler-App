@@ -52,7 +52,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
     private EditText messBox;
     private User currUser;
     private WebSocketClient cc;
-    private Message tempRei;
+    private Message temp = new Message("", "", "");
 
 
     @Override
@@ -80,12 +80,12 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
 //        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID);
 //        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID);
 
+        getServerRes();
         mMessageRecycler = (RecyclerView) findViewById(R.id.messList);
         mMessageAdapter = new ChatAdapter(this, messageList);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMessageRecycler.setHasFixedSize(true);
         mMessageRecycler.setAdapter(mMessageAdapter);
-
 
     }
 
@@ -97,68 +97,72 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
 
             case R.id.textSend:
 
-//                //WebSocket Communication (Client<->Server).
-                Draft[] drafts = {new Draft_6455()};
-                String w = WEBSOCKET_URL;
-                w += currUser.getID();
+                String sent_s = messBox.getText().toString();
+                Message sent_m = new Message("userID","testRecID", sent_s);
+                getServerRes();
 
-                Log.d("websocket url", w);
-                try {
-
-                    Log.d("Socket:", "Trying socket");
-                    cc = new WebSocketClient(new URI(w), (Draft) drafts[0]) {
-                        @Override
-                        public void onMessage(String message) {
-
-                            Log.d("", "run() returned: " + message);
-
-                            //Update sent texts
-                            String sent_s = messBox.getText().toString();
-                            Message sent_m = new Message("userID","testRecID", sent_s);
-                            messageList.add(sent_m);
-
-                            //Update received texts
-                            Message temp = new Message("testSenderID","testRecID", "Server: " + message);
-                            messageList.add(temp);
-
-                            mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0? 0 :messageList.size()  - 2, 2);
-
-                        }
-
-                        @Override
-                        public void onOpen(ServerHandshake handshake) {
-
-                            Log.d("OPEN", "run() returned: " + "is connecting");
-
-                        }
-
-                        @Override
-                        public void onClose(int code, String reason, boolean remote) {
-
-                            Log.d("CLOSE", "onClose() returned: " + reason);
-
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            Log.d("Exception:", e.toString());
-                        }
-                    };
-                } catch (URISyntaxException e) {
-                    Log.d("Exception:", e.getMessage().toString());
-                    e.printStackTrace();
-                }
-                cc.connect();
+                messageList.add(sent_m);
+                messBox.setText("");
+                messageList.add(temp);
+                mMessageAdapter.notifyItemRangeInserted(messageList.size() == 0? 0 :messageList.size()  - 2, 2);
+                mMessageRecycler.smoothScrollToPosition(messageList.size() - 1);
 
                 break;
 
         }
 
+    }
 
+    //WebSocket Communication (Client<->Server).
+    private void getServerRes() {
 
+        Draft[] drafts = {new Draft_6455()};
+        String w = WEBSOCKET_URL;
+        w += currUser.getID();
 
+        Log.d("websocket url", w);
+        try {
+
+            Log.d("Socket:", "Trying socket");
+            cc = new WebSocketClient(new URI(w), (Draft) drafts[0]) {
+                @Override
+                public void onMessage(String message) {
+
+                    Log.d("", "run() returned: " + message);
+
+                    //? First-time call temp will not be updated.
+                    //? This socket block appears to be called multiple times during run, so has to access server message separately.
+                    temp = new Message("testSenderID","testRecID", "Server: " + message);
+
+                }
+
+                @Override
+                public void onOpen(ServerHandshake handshake) {
+
+                    Log.d("OPEN", "run() returned: " + "is connecting");
+
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                    Log.d("CLOSE", "onClose() returned: " + reason);
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.d("Exception:", e.toString());
+                }
+            };
+        } catch (URISyntaxException e) {
+            Log.d("Exception:", e.getMessage().toString());
+            e.printStackTrace();
+        }
+        cc.connect();
 
     }
+
 
 
 
