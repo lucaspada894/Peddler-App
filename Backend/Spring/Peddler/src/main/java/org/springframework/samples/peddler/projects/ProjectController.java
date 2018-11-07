@@ -93,7 +93,9 @@ public class ProjectController {
     	projectRepository.setRequestStatus(requestStatus, projectId);
     	Projects p = projectRepository.fetchProject(projectId);
     	projectRepository.setRequestNotification("you have been " + status +  " for project " + p.getTitle() + "!", p.getRequesterId());
+    	if(requestStatus) {
     	projectRepository.setNewProjectId(projectId, p.getRequesterId());
+    	}
     	return "request has been " + status;
     }
     
