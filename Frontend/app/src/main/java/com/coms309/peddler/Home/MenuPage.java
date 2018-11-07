@@ -67,9 +67,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
             @Override public void onItemClick(View view, int position) {
                 pageSwitch(JoinableActivity.class, projects.get(position));
             }
-            @Override public void onLongItemClick(View view, int position) {
-                // do whatever
-            }
+            @Override public void onLongItemClick(View view, int position) { }
         }));
         // specify an adapter (see also next example)
         if (AppController.getInstance().CurrentUser == null) {
@@ -109,7 +107,6 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
 
     private void makeJsonArryReq(String path) {
         //showProgressDialog();
-
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -117,6 +114,8 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                         String id = "";
                         String name = "";
                         String desc = "";
+                        String major = "";
+                        String ownerID = "";
                         Log.d("response", response.toString());
                         projects.clear();
                         for (int i = 0; i < response.length(); i++) {
@@ -125,11 +124,14 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                                 id = responseObject.getString("id");
                                 name = responseObject.getString("title");
                                 desc = responseObject.getString("description");
-                                projects.add(new Project(id, name, desc));
+                                major = responseObject.getString("major");
+                                ownerID = responseObject.getString("userID");
+                                projects.add(new Project(id, name, major, desc, ownerID));
                             } catch (org.json.JSONException e) {
 
                             }
                         }
+
                         mAdapter = new MainListAdapter(projects);
                         mRecyclerView.setAdapter(mAdapter);
 
@@ -138,14 +140,18 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("main page", "Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), "Failed to retrieve account credentials", Toast.LENGTH_LONG).show();
+                Log.d("menu error: ", error.getMessage());
+                Toast.makeText(getApplicationContext(), "Failed to retrieve projects", Toast.LENGTH_LONG).show();
             }
         });
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
+
+        // Cancelling request
+        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
+
 
     private void pageSwitch(Class obj, Project temp) {
         Intent intent = new Intent(this, obj);
