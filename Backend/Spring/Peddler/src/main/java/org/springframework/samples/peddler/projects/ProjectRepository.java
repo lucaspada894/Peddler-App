@@ -61,6 +61,12 @@ void setRequestStatus(@Param("request_status") boolean request_status, @Param("p
 
 @Transactional
 @Modifying
+@Query("UPDATE Users u SET u.projectID =:projectId WHERE u.id =:id")
+void setNewProjectId(@Param("projectId") int projectId, @Param("id") int id);
+
+
+@Transactional
+@Modifying
 @Query("UPDATE Users u SET u.notification =:notification WHERE u.id =:id ")
 void setRequestNotification(@Param("notification") String notification, @Param("id") int id);
 
@@ -69,6 +75,9 @@ Users fetchUser(@Param("id") int id);
 
 @Query("SELECT p FROM Projects p WHERE p.id =:projectId")
 Projects fetchProject(@Param("projectId") int projectId);
+
+@Query("SELECT u FROM Users u WHERE u.projectID =:projectId")
+Iterable<Users> fetchProjectMembers(@Param("projectId") int projectId);
 
 @Query("SELECT id FROM Projects t WHERE t.title LIKE CONCAT('%',:query,'%') OR t.description LIKE CONCAT('%',:query,'%') OR t.major LIKE CONCAT('%',:query,'%')")
 Iterable<Integer> findProjectsWithPartOfName(@Param("query") String query);

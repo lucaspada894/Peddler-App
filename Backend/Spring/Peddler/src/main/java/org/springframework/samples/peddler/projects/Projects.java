@@ -20,6 +20,7 @@ public class Projects {
 	private int requesterId;
 	private boolean requestStatus = false;
 	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -72,6 +73,7 @@ public class Projects {
 	public boolean getRequestStatus() {
 		return this.requestStatus;
 	}
+	
 	
 
 

@@ -19,6 +19,7 @@ public class Users {
 	private String university;
 	private String password;	
 	private String notification;
+	private int projectID;
 	
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -90,6 +91,14 @@ public class Users {
 	
 	public String getNotification() {
 		return this.notification;
+	}
+	
+	public void setProjectID(int projectID) {
+		this.projectID = projectID;
+	}
+	
+	public int getProjectID() {
+		return projectID;
 	}
 
 

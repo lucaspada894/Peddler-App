@@ -16,6 +16,7 @@ import org.springframework.samples.peddler.projects.Projects;
 import org.springframework.samples.peddler.user.UserRepository;
 import org.springframework.samples.peddler.tutors.Tutors;
 import org.springframework.samples.peddler.projects.ProjectRepository;
+import org.springframework.samples.peddler.user.Users;
 
 @Controller
 @RequestMapping(path="/project")
@@ -92,6 +93,7 @@ public class ProjectController {
     	projectRepository.setRequestStatus(requestStatus, projectId);
     	Projects p = projectRepository.fetchProject(projectId);
     	projectRepository.setRequestNotification("you have been " + status +  " for project " + p.getTitle() + "!", p.getRequesterId());
+    	projectRepository.setNewProjectId(projectId, p.getRequesterId());
     	return "request has been " + status;
     }
     
@@ -103,7 +105,10 @@ public class ProjectController {
     		projectRepository.setRequestNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + " wishes to join your project!", p.getUserID());
     		return "request to join sent!";
     	}
-    
+    @GetMapping(path="/fetchMembers")
+    public @ResponseBody Iterable<Users> fetchMembers(@RequestParam int projectId){
+    	return projectRepository.fetchProjectMembers(projectId);
+    }
     
     
 	@GetMapping(path="/search")
