@@ -1,4 +1,4 @@
-package websocket;
+package org.springframework.samples.peddler.websocket;
 
 
 import java.io.IOException;

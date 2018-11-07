@@ -1,4 +1,4 @@
-package websocket;
+package org.springframework.samples.peddler.websocket;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
