@@ -96,7 +96,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                                 id = responseObject.getString("id");
                                 name = responseObject.getString("title");
                                 desc = responseObject.getString("description");
-                                projects.add(new Project(id, name, desc));
+                                //projects.add(new Project(id, name, desc));
                             } catch (org.json.JSONException e) {
 
                             }

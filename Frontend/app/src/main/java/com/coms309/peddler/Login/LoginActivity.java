@@ -167,12 +167,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             errors += 1;
             username.setHint("enter first name");
             Log.d(TAG, "validateForm: firstname error");
-            username.setHintTextColor(getResources().getColor(R.color.colorError, getTheme()));
+            //username.setHintTextColor(getResources().getColor(R.color.colorError, getTheme()));
         }
         if (password.getText().toString().equals("")) {
             errors += 1;
             password.setHint("enter last name");
-            password.setHintTextColor(getResources().getColor(R.color.colorError, getTheme()));
+            //password.setHintTextColor(getResources().getColor(R.color.colorError, getTheme()));
         }
         return errors == 0;
     }

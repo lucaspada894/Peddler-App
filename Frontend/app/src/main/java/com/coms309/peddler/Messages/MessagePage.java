@@ -46,6 +46,7 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
     static String recipientUserID;
     static String tag_json_arry = "jarray_req";
     private ArrayList<Message> messageList = new ArrayList<>();
+    private ArrayList<String> receivedMessages = new ArrayList<>();
     private RecyclerView mMessageRecycler;
     private ChatAdapter mMessageAdapter;
     private Button sendBtn;
@@ -96,9 +97,9 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
 
             case R.id.textSend:
                 String sent_s = messBox.getText().toString();
+                cc.send(sent_s);
                 Message sent_m = new Message("userID", "testRecID", sent_s);
 
-                connectToWebsocket();
                 messageList.add(sent_m);
                 messBox.setText("");
                 messageList.add(temp);
@@ -196,7 +197,8 @@ public class MessagePage extends AppCompatActivity implements View.OnClickListen
 //                        makeJsonArryReq("/message/getBySender?creatorId=" + currentUserID, true);
 //                        makeJsonArryReq("/message/getBySender?creatorId=" + recipientUserID, false);
                     }
-
+                    receivedMessages.add(message);
+                    Log.d("received message: ", receivedMessages.toString());
                     //Update received texts
                     temp = new Message("testSenderID","testRecID", "Server: " + message);
 

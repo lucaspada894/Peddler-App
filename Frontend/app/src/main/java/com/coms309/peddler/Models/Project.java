@@ -8,9 +8,18 @@ public class Project implements Serializable {
     private String id;
     private String name;
     private String desc;
+    private String major;
     String owner_id;
     ArrayList<String> users;
     ArrayList<Message> requests;
+
+    public Project(String id, String name, String major, String desc, String owner) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.major = major;
+        this.owner_id = owner;
+    }
 
     public Project(String id, String name, String desc) {
         this.id = id;
@@ -34,4 +43,6 @@ public class Project implements Serializable {
     public String getDesc() {
         return desc;
     }
+    public String getMajor() { return major; }
+    public String getOwnerID() { return owner_id; }
 }
