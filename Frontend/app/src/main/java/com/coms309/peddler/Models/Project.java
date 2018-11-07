@@ -10,15 +10,17 @@ public class Project implements Serializable {
     private String desc;
     private String major;
     String owner_id;
+    String requestorId;
     ArrayList<String> users;
     ArrayList<Message> requests;
 
-    public Project(String id, String name, String major, String desc, String owner) {
+    public Project(String id, String name, String major, String desc, String owner, String requesterID) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.major = major;
         this.owner_id = owner;
+        this.requestorId = requesterID;
     }
 
     public Project(String id, String name, String desc) {
@@ -45,4 +47,5 @@ public class Project implements Serializable {
     }
     public String getMajor() { return major; }
     public String getOwnerID() { return owner_id; }
+    public String getRequestorId() { return requestorId; }
 }

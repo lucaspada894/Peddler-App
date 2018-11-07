@@ -74,7 +74,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         //Log.d("user id", CurrentUser.getID());
-        //makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
         //postInfo();
     }
 
@@ -96,7 +96,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                                 id = responseObject.getString("id");
                                 name = responseObject.getString("title");
                                 desc = responseObject.getString("description");
-                                //projects.add(new Project(id, name, desc));
+                                projects.add(new Project(id, name, desc));
                             } catch (org.json.JSONException e) {
 
                             }
@@ -121,8 +121,8 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
     private void postInfo(String projTitle, String major, String desc) {
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
         url = "http://proj309-pp-07.misc.iastate.edu:8080/project/add?";
-        url += "title=\"" + projTitle + "\"&major=\"" + major;
-        url += "\"&description=\"" + desc + "\"&userID=" + CurrentUser.getID() + "&ownerID=" + CurrentUser.getID();
+        url += "title=" + projTitle + "&major=" + major;
+        url += "&description=" + desc + "&userID=" + CurrentUser.getID() + "&ownerID=" + CurrentUser.getID();
         final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -138,9 +138,6 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                     }
                 });
         AppController.getInstance().addToRequestQueue(postRequest, tag_json_arry);
-
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
 
     public void onClick(View v)

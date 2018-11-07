@@ -3,6 +3,7 @@ package com.coms309.peddler.utils;
 public class Const {
 	public static final String JSON_OBJECT_URL_LOCAL = "http://10.0.2.2:8080";
 	public static final String JSON_OBJECT_URL_SERVER = "http://proj309-pp-07.misc.iastate.edu:8080";
+	public static final String SERVER_URL = "http://proj309-pp-07.misc.iastate.edu:8080";
 
 	public static final String WEBSOCKET_URL = "ws://proj309-pp-07.misc.iastate.edu:8080/websocket/";
 

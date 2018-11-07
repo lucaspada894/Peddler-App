@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.coms309.peddler.Messages.FriendList;
+import com.coms309.peddler.Messages.MessagePage;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.Project.JoinableActivity;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 
 public class MenuPage extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView projBtn, messBtn, markBtn, lessBtn, persBtn;
+    private ImageView projBtn, messBtn, markBtn, lessBtn, persBtn, chatBtn;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -47,12 +48,14 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         markBtn = findViewById(R.id.MarkBtn);
         lessBtn = findViewById(R.id.LessBtn);
         persBtn = findViewById(R.id.PersBtn);
+        chatBtn = findViewById(R.id.Chat);
 
         projBtn.setOnClickListener(this);
         messBtn.setOnClickListener(this);
         markBtn.setOnClickListener(this);
         lessBtn.setOnClickListener(this);
         persBtn.setOnClickListener(this);
+        chatBtn.setOnClickListener(this);
 
         this.CurrentUser = AppController.getInstance().CurrentUser;
 
@@ -71,12 +74,11 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         }));
         // specify an adapter (see also next example)
         if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("1000", "test", "test");
+            AppController.getInstance().CurrentUser = new User("135", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         Log.d("user id", CurrentUser.getID());
         makeJsonArryReq("/project/all");
-
     }
 
     public void onClick(View v){
@@ -100,9 +102,10 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
             case R.id.LessBtn:
                 pageSwitch(LessonPage.class);
                 break;
-
+            case R.id.Chat:
+                pageSwitch(MessagePage.class);
+                break;
         }
-
     }
 
     private void makeJsonArryReq(String path) {
@@ -116,6 +119,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                         String desc = "";
                         String major = "";
                         String ownerID = "";
+                        String requesterID = "";
                         Log.d("response", response.toString());
                         projects.clear();
                         for (int i = 0; i < response.length(); i++) {
@@ -126,7 +130,8 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                                 desc = responseObject.getString("description");
                                 major = responseObject.getString("major");
                                 ownerID = responseObject.getString("userID");
-                                projects.add(new Project(id, name, major, desc, ownerID));
+                                requesterID = responseObject.getString("requesterId");
+                                projects.add(new Project(id, name, major, desc, ownerID, requesterID));
                             } catch (org.json.JSONException e) {
 
                             }
