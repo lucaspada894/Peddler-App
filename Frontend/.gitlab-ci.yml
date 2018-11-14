@@ -3,6 +3,7 @@
 # building apk.
 # Ensure the tag matches with the tag created for Android runner
 # Android runner should have docker as executor.
+#
 android-build:
  image: javiersantos/android-ci:latest
  stage: androidbuild
