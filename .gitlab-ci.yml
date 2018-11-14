@@ -76,9 +76,6 @@ android-build:
  script:
  - cd Android_test
  - ./gradlew assemble
- artifacts:
- paths:
-    - Android_test/app/build/outputs/
 
  # To run Android unit tests.
 unitTests:
