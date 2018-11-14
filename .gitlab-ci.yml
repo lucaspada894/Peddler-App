@@ -39,7 +39,7 @@ maven-test:
  - cd Peddler
  - mvn test
  paths:
-    - backend/Spring/Peddler/target/*.jar
+    - /var/www/html/*.jar
  
  
  
