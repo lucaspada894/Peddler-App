@@ -1,12 +1,12 @@
 # Stages of pipeline, should match with stage tag inside each job.
 # Each stages executes in sequence, if previous job fails, then all the preceeding jobs
 # are skipped.
-stages:
- - mavenbuild
- - maventest
- - autodeploy
- - androidbuild
- - androidtest
+#stages:
+# - mavenbuild
+# - maventest
+ #- autodeploy
+# - androidbuild
+# - androidtest
  
  # tags: "shell" should match with the tag name provided to runner, for spring runner
 #should execute in shell.
