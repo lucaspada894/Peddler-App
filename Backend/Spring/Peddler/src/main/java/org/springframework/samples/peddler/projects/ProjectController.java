@@ -121,6 +121,11 @@ public class ProjectController {
 
 		return projectRepository.findAllById(tutorIDs);
 	}
+	
+	@GetMapping(path="/fetchProject")
+	public @ResponseBody Projects fetchProject(@RequestParam int projectId) {
+		return projectRepository.fetchProject(projectId);
+	}
     
     
     
