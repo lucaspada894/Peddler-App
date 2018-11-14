@@ -5,6 +5,8 @@ stages:
   - mavenbuild
   - maventest
   - autodeploy
+  - androidbuild
+  - androidtest
  
  # tags: "shell" should match with the tag name provided to runner, for spring runner
 #should execute in shell.
@@ -16,6 +18,7 @@ maven-build:
  tags:
  - shell
  script:
+ - cd backend
  - cd Spring
  - cd Peddler
  - mvn package -B
@@ -31,6 +34,7 @@ maven-test:
  tags:
  - shell
  script:
+ - cd backend
  - cd Spring
  - cd Peddler
  - mvn test
@@ -49,6 +53,7 @@ autoDeploy:
  tags:
  - shell
  script:
+ - cd backend
  - cd Spring
  - cd Peddler
  - mvn package
