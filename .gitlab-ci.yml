@@ -18,7 +18,7 @@ maven-build:
  tags:
  - backend_spring
  script:
- - cd backend
+ - cd Backend
  - cd Spring
  - cd Peddler
  - mvn package -B
@@ -34,7 +34,7 @@ maven-test:
  tags:
  - backend_spring
  script:
- - cd backend
+ - cd Backend
  - cd Spring
  - cd Peddler
  - mvn test
@@ -51,7 +51,7 @@ autoDeploy:
  tags:
  - backend_spring
  script:
- - cd backend
+ - cd Backend
  - cd Spring
  - cd Peddler
  - mvn package
