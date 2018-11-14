@@ -2,11 +2,9 @@
 # Each stages executes in sequence, if previous job fails, then all the preceeding jobs
 # are skipped.
 stages:
- - mavenbuild
- #- maventest
- - autodeploy
- - androidbuild
- - androidtest
+  - mavenbuild
+  - maventest
+  - autodeploy
  
  # tags: "shell" should match with the tag name provided to runner, for spring runner
 #should execute in shell.
@@ -18,7 +16,6 @@ maven-build:
  tags:
  - shell
  script:
- - cd Backend
  - cd Spring
  - cd Peddler
  - mvn package -B
@@ -29,18 +26,17 @@ maven-build:
 #downloaded from GitLab GUI.
 # artifacts are not mandatory, but it is good practice, in case auto deploy fails, you
 # can manually download the jar.
-#maven-test:
-# stage: maventest
-# tags:
-# - shell
-# script:
-# - cd Backend
-# - cd Spring
-# - cd Peddler
-# - mvn test
-# artifacts:
-# paths:
-# - Peddler/target/*.jar
+maven-test:
+ stage: maventest
+ tags:
+ - shell
+ script:
+ - cd Spring
+ - cd Peddler
+ - mvn test
+ artifacts:
+ paths:
+ - Peddler/target/*.jar
  
  
  
@@ -53,7 +49,6 @@ autoDeploy:
  tags:
  - shell
  script:
-- cd Backend
  - cd Spring
  - cd Peddler
  - mvn package
@@ -63,40 +58,3 @@ autoDeploy:
  
  
  
- 
- # To build android projects
-# Notice that we cd into Android_test folder which contains all Android files before
-# building apk.
-# Ensure the tag matches with the tag created for Android runner
-# Android runner should have docker as executor.
-android-build:
- image: javiersantos/android-ci:latest
- stage: androidbuild
- before_script:
- - export GRADLE_USER_HOME=`pwd`/.gradle
- - chmod +x ./Android_test/gradlew
- tags:
- - android_tag1
- script:
- - cd Frontend
- - cd Android_test
- - ./gradlew assemble
- artifacts:
- paths:
- - Android_test/app/build/outputs/
-
-
-
- # To run Android unit tests.
-unitTests:
- image: javiersantos/android-ci:latest
- stage: androidtest
- before_script:
- - export GRADLE_USER_HOME=`pwd`/.gradle
- - chmod +x ./Android_test/gradlew
- tags:
- - android_tag1
- script:
- - cd Frontend
- - cd Android_test
- - ./gradlew test
