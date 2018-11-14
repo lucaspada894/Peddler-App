@@ -78,7 +78,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         }));
         // specify an adapter (see also next example)
         if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("64", "test", "test");
+            AppController.getInstance().CurrentUser = new User("125", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         Log.d("user id", CurrentUser.getID());
