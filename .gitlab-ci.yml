@@ -40,7 +40,7 @@ maven-test:
  - mvn test
  artifacts:
  paths:
- - Peddler/target/*.jar
+    - Peddler/target/*.jar
  
  
  
@@ -80,7 +80,7 @@ android-build:
  - ./gradlew assemble
  artifacts:
  paths:
- - Android_test/app/build/outputs/
+    - Android_test/app/build/outputs/
 
  # To run Android unit tests.
 unitTests:
