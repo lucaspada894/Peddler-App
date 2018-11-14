@@ -38,8 +38,7 @@ maven-test:
  - cd Spring
  - cd Peddler
  - mvn test
- paths:
-    - /var/www/html/*.jar
+
  
  
  
