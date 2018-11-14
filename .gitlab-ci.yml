@@ -38,7 +38,6 @@ maven-test:
  - cd Spring
  - cd Peddler
  - mvn test
- artifacts:
  paths:
     - Peddler/target/*.jar
  
