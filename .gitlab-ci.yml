@@ -38,6 +38,9 @@ maven-test:
  - cd Spring
  - cd Peddler
  - mvn test
+ artifacts:
+    paths:
+        - Backend/Spring/Peddler/target/*.jar
 
  
  
@@ -55,7 +58,7 @@ autoDeploy:
  - cd Spring
  - cd Peddler
  - mvn package
- - sudo mv target/*.jar /target/web-demo.jar
+ - sudo mv Backend/Spring/Peddler/target/*.jar /target/web-demo.jar
  - sudo systemctl stop web-demo
  - sudo systemctl start web-demo
 
