@@ -49,14 +49,12 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         //Initializing
         projBtn = findViewById(R.id.ProjBtn);
         messBtn = findViewById(R.id.MessBtn);
-        markBtn = findViewById(R.id.MarkBtn);
         lessBtn = findViewById(R.id.LessBtn);
         persBtn = findViewById(R.id.PersBtn);
         chatBtn = findViewById(R.id.Chat);
 
         projBtn.setOnClickListener(this);
         messBtn.setOnClickListener(this);
-        markBtn.setOnClickListener(this);
         lessBtn.setOnClickListener(this);
         persBtn.setOnClickListener(this);
         chatBtn.setOnClickListener(this);
@@ -91,19 +89,12 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
             case R.id.PersBtn:
                 pageSwitch(ProfilePage.class);
                 break;
-
             case R.id.ProjBtn:
                 pageSwitch(UserProject.class);
                 break;
-
             case R.id.MessBtn:
                 pageSwitch(FriendList.class);
                 break;
-
-            case R.id.MarkBtn:
-                pageSwitch(MarketPage.class);
-                break;
-
             case R.id.LessBtn:
                 pageSwitch(LessonPage.class);
                 break;
