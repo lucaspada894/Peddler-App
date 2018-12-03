@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import com.coms309.peddler.Models.Group;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
@@ -56,7 +57,7 @@ public class FriendList extends AppCompatActivity {
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                pageSwitch(MessagePage.class, users.get(i));
+                pageSwitch(PM.class, users.get(i));
             }
         });
     }
@@ -94,12 +95,7 @@ public class FriendList extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Failed to retrieve any friends", Toast.LENGTH_LONG).show();
             }
         });
-
-        // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
 
     //Request List of users

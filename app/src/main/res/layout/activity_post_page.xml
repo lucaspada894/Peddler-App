@@ -9,56 +9,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="72dp">
+        android:orientation="vertical">
 
 
         <EditText
             android:id="@+id/item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:hint="Enter the Item Name"
-            android:inputType="textAutoComplete" />
+            android:inputType="textAutoComplete"
+            android:hint="Enter the Item Name"/>
 
         <EditText
             android:id="@+id/item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:hint="Enter the Item Description"
-            android:inputType="textAutoComplete" />
+            android:inputType="textAutoComplete"
+            android:hint="Enter the Item Description"/>
 
         <Button
             android:id="@+id/image_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:text="Select Image" />
+            android:text="Select Image"/>
 
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="30dp" />
+            android:layout_marginStart="8dp"/>
 
         <Button
-            android:id="@+id/post"
+            android:id="@+id/p_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:text="Post Now" />
+            android:text="Post Now"/>
 
     </LinearLayout>
 

@@ -39,7 +39,7 @@ import com.coms309.peddler.utils.GeneralAdapter;
 
 import static com.coms309.peddler.utils.Const.WEBSOCKET_URL;
 
-public class MessagePage extends AppCompatActivity implements View.OnClickListener {
+public class GroupMessagePage extends AppCompatActivity implements View.OnClickListener {
 
     //Fields
     static ArrayList<String> messages = new ArrayList<>();

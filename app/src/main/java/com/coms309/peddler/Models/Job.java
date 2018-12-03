@@ -1,40 +1,51 @@
 package com.coms309.peddler.Models;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-public class Job {
-    private Integer productID;
-    private Integer userID ;
-    private String productName;
-    private String productDescription;
-    private String productCondition;
-    private String productPrice;
+public class Job implements Serializable {
+    private String id;
+    private String name;
+    private String desc;
+    private String major;
+    String owner_id;
+    String requestorId;
+    ArrayList<String> users;
+    ArrayList<Message> requests;
 
-    public Job(Integer productID, Integer userID, String productName, String productDescription, String productCondition, String productPrice) {
-        this.productID = productID;
-        this.userID = userID;
-        this.productName = productName;
-        this.productDescription = productDescription;
-        this.productCondition = productCondition;
-        this.productPrice = productPrice;
+    public Job(String id, String name, String major, String desc, String owner, String requesterID) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.major = major;
+        this.owner_id = owner;
+        this.requestorId = requesterID;
     }
 
+    public Job(String id, String name, String desc) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+    }
 
-    public int getProductID() {
-        return productID;
+    public Job(String id, String name, String desc, String owner_id, ArrayList<String> users, ArrayList<Message> requests) {
+        //super(owner_id, users, requests);
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
     }
-    public int geUserID() {
-        return userID;
+
+    public String getID() {
+        return id;
     }
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
-    public String getProductDescription() {
-        return productDescription;
+    public String getDesc() {
+        return desc;
     }
-    public String getProductCondition() {
-        return productCondition;
-    }
-    public String getProductPrice() {
-        return productPrice;
-    }
+    public String getMajor() { return major; }
+    public String getOwnerID() { return owner_id; }
+    public String getRequestorId() { return requestorId; }
 }

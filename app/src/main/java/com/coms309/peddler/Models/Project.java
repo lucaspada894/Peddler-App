@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Project extends Namable {
+public class Project implements Serializable {
     private String id;
     private String name;
     private String desc;
@@ -15,7 +15,6 @@ public class Project extends Namable {
     ArrayList<Message> requests;
 
     public Project(String id, String name, String major, String desc, String owner, String requesterID) {
-        super(name, desc);
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -25,14 +24,13 @@ public class Project extends Namable {
     }
 
     public Project(String id, String name, String desc) {
-        super(name, desc);
         this.id = id;
         this.name = name;
         this.desc = desc;
     }
 
     public Project(String id, String name, String desc, String owner_id, ArrayList<String> users, ArrayList<Message> requests) {
-        super(name, desc);
+        //super(owner_id, users, requests);
         this.id = id;
         this.name = name;
         this.desc = desc;

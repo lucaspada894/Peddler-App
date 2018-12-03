@@ -20,7 +20,7 @@ import android.widget.EditText;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.coms309.peddler.Messages.MessagePage;
+import com.coms309.peddler.Messages.GroupMessagePage;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
@@ -110,7 +110,7 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                pageSwitch(MessagePage.class, usersMark.get(i));
+                pageSwitch(GroupMessagePage.class, usersMark.get(i));
             }
         });
 
