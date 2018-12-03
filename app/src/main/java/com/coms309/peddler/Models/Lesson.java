@@ -2,7 +2,7 @@ package com.coms309.peddler.Models;
 
 import java.io.Serializable;
 
-public class Tutor implements Serializable {
+public class Lesson implements Serializable {
 
     private Integer tutorID;
     private Integer userID;
@@ -13,7 +13,7 @@ public class Tutor implements Serializable {
     private String tutorTimes;
 
 
-    public Tutor(Integer tutorID, Integer userID, Integer sharedID, String tutorTitle, String tutorSubject, String tutorDescription, String tutorTimes) {
+    public Lesson(Integer tutorID, Integer userID, Integer sharedID, String tutorTitle, String tutorSubject, String tutorDescription, String tutorTimes) {
         this.tutorID = tutorID;
         this.userID = userID;
         this.sharedID = sharedID;

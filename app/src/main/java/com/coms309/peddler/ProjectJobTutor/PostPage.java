@@ -55,8 +55,23 @@ public class PostPage extends AppCompatActivity implements View.OnClickListener 
 
     //Post new items.
     private void postItem(int type) {
+        String addType;
+        switch (type) {
+            case 0:
+                addType = "project";
+                break;
+            case 1:
+                addType = "tutor";
+                break;
+            case 2:
+                addType = "job";
+                break;
+            default:
+                addType = "project";
+                 break;
+        }
         String url = JSON_OBJECT_URL_SERVER + "/project/add?";
-        url = "http://proj309-pp-07.misc.iastate.edu:8080/project/add";
+        url = "http://proj309-pp-07.misc.iastate.edu:8080/" + addType + "/add";
         url += "?title=" + Item_Name.getText().toString() + "&major=" + Item_Name.getText().toString();
         url += "&description=" + Item_Description.getText().toString() + "&userID=" + 0;
         url += "&ownerID=" + 1;

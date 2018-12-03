@@ -1,7 +1,7 @@
 package com.coms309.peddler.Models;
 
 
-public class Product {
+public class Job {
     private Integer productID;
     private Integer userID ;
     private String productName;
@@ -9,7 +9,7 @@ public class Product {
     private String productCondition;
     private String productPrice;
 
-    public Product(Integer productID, Integer userID, String productName, String productDescription, String productCondition, String productPrice) {
+    public Job(Integer productID, Integer userID, String productName, String productDescription, String productCondition, String productPrice) {
         this.productID = productID;
         this.userID = userID;
         this.productName = productName;
