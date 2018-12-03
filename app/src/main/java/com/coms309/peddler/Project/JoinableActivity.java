@@ -35,6 +35,7 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("poooop", "poooop");
         setContentView(R.layout.activity_joinable);
 
         owner = findViewById(R.id.owner_text);
