@@ -55,7 +55,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_project);
 
         listItem = findViewById(R.id.list_item_btn);
         listItem.setOnClickListener(this);
