@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    android:id="@+id/rlt">
+
+    <RelativeLayout
+        android:layout_weight="1.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:id="@+id/PersBtn"
+            android:src="@drawable/pers_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Menu"
+            android:textColor="@android:color/black"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8.5"
+        android:paddingTop="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/ProjBtn"
+                android:src="@drawable/proj_icon"
+                android:layout_width="150dp"
+                android:layout_height="70dp" />
+
+            <ImageView
+                android:id="@+id/MessBtn"
+                android:src="@drawable/mess_icon"
+                android:layout_width="150dp"
+                android:layout_height="70dp" />
+
+            <ImageView
+                android:id="@+id/MarkBtn"
+                android:src="@drawable/mark_icon"
+                android:layout_width="150dp"
+                android:layout_height="70dp" />
+
+            <ImageView
+                android:id="@+id/LessBtn"
+                android:src="@drawable/less_icon"
+                android:layout_width="150dp"
+                android:layout_height="70dp" />
+
+            <ImageView
+                android:id="@+id/Chat"
+                android:src="@drawable/pers_icon"
+                android:layout_width="150dp"
+                android:layout_height="70dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ProjListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Newest Projects"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"/>
+
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/proj_list"-->
+                <!--android:scrollbars="vertical"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:paddingTop="10dp" />-->
+
+            <ListView
+                android:id="@+id/proj_list"
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
