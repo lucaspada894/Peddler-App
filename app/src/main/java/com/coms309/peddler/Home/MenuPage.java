@@ -83,11 +83,11 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
 //        }));
         // specify an adapter (see also next example)
         if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("125", "test", "test");
+            AppController.getInstance().CurrentUser = new User("10", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
        //  Log.d("user id", CurrentUser.getID());
-       // makeJsonArryReq("/project/all");
+        makeJsonArryReq("/project/all");
         updateUser("/user/all");
     }
 
@@ -124,7 +124,9 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                         String ownerID = "";
                         String requesterID = "";
                         Log.d("response", response.toString());
-                        projects.clear();
+                        //projects.clear();
+                        names.clear();
+                        descriptions.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
