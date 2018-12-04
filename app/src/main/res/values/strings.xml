@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">Peddler</string>
-    <string name="title_activity_create_lesson">CreateLesson</string>
-    <string name="title_activity_create_product">CreateProduct</string>
-</resources>
