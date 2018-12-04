@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.view.View;
 import android.widget.ListView;
@@ -18,6 +19,8 @@ import com.coms309.peddler.Messages.FriendList;
 import com.coms309.peddler.Messages.GroupMessagePage;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
+import com.coms309.peddler.Project.JoinableActivity;
+import com.coms309.peddler.Project.UserProject;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
@@ -63,24 +66,18 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         makeJsonArryReq("/project/all");
         mRecyclerView = (ListView) findViewById(R.id.proj_list);
         adpt = new ProjAdapter(MenuPage.this, names, descriptions);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        //mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
         mRecyclerView.setAdapter(adpt);
-        //mRecyclerView.setLayoutManager(mLayoutManager);
-//        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-//            @Override public void onItemClick(View view, int position) {
-//                pageSwitch(JoinableActivity.class, projects.get(position));
-//            }
-//            @Override public void onLongItemClick(View view, int position) { }
-//        }));
-        // specify an adapter (see also next example)
+        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("selected project: ", projects.get(position).getName());
+                pageSwitch(JoinableActivity.class, projects.get(position));
+            }
+        });
         if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("10", "test", "test");
+            AppController.getInstance().CurrentUser = new User("125", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
-       //  Log.d("user id", CurrentUser.getID());
         makeJsonArryReq("/project/all");
         updateUser("/user/all");
     }
@@ -124,16 +121,16 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
-//                                id = responseObject.getString("id");
+                                id = responseObject.getString("id");
                                 name = responseObject.getString("title");
                                 desc = responseObject.getString("description");
-//                                major = responseObject.getString("major");
-//                                ownerID = responseObject.getString("userID");
-//                                requesterID = responseObject.getString("requesterId");
+                                major = responseObject.getString("major");
+                                ownerID = responseObject.getString("userID");
+                                requesterID = responseObject.getString("requesterId");
                                 names.add(name);
                                 descriptions.add(desc);
                                 adpt.notifyDataSetChanged();
-                               // projects.add(new Project(id, name, major, desc, ownerID, requesterID));
+                                projects.add(new Project(id, name, major, desc, ownerID, requesterID));
                             } catch (org.json.JSONException e) {
 
                             }
