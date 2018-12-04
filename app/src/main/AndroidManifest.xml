@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.coms309.peddler">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".app.AppController"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".Login.LoginActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".Home.UserProject">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity
+            android:name=".ListItemActivity"
+            android:label="List Item">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.UserProject" />
+        </activity>
+        <activity
+            android:name=".Messages.WebSocket"
+            android:label="Web Socket">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.UserProject" />
+        </activity>
+        <activity
+            android:name=".Login.SignupActivity"
+            android:label="Sign Up">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.UserProject" />
+        </activity>
+        <activity
+            android:name=".SampleRequests.JsonRequestActivity"
+            android:label="JSON Request">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.UserProject" />
+        </activity>
+        <activity android:name=".Home.MenuPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Project.JoinableActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity
+            android:name=".Home.ProfilePage"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity
+            android:name=".Messages.FriendList"
+            android:label="Friend List">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity android:name=".Home.MarketPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity android:name=".Home.LessonPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity android:name=".Messages.PM">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Messages.FriendList" />
+        </activity>
+        <activity
+            android:name=".Messages.GroupMessagePage"
+            android:label="Messages">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity
+            android:name=".Home.CreateLesson"
+            android:label="@string/title_activity_create_lesson"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.LessonPage" />
+        </activity>
+        <activity
+            android:name=".Home.CreateProduct"
+            android:label="@string/title_activity_create_product"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MarketPage" />
+        </activity>
+    </application>
+
+</manifest>
