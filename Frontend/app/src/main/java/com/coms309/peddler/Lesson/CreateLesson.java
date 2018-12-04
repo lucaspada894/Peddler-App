@@ -1,4 +1,4 @@
-package com.coms309.peddler.Home;
+package com.coms309.peddler.Lesson;
 
 import android.content.Intent;
 import android.os.Bundle;

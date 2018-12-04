@@ -3,7 +3,6 @@ package com.coms309.peddler.Home;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
@@ -11,25 +10,20 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.coms309.peddler.Lesson.LessonPage;
 import com.coms309.peddler.Messages.FriendList;
-import com.coms309.peddler.Messages.MessagePage;
+import com.coms309.peddler.Messages.GroupMessagePage;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
-import com.coms309.peddler.Project.JoinableActivity;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
 import com.coms309.peddler.utils.ProjAdapter;
-import com.coms309.peddler.utils.MainListAdapter;
-import com.coms309.peddler.utils.RecyclerItemClickListener;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
@@ -83,11 +77,11 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
 //        }));
         // specify an adapter (see also next example)
         if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("125", "test", "test");
+            AppController.getInstance().CurrentUser = new User("10", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
        //  Log.d("user id", CurrentUser.getID());
-       // makeJsonArryReq("/project/all");
+        makeJsonArryReq("/project/all");
         updateUser("/user/all");
     }
 
@@ -106,7 +100,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 pageSwitch(LessonPage.class);
                 break;
             case R.id.Chat:
-                pageSwitch(MessagePage.class);
+                pageSwitch(GroupMessagePage.class);
                 break;
         }
     }
@@ -117,14 +111,16 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-//                        String id = "";
+                        String id = "";
                         String name = "";
                         String desc = "";
-//                        String major = "";
-//                        String ownerID = "";
-//                        String requesterID = "";
+                        String major = "";
+                        String ownerID = "";
+                        String requesterID = "";
                         Log.d("response", response.toString());
                         //projects.clear();
+                        names.clear();
+                        descriptions.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
@@ -142,7 +138,6 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
 
                             }
                         }
-
 //                        mAdapter = new MainListAdapter(projects);
 //                        mRecyclerView.setAdapter(mAdapter);
 //

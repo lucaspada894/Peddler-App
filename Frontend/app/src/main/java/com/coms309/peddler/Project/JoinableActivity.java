@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class JoinableActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView projectIcon;
-    private User CurrentUser = AppController.getInstance().CurrentUser;
+    private User CurrentUser;
     private Project currentProj;
 
     private TextView owner, major, desc;
@@ -54,6 +54,8 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
             desc.setText("Description: " + currentProj.getDesc());
             owner.setText("Owner: " + currentProj.getOwnerID());
         }
+
+        CurrentUser = AppController.getInstance().CurrentUser;
 
         if (currentProj.getOwnerID().equals(CurrentUser.getID())) {
             requestBtn.setAlpha((float) 0.0);

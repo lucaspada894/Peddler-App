@@ -93,23 +93,44 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
         </activity>
-        <activity android:name=".Home.MarketPage" />
-        <activity android:name=".Home.LessonPage" />
-        <activity
-            android:name=".Messages.MessagePage"
-            android:label="Messages">
+        <activity android:name=".Home.MarketPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity android:name=".Lesson.LessonPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity android:name=".Messages.PM">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Messages.FriendList" />
         </activity>
         <activity
-            android:name=".Home.CreateLesson"
+            android:name=".Messages.GroupMessagePage"
+            android:label="Messages">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+        <activity
+            android:name=".Lesson.CreateLesson"
             android:label="@string/title_activity_create_lesson"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Lesson.LessonPage" />
+        </activity>
         <activity
             android:name=".Home.CreateProduct"
             android:label="@string/title_activity_create_product"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MarketPage" />
+        </activity>
     </application>
 
 </manifest>

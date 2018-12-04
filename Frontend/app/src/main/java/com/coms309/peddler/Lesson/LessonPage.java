@@ -1,4 +1,4 @@
-package com.coms309.peddler.Home;
+package com.coms309.peddler.Lesson;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,42 +8,32 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.SearchView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.coms309.peddler.Messages.MessagePage;
+import com.coms309.peddler.Messages.GroupMessagePage;
 import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
 import com.coms309.peddler.utils.LessonAdapter;
-import com.coms309.peddler.utils.MarketAdapter;
-import com.coms309.peddler.Messages.FriendList;
 import com.coms309.peddler.Models.Project;
-import com.coms309.peddler.R;
-import com.coms309.peddler.app.AppController;
-import com.coms309.peddler.utils.Const;
 import com.coms309.peddler.utils.MainListAdapter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MarketPage extends AppCompatActivity implements View.OnClickListener {
+public class LessonPage extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText searchproText;
-    private Button searchProduct, createProduct, myProducts;
+    private EditText search;
+    private Button search_btn, create_btn, my_lessons;
 
-    private ArrayList<Project> products = new ArrayList<>();
+    private ArrayList<Project> tutors = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -52,68 +42,49 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
     //Fields
     private User CurrentUser;
 
-    int[] icons = {R.drawable.mark_icon};
+    int[] icons = {R.drawable.less_icon};
     static ArrayList<String> convsMark = new ArrayList<>();
     static ArrayList<String> namesMark = new ArrayList<>();
     static ArrayList<User> usersMark = new ArrayList<>();
-    static MarketAdapter adptMark;
-    ListView marketList;
+    static LessonAdapter adptMark;
+    ListView userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_market_page);
+        setContentView(R.layout.activity_lesson_page);
 
         //Initializing
-        //makeJsonArryReq("/product/all");
-        update("/product/all");
-        searchproText = findViewById(R.id.searchpro_text);
-        searchProduct = findViewById(R.id.search_product);
-        searchProduct.setOnClickListener(this);
+        update("/tutor/all");
+        search = findViewById(R.id.search_text);
+        search_btn = findViewById(R.id.button);
+        search_btn.setOnClickListener(this);
 
-        createProduct = findViewById(R.id.create_product);
-        createProduct.setOnClickListener(this);
+        create_btn = findViewById(R.id.create_lesson);
+        create_btn.setOnClickListener(this);
 
-        myProducts = findViewById(R.id.my_products);
-        myProducts.setOnClickListener(this);
-
-//        mRecyclerView = findViewById(R.id.lessons);
-//        mRecyclerView.setHasFixedSize(true);
-//        mLayoutManager = new LinearLayoutManager(this);
-//        mRecyclerView.setLayoutManager(mLayoutManager);
-
-       /* marketList = findViewById(R.id.products);
-        adptMark = new MarketAdapter(MarketPage.this, namesMark, convsMark, icons);
-        marketList.setAdapter(adptMark);
-        if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("-1000", "test", "test");
-        }
-        this.CurrentUser = AppController.getInstance().CurrentUser;
-        marketList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                pageSwitch(MessagePage.class, usersMark.get(i));
-            }
-        });*/
+        my_lessons = findViewById(R.id.my_lessons);
+        my_lessons.setOnClickListener(this);
     }
 
 
     public void update(String path) {
         makeJsonArryReq(path);
 
-        marketList = findViewById(R.id.products);
-        adptMark = new MarketAdapter(MarketPage.this, namesMark, convsMark, icons);
-        marketList.setAdapter(adptMark);
+        userList = findViewById(R.id.lessons);
+        adptMark = new LessonAdapter(LessonPage.this, namesMark, convsMark, icons);
+        userList.setAdapter(adptMark);
         if (AppController.getInstance().CurrentUser == null) {
             AppController.getInstance().CurrentUser = new User("-1000", "test", "test");
         }
         this.CurrentUser = AppController.getInstance().CurrentUser;
-        marketList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                pageSwitch(MessagePage.class, usersMark.get(i));
+                pageSwitch(GroupMessagePage.class, usersMark.get(i));
             }
         });
+
     }
 
     public void clear() {
@@ -135,9 +106,9 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject userObject = (JSONObject) response.get(i);
-                                id = userObject.getString("productID");
-                                firstName = userObject.getString("productName");
-                                desc = userObject.getString("productDescription");
+                                id = userObject.getString("tutorID");
+                                firstName = userObject.getString("tutorTitle");
+                                desc = userObject.getString("tutorDescription");
                                 usersMark.add(new User(firstName, desc, id, false));
                                 namesMark.add(firstName);
                                 convsMark.add(desc);
@@ -180,19 +151,19 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.search_product:
-                String query = searchproText.getText().toString();
+            case R.id.button:
+                String query = search.getText().toString();
                 clear();
-                update("/product/search/?search=" + query);
+                update("/tutor/search/?search=" + query);
                 break;
 
-            case R.id.create_product:
-                pageSwitch(CreateProduct.class);
+            case R.id.create_lesson:
+                pageSwitch(CreateLesson.class);
                 break;
 
-            case R.id.my_products:
+            case R.id.my_lessons:
                 clear();
-               update("/product/myProducts/?userID=" + AppController.getInstance().CurrentUser.getID());
+                update("/tutor/myLessons/?userID=" + AppController.getInstance().CurrentUser.getID());
                 break;
         }
 
@@ -209,19 +180,19 @@ public class MarketPage extends AppCompatActivity implements View.OnClickListene
                         String name = "";
                         String desc = "";
                         Log.d("response", response.toString());
-                        products.clear();
+                        tutors.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
                                 id = responseObject.getString("userID");
                                 name = responseObject.getString("tutorTitle");
                                 desc = responseObject.getString("tutorSubject");
-                                products.add(new Project(id, name, desc));
+                                tutors.add(new Project(id, name, desc));
                             } catch (org.json.JSONException e) {
 
                             }
                         }
-                        mAdapter = new MainListAdapter(products);
+                        mAdapter = new MainListAdapter(tutors);
                         mRecyclerView.setAdapter(mAdapter);
 
                         mAdapter.notifyDataSetChanged();
