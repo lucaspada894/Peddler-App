@@ -26,38 +26,31 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".Home.UserProject">
+        <activity android:name=".Project.UserProject">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
-        </activity>
-        <activity
-            android:name=".ListItemActivity"
-            android:label="List Item">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.UserProject" />
         </activity>
         <activity
             android:name=".Messages.WebSocket"
             android:label="Web Socket">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.UserProject" />
+                android:value=".Project.UserProject" />
         </activity>
         <activity
             android:name=".Login.SignupActivity"
             android:label="Sign Up">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.UserProject" />
+                android:value=".Project.UserProject" />
         </activity>
         <activity
             android:name=".SampleRequests.JsonRequestActivity"
             android:label="JSON Request">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.UserProject" />
+                android:value=".Project.UserProject" />
         </activity>
         <activity android:name=".Home.MenuPage">
             <intent-filter>

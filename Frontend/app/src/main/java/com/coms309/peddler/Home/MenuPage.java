@@ -18,6 +18,7 @@ import com.coms309.peddler.Messages.FriendList;
 import com.coms309.peddler.Messages.GroupMessagePage;
 import com.coms309.peddler.Models.Project;
 import com.coms309.peddler.Models.User;
+import com.coms309.peddler.Project.UserProject;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;

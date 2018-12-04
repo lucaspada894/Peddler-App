@@ -1,4 +1,4 @@
-package com.coms309.peddler.Home;
+package com.coms309.peddler.Project;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
