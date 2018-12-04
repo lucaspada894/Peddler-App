@@ -21,22 +21,15 @@
 
         <activity android:name=".Login.LoginActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--</intent-filter>-->
         </activity>
         <activity android:name=".Project.UserProject">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
-        </activity>
-        <activity
-            android:name=".Messages.WebSocket"
-            android:label="Web Socket">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Project.UserProject" />
         </activity>
         <activity
             android:name=".Login.SignupActivity"
@@ -45,17 +38,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Project.UserProject" />
         </activity>
-        <activity
-            android:name=".SampleRequests.JsonRequestActivity"
-            android:label="JSON Request">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Project.UserProject" />
-        </activity>
         <activity android:name=".Home.MenuPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -86,11 +71,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
         </activity>
-        <activity android:name=".Home.MarketPage">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.MenuPage" />
-        </activity>
         <activity android:name=".Lesson.LessonPage">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -115,14 +95,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Lesson.LessonPage" />
-        </activity>
-        <activity
-            android:name=".Home.CreateProduct"
-            android:label="@string/title_activity_create_product"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.MarketPage" />
         </activity>
     </application>
 

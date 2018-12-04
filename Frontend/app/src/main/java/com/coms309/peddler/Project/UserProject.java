@@ -79,9 +79,6 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
             @Override public void onLongItemClick(View view, int position) { }
         }));
 
-        if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("test", "test", "test");
-        }
         this.CurrentUser = AppController.getInstance().CurrentUser;
         //Log.d("user id", CurrentUser.getID());
         makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
@@ -102,11 +99,10 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                         String ownerID = "";
                         String requesterID = "";
                         projects.clear();
-                        Log.d("response", response.toString());
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
-                                Log.d("response adsfa", responseObject.toString());
+                                Log.d("response user project", responseObject.toString());
                                 id = responseObject.getString("id");
                                 name = responseObject.getString("title");
                                 desc = responseObject.getString("description");
@@ -211,9 +207,9 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
     }
 
-    private void pageSwitch(Class obj, Project u) {
+    private void pageSwitch(Class obj, Project proj) {
         Intent intent = new Intent(this, obj);
-        intent.putExtra("PROJ", u);
+        intent.putExtra("PROJ", proj);
         startActivity(intent);
     }
 }
