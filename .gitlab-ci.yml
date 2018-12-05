@@ -28,7 +28,7 @@ maven-build:
  # artifacts are created when job executes successfully, and can be manually
 #downloaded from GitLab GUI.
 # artifacts are not mandatory, but it is good practice, in case auto deploy fails, you
-# can manually download the jar.
+# can manually download the jar
 maven-test:
  stage: maventest
  tags:
