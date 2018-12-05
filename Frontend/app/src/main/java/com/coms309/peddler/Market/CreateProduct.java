@@ -1,4 +1,4 @@
-package com.coms309.peddler.Lesson;
+package com.coms309.peddler.Market;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,30 +22,30 @@ import org.json.JSONObject;
 
 import static com.coms309.peddler.utils.Const.JSON_OBJECT_URL_SERVER;
 
-public class CreateLesson extends AppCompatActivity implements View.OnClickListener{
+public class CreateProduct extends AppCompatActivity implements View.OnClickListener {
 
-    TextView subject, description, title, times;
+    TextView name, description, condition, price;
     private Button create_btn;
     private String tag_json_obj = "jobj_req", tag_jsonproj_arry = "jarray_req";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_lesson);
+        setContentView(R.layout.activity_create_product);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        subject = findViewById(R.id.subject_text);
+        name = findViewById(R.id.name_text);
         description = findViewById(R.id.description_text);
-        title = findViewById(R.id.title_text);
-        times = findViewById(R.id.time_text);
+        condition = findViewById(R.id.condition_text);
+        price = findViewById(R.id.price_text);
 
         create_btn = findViewById(R.id.create_btn);
         create_btn.setOnClickListener(this);
 
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,28 +57,24 @@ public class CreateLesson extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View v)
     {
-
         switch(v.getId()){
 
             case R.id.create_btn:
                 postItem();
-                //pageSwitch(LessonPage.class);
+                //pageSwitch(MarketPage.class);
                 break;
-
-
         }
         return;
-
     }
 
 
     private void postItem() {
 
         String url;
-        url = JSON_OBJECT_URL_SERVER + "/tutor/add";
-        url += "?userID=" + AppController.getInstance().CurrentUser.getID() + "&tutorTitle=" + title.getText().toString();
-        url += "&tutorSubject=" + subject.getText().toString() + "&tutorDescription=" + description.getText().toString();
-        url += "&tutorTimes=" + times.getText().toString();
+        url = JSON_OBJECT_URL_SERVER + "/product/add";
+        url += "?userID=" + AppController.getInstance().CurrentUser.getID() + "&productName=" + name.getText().toString();
+        url += "&productDescription=" + description.getText().toString() + "&productCondition=" + condition.getText().toString();
+        url += "&productPrice=" + price.getText().toString();
         JsonObjectRequest postRequest2 = new JsonObjectRequest (Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -93,14 +89,11 @@ public class CreateLesson extends AppCompatActivity implements View.OnClickListe
                     }
                 });
         AppController.getInstance().addToRequestQueue(postRequest2, tag_jsonproj_arry);
-
     }
-
 
     private void pageSwitch(Class obj) {
         Intent intent = new Intent(this, obj);
         startActivity(intent);
     }
-
 
 }

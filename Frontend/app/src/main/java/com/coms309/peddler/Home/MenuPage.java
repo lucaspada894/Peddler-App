@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.coms309.peddler.Lesson.LessonPage;
+import com.coms309.peddler.Market.MarketPage;
 import com.coms309.peddler.Messages.FriendList;
 import com.coms309.peddler.Messages.GroupMessagePage;
 import com.coms309.peddler.Models.Project;
@@ -54,12 +55,14 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         lessBtn = findViewById(R.id.LessBtn);
         persBtn = findViewById(R.id.PersBtn);
         chatBtn = findViewById(R.id.Chat);
+        markBtn = findViewById(R.id.Market);
 
         projBtn.setOnClickListener(this);
         messBtn.setOnClickListener(this);
         lessBtn.setOnClickListener(this);
         persBtn.setOnClickListener(this);
         chatBtn.setOnClickListener(this);
+        markBtn.setOnClickListener(this);
 
         this.CurrentUser = AppController.getInstance().CurrentUser;
 
@@ -98,6 +101,9 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.Chat:
                 pageSwitch(GroupMessagePage.class);
+                break;
+            case R.id.Market:
+                pageSwitch(MarketPage.class);
                 break;
         }
     }
