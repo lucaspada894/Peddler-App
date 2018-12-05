@@ -116,16 +116,19 @@ public class ProjectController {
     	n.setProjectId(projectId);
     	n.setUserId(userId);
     	userRepository.updateNumNotifications(userId);
+    	
     	if(requestStatus == true) {
     		status = "accepted.";
     		ProjectUsers newId = new ProjectUsers();
     		newId.setProjectId(projectId);
     		newId.setUserId(userId);
     		projectUsersRepository.save(newId);
+    		projectRequestsRepository.deleteRequest(projectId, userId);
     	//projectUsersRepository.setNewUserId(projectId, userId);
     	}
     	else {
     		status = "declined.";
+    		projectRequestsRepository.deleteRequest(projectId, userId);
     	}
     	
     	n.setNotification("your request to join " + p.getTitle() + " has been " + status);

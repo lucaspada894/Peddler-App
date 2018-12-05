@@ -24,5 +24,9 @@ public interface ProjectRequestsRepository extends CrudRepository<ProjectRequest
 	@Query("SELECT p FROM ProjectRequests p WHERE p.projectId =:projectId")
 	Iterable<ProjectRequests> findAllByProjectId(@Param("projectId") int projectId);
 	
-	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM ProjectRequests p WHERE p.projectId =:projectId AND p.userId =:userId")
+	void deleteRequest(@Param("projectId") int projectId, @Param("userId") int userId);
 }
+
