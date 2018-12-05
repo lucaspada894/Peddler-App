@@ -128,9 +128,9 @@ public interface UserRepository extends CrudRepository<Users, Integer> {
      * @param userID
      * @return
      */
-    @Query("SELECT id FROM Projects t WHERE t.userID =:userID")
+    @Query("SELECT id FROM Projects t WHERE t.ownerId =:ownerId")
     @Transactional(readOnly = true)
-    Iterable<Integer> findProjectID(@Param("userID")Integer userID);
+    Iterable<Integer> findProjectID(@Param("ownerId")Integer userID);
     
     @Modifying
     @Query("UPDATE Users u SET u.numNotifications = (u.numNotifications + 1) WHERE u.id =:userId")

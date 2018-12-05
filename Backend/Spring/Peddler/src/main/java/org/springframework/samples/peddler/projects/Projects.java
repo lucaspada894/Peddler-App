@@ -15,11 +15,7 @@ public class Projects {
 	private String title;
 	private String major;
 	private String description;
-	private Integer userID;
-	private Integer ownerID;
-	private int requesterId;
-	private boolean requestStatus = false;
-	
+	private Integer ownerId;	
 	
 	public Integer getId() {
 		return id;
@@ -45,34 +41,16 @@ public class Projects {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Integer getUserID() {
-		return userID;
-	}
-	public void setUserID(Integer userID) {
-		this.userID = userID;
-	}
-	public Integer getOwnerID() {
-		return ownerID;
+	
+	
+	public Integer getOwnerId() {
+		return ownerId;
 	}
 	public void setOwnerID(Integer ownerID) {
-		this.ownerID = ownerID;
+		this.ownerId = ownerID;
 	}
 	
-	public void setRequesertId(int requesterId) {
-		this.requesterId = requesterId;
-	}
-	
-	public int getRequesterId() {
-		return this.requesterId;
-	}
-	
-	public void setRequestStatus(boolean requestStatus) {
-		this.requestStatus = requestStatus;
-	}
-	
-	public boolean getRequestStatus() {
-		return this.requestStatus;
-	}
+
 	
 	
 

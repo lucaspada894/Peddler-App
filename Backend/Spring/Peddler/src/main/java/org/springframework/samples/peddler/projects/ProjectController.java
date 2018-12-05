@@ -43,7 +43,6 @@ public class ProjectController {
 		n.setTitle(title);
 		n.setMajor(major);
 		n.setDescription(description);
-		n.setUserID(userID);
 		n.setOwnerID(ownerID);
 		projectRepository.save(n);
 		return "Saved";
@@ -71,7 +70,7 @@ public class ProjectController {
 	@GetMapping(value = "/myProjects")
 	public @ResponseBody Iterable<Projects> usersProjects(Integer userId) {
 
-		return projectRepository.findProjectsByUserID(userId);
+		return projectRepository.findProjectsByOwnerId(userId);
 	}
 	
 	
@@ -166,13 +165,15 @@ public class ProjectController {
     		n.setOwnerId(projectRepository.fetchProjectOwnerId(projectId));
     		n.setStatus(false);
     		projectRequestsRepository.save(n);
+    		
     		ProjectNotifications m = new ProjectNotifications();
     		m.setUserId(projectRepository.fetchProjectOwnerId(projectId));
     		m.setProjectId(projectId);
     		m.setNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + "wishes to join your project!");
     		userRepository.updateNumNotifications(projectRepository.fetchProjectOwnerId(projectId));
     		projectNotificationsRepository.save(m);
-    		return "request to join " + projectRepository.fetchProject(projectId).getTitle() + " sent!";
+    		return "" + projectRepository.fetchProjectOwnerId(projectId);
+    		//return "request to join " + projectRepository.fetchProject(projectId).getTitle() + " sent!";
     	}
     //@GetMapping(path="/fetchMembers")
     //public @ResponseBody Iterable<Users> fetchMembers(@RequestParam int projectId){

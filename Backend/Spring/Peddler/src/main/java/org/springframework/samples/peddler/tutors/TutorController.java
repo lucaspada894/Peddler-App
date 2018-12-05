@@ -23,6 +23,9 @@ public class TutorController {
 	@Autowired
 	public TutorRepository tutorRepository;
 	
+	@Autowired
+	public TutorMembersRepository tutorMembersRepo;
+	
 	@GetMapping(path="/add")
 	public @ResponseBody String addNewProject(@RequestParam Integer userID, @RequestParam String tutorTitle,@RequestParam String tutorSubject,@RequestParam String tutorDescription, @RequestParam String tutorTimes) {
 		Tutors n = new Tutors();
@@ -35,7 +38,7 @@ public class TutorController {
 		return "Saved";
 	}
 	
-	
+		
 	@Transactional
 	@RequestMapping(path="/request")
 	public @ResponseBody String requestTutor(@RequestParam Integer tutorID, @RequestParam Integer userID) {
@@ -45,6 +48,14 @@ public class TutorController {
 		return "Tutor Requested";
 	}
 
+	@Transactional
+	@GetMapping(path="/addStudent")
+	public @ResponseBody void addStudent(@RequestParam int tutorId, @RequestParam int studentId) {
+		TutorMembers newMember = new TutorMembers();
+		newMember.setStudentId(studentId);
+		newMember.setTutorId(tutorId);
+		tutorMembersRepo.save(newMember);
+	}
 	
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<Tutors> getAllTutors() {

@@ -10,6 +10,7 @@ public class ProjectNotifications {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	
+	private int id;
 	private int userId;
 	private int projectId;
 	String notification;

@@ -85,7 +85,7 @@ public class Users {
 		this.password = password;
 	}
 	
-	public void increaseNotificationNum() {
+	public void setNumNotifications() {
 		this.numNotifications += 1;
 	}
 	
@@ -97,6 +97,9 @@ public class Users {
 		return projectID;
 	}
 
+	public int getNumNotifications () {
+		return numNotifications;
+	}
 
 	
 

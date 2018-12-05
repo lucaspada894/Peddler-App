@@ -17,11 +17,11 @@ public interface ProjectRepository extends CrudRepository<Projects, Integer> {
 
 	
 @Transactional(readOnly = true)
-Iterable<Projects> findProjectsByUserID(@Param("userID") Integer userID);	
+Iterable<Projects> findProjectsByOwnerId(@Param("ownerId") Integer userID);	
 	
 
 
-@Query("SELECT title FROM Projects p WHERE p.userID =:userId")
+@Query("SELECT title FROM Projects p WHERE p.ownerId =:userId")
 @Transactional(readOnly = true)
 String getTitle(@Param("userId") Integer userId);
 
@@ -30,7 +30,7 @@ String getTitle(@Param("userId") Integer userId);
 	
 @Transactional
 @Modifying
-@Query("DELETE FROM Projects p WHERE p.id =:projId AND p.userID =:userId")
+@Query("DELETE FROM Projects p WHERE p.id =:projId AND p.ownerId =:userId")
 void deleteProject(@Param("projId") Integer projId, @Param("userId") Integer userId);
 
 
@@ -38,7 +38,7 @@ void deleteProject(@Param("projId") Integer projId, @Param("userId") Integer use
 
 @Transactional
 @Modifying(clearAutomatically = true)
-@Query("UPDATE Projects p SET p.description =:newDescription  WHERE p.id =:projId AND p.userID =:userId")
+@Query("UPDATE Projects p SET p.description =:newDescription  WHERE p.id =:projId AND p.ownerId =:userId")
 void editProjectDescription(@Param("newDescription") String newDescription, @Param("projId") Integer projID, @Param("userId") Integer userid);
 
 
@@ -46,12 +46,12 @@ void editProjectDescription(@Param("newDescription") String newDescription, @Par
 
 @Transactional
 @Modifying(clearAutomatically = true)
-@Query("UPDATE Projects p SET p.title =:newTitle WHERE p.id =:projId AND p.userID =:userId")
+@Query("UPDATE Projects p SET p.title =:newTitle WHERE p.id =:projId AND p.ownerId =:userId")
 void editProjectTitle(@Param("newTitle") String newTitle, @Param("projId") Integer projId, @Param("userId") Integer userId);
 
 @Transactional
 @Modifying
-@Query("UPDATE ProjectRequests p SET p.userId =:requesterId WHERE p.id =:id")
+@Query("UPDATE ProjectRequests p SET p.ownerId =:requesterId WHERE p.id =:id")
 void setNewRequest(@Param("requesterId") int requesterId, @Param("id") int id);
 
 @Transactional
@@ -77,7 +77,7 @@ Iterable<Users> fetchProjectMembers(@Param("projectId") int projectId);
 @Query("SELECT id FROM Projects t WHERE t.title LIKE CONCAT('%',:query,'%') OR t.description LIKE CONCAT('%',:query,'%') OR t.major LIKE CONCAT('%',:query,'%')")
 Iterable<Integer> findProjectsWithPartOfName(@Param("query") String query);
 
-@Query("SELECT ownerID FROM Projects p WHERE p.id =:projectId")
+@Query("SELECT ownerId FROM Projects p WHERE p.id =:projectId")
 int fetchProjectOwnerId(@Param("projectId") int projectId);
 
 }
