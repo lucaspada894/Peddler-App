@@ -1,5 +1,7 @@
 package com.coms309.peddler.utils;
 
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ public class GeneralAdapter extends ArrayAdapter<String> {
     private ArrayList<String> names;
     private ArrayList<String> convs;
     private Context currCtxt;
+    private ArrayList<Drawable> images;
 
 
     //ViewContainer to optimize the repeated res look-up.
@@ -34,21 +37,25 @@ public class GeneralAdapter extends ArrayAdapter<String> {
 
     }
 
-
-    //Initializing
     public GeneralAdapter(Context context, ArrayList<String> n, ArrayList<String> c, int[] i){
-
         super(context, R.layout.friends_row);
         icons = i;
         names = n;
         convs = c;
         currCtxt = context;
+    }
 
+    public GeneralAdapter(Context context, ArrayList<String> n, ArrayList<String> c, int[] i, ArrayList<Drawable> images){
+        super(context, R.layout.friends_row);
+        icons = i;
+        names = n;
+        convs = c;
+        currCtxt = context;
+        this.images = images;
     }
 
     @Override
-    public int getCount(){
-
+    public int getCount() {
         return names.size();
 
     }
@@ -81,7 +88,7 @@ public class GeneralAdapter extends ArrayAdapter<String> {
             vc = (ViewContainer) targetV.getTag();
 
         }
-        vc.ic.setImageResource(icons[0]);
+        //vc.ic.setImageDrawable(images.get(pos));
         vc.na.setText(names.get(pos));
         vc.nc.setText(convs.get(0));
 

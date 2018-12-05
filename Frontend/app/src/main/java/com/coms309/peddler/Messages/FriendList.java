@@ -45,7 +45,7 @@ public class FriendList extends AppCompatActivity {
         setContentView(R.layout.activity_chat_page);
 
         //Initializing
-        makeJsonArryReq("/user/all");
+        getFriends("/user/all");
         convs.add("W'sup bitch");
         userList = (ListView) findViewById(R.id.frilist);
         adpt = new GeneralAdapter(FriendList.this, names, convs, icons);
@@ -62,8 +62,7 @@ public class FriendList extends AppCompatActivity {
         });
     }
 
-    private void makeJsonArryReq(String path) {
-        //showProgressDialog();
+    private void getFriends(String path) {
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -107,9 +106,7 @@ public class FriendList extends AppCompatActivity {
             public void onResponse(JSONArray r) {
                 try {
                     for(int i = 0; i < r.length(); i ++){
-
                         JSONObject jsobj = r.getJSONObject(i);
-
                         names.add(jsobj.getString("firstName") + " " + jsobj.getString("lastName"));
                         adpt.notifyDataSetChanged();
                     }
