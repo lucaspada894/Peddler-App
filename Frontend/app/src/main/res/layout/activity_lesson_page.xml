@@ -63,6 +63,31 @@
                 android:layout_marginRight="10dp"
                 android:background="@android:drawable/dark_header"
                 android:textColor="@android:color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filter: "
+                android:textSize="20dp"/>
+
+            <Spinner
+                android:layout_weight="1"
+                android:id="@+id/filter_lessons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+
+
         </LinearLayout>
 
         <ListView
