@@ -106,42 +106,6 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                             Log.d("list users", "onResponse users: " + projUsers.get(i).getEmail() + " id: ");
                         }
                         projects.get(position).users = projUsers;
-                        getProjRequests(position);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("menu error: ", error.getMessage());
-                Toast.makeText(getApplicationContext(), "Failed to retrieve projects", Toast.LENGTH_LONG).show();
-            }
-        });
-        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-    }
-
-    private void getProjRequests(final int position) {
-        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER +
-                "/project/fetchProjectRequests?projectId=" + projects.get(position).getID(),
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        ArrayList<User> projReq = new ArrayList<>();
-                        String id = "";
-                        String email = "";
-                        Log.d("request list:", response.toString());
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject userObject = (JSONObject) response.get(i);
-                                id = userObject.getString("userId");
-                                projReq.add(new User(id));
-                            } catch (org.json.JSONException e) {
-
-                            }
-                        }
-                        for (int i = 0; i < projReq.size(); i++) {
-                            Log.d("list users", "onResponse users: " + projReq.get(i).getID());
-                        }
-                        projects.get(position).requests = null;
-                        projects.get(position).requests = projReq;
                         pageSwitch(JoinableActivity.class, projects.get(position));
                     }
                 }, new Response.ErrorListener() {
@@ -153,6 +117,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         });
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
+
 
     private void getProjects(String path) {
         //showProgressDialog();
