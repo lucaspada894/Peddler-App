@@ -58,7 +58,7 @@ autoDeploy:
  - cd Spring
  - cd Peddler
  - mvn package
- - sudo mv /builds/33529074/0/cs309/Fall2018/PP_7/Backend/Spring/Peddler/target/*.jar /target/web-demo.jar
+ - sudo mv /builds/33529074/0/cs309/Fall2018/PP_7/Backend/Spring/Peddler/target/*.jar /var/www/html/web-demo.jar
  - sudo systemctl stop system-web-demo2
  - sudo systemctl start system-web-demo2
 
