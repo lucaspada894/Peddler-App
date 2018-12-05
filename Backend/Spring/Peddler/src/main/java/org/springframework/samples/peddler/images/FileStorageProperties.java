@@ -7,6 +7,7 @@ public class FileStorageProperties {
     private String uploadDir = "/var/www/html/uploads";
 
     public String getUploadDir() {
+    	uploadDir = "/var/www/html/uploads";
         return uploadDir;
     }
 
