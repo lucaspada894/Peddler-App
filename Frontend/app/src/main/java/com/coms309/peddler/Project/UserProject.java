@@ -73,7 +73,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
                 Log.d("pooooop", projects.get(position).getDesc());
-                pageSwitch(JoinableActivity.class, projects.get(position));
+                getProjRequests(position);
             }
             @Override public void onLongItemClick(View view, int position) { }
         }));
@@ -118,8 +118,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
 //                                        Log.d("requests:", requests.get(k).toString());
 //                                    }
 //                                }
-                                projects.add(new Project(id, name, major, desc, ownerID, projUsers, projRequest));
-                                System.out.println("projects: " + projects);
+                                projects.add(new Project(id, name, major, desc, ownerID, requesterID, projUsers, projRequest));
                             } catch (org.json.JSONException e) {
                                 System.out.println("e: " + e);
                             }
@@ -141,35 +140,40 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
-    private void getProjById(String path) {
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                Const.JSON_OBJECT_URL_SERVER + path, null,
-                new Response.Listener<JSONObject>() {
-
+    private void getProjRequests(final int position) {
+        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER +
+                "/project/fetchProjectRequests?projectId=" + projects.get(position).getID(),
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("response object", response.toString());
-                        try {
-                            projects.add(new Project(response.getString("id"), response.getString("title"), response.getString("description")));
+                    public void onResponse(JSONArray response) {
+                        ArrayList<User> projReq = new ArrayList<>();
+                        String id = "";
+                        String email = "";
+                        Log.d("request list:", response.toString());
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject userObject = (JSONObject) response.get(i);
+                                id = userObject.getString("id");
+                                projReq.add(new User(id));
+                            } catch (org.json.JSONException e) {
 
-                        } catch (org.json.JSONException e) {
-
+                            }
                         }
-                        mAdapter = new MainListAdapter(projects);
-                        mRecyclerView.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                        for (int i = 0; i < projReq.size(); i++) {
+                            Log.d("list users", "onResponse users: " + projReq.get(i).getEmail() + " id: ");
+                        }
+                        projects.get(position).requests = projReq;
+                        pageSwitch(JoinableActivity.class, projects.get(position));
                     }
                 }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ppop", "Error: " + error.getMessage());
-                System.out.println("error: " + error.getMessage());
+                Log.d("menu error: ", error.getMessage());
+                Toast.makeText(getApplicationContext(), "Failed to retrieve projects", Toast.LENGTH_LONG).show();
             }
         });
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
-
 
     private void postInfo(String projTitle, String major, String desc) {
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
@@ -182,7 +186,6 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         getProjects("/project/myProjects?userId=" + CurrentUser.getID());
-                        getProjById("/project/fetchMembers?projectId=" + CurrentUser.getProjectId());
                     }
                 },
                 new Response.ErrorListener() {

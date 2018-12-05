@@ -52,6 +52,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
         </activity>
+        <activity android:name=".Project.FriendProfile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Project.JoinableActivity" />
+        </activity>
 
         <activity
             android:name=".Home.ProfilePage"

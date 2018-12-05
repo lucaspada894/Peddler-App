@@ -55,8 +55,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
             holder.titleText.setText(mDataset.get(position).getName());
             holder.descText.setText(mDataset.get(position).getDesc());
         } else {
-            holder.titleText.setText(mDatasetUser.get(position).getEmail());
-            holder.descText.setText(mDatasetUser.get(position).getUniversity());
+            holder.titleText.setText(mDatasetUser.get(position).getID());
+            //holder.descText.setText(mDatasetUser.get(position).getUniversity());
         }
     }
 

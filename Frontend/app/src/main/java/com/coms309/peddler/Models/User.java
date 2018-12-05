@@ -1,5 +1,7 @@
 package com.coms309.peddler.Models;
 
+import android.media.Image;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -12,6 +14,7 @@ public class User implements Serializable {
     private String university;
     private String year;
     private String projectId;
+    public Image pic;
 
     public User(String id, String email, String firstName, String lastName, String password, String phoneNumber, String university, String year) {
         this.id = id;
@@ -28,6 +31,11 @@ public class User implements Serializable {
         this.id = id;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String id, String email) {
+        this.id = id;
+        this.email = email;
     }
 
     public User(String firstName, String lastName, String id, boolean is) {

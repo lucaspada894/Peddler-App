@@ -48,8 +48,12 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_page);
+        if (AppController.getInstance().CurrentUser == null) {
+            AppController.getInstance().CurrentUser = new User("125", "test", "test");
+        }
+        this.CurrentUser = AppController.getInstance().CurrentUser;
 
-        //Initializing
+
         projBtn = findViewById(R.id.ProjBtn);
         messBtn = findViewById(R.id.MessBtn);
         lessBtn = findViewById(R.id.LessBtn);
@@ -64,8 +68,6 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         chatBtn.setOnClickListener(this);
         markBtn.setOnClickListener(this);
 
-        this.CurrentUser = AppController.getInstance().CurrentUser;
-
         mRecyclerView = (ListView) findViewById(R.id.proj_list);
         adpt = new ProjAdapter(MenuPage.this, names, descriptions);
         mRecyclerView.setAdapter(adpt);
@@ -73,37 +75,83 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("selected project: ", projects.get(position).getName());
-                pageSwitch(JoinableActivity.class, projects.get(position));
+                getProjUsers(position);
             }
         });
-        if (AppController.getInstance().CurrentUser == null) {
-            AppController.getInstance().CurrentUser = new User("125", "test", "test");
-        }
         getProjects("/project/all");
-        updateUser("/user/all");
+        //updateUser("/user/all");
     }
 
-    public void onClick(View v){
-        switch(v.getId()){
-            case R.id.PersBtn:
-                pageSwitch(ProfilePage.class);
-                break;
-            case R.id.ProjBtn:
-                pageSwitch(UserProject.class);
-                break;
-            case R.id.MessBtn:
-                pageSwitch(FriendList.class);
-                break;
-            case R.id.LessBtn:
-                pageSwitch(LessonPage.class);
-                break;
-            case R.id.Chat:
-                pageSwitch(GroupMessagePage.class);
-                break;
-            case R.id.Market:
-                pageSwitch(MarketPage.class);
-                break;
-        }
+    private void getProjUsers(final int position) {
+        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER +
+                "/project/getProjectUsers?projectId=" + projects.get(position).getID(),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        ArrayList<User> projUsers = new ArrayList<>();
+                        String id = "";
+                        String email = "";
+                        Log.d("user list:", response.toString());
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject userObject = (JSONObject) response.get(i);
+                                id = userObject.getString("id");
+                                email = userObject.getString("email");
+                                projUsers.add(new User(id, email));
+                            } catch (org.json.JSONException e) {
+
+                            }
+                        }
+                        for (int i = 0; i < projUsers.size(); i++) {
+                            Log.d("list users", "onResponse users: " + projUsers.get(i).getEmail() + " id: ");
+                        }
+                        projects.get(position).users = projUsers;
+                        getProjRequests(position);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("menu error: ", error.getMessage());
+                Toast.makeText(getApplicationContext(), "Failed to retrieve projects", Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
+    }
+
+    private void getProjRequests(final int position) {
+        final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER +
+                "/project/fetchProjectRequests?projectId=" + projects.get(position).getID(),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        ArrayList<User> projReq = new ArrayList<>();
+                        String id = "";
+                        String email = "";
+                        Log.d("request list:", response.toString());
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject userObject = (JSONObject) response.get(i);
+                                id = userObject.getString("userId");
+                                projReq.add(new User(id));
+                            } catch (org.json.JSONException e) {
+
+                            }
+                        }
+                        for (int i = 0; i < projReq.size(); i++) {
+                            Log.d("list users", "onResponse users: " + projReq.get(i).getID());
+                        }
+                        projects.get(position).requests = null;
+                        projects.get(position).requests = projReq;
+                        pageSwitch(JoinableActivity.class, projects.get(position));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("menu error: ", error.getMessage());
+                Toast.makeText(getApplicationContext(), "Failed to retrieve projects", Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
     private void getProjects(String path) {
@@ -120,34 +168,22 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                         String requesterID = "";
                         JSONArray users;
                         JSONArray requests;
-                        Log.d("menu project resp:", response.toString());
-                        //projects.clear();
+                        projects.clear();
                         names.clear();
                         descriptions.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
-                                Log.d("response user project", responseObject.toString());
+                                //Log.d("menu projects", responseObject.toString());
                                 id = responseObject.getString("id");
                                 name = responseObject.getString("title");
                                 desc = responseObject.getString("description");
                                 major = responseObject.getString("major");
                                 ownerID = responseObject.getString("ownerID");
                                 requesterID = responseObject.getString("requesterId");
-//                                users = responseObject.getJSONArray("users");
-//                                requests = responseObject.getJSONArray("requestes");
                                 ArrayList<User> projUsers = new ArrayList<>();
                                 ArrayList<User> projRequest = new ArrayList<>();
-//                                for (int k = 0; i < (users.length() > requests.length() ? users.length() : requests.length()); i++) {
-//                                    if (!(k >= users.length())) {
-//                                        Log.d("user:", users.get(k).toString());
-//                                    }
-//                                    if (!(k >= requests.length())) {
-//                                        Log.d("requests:", requests.get(k).toString());
-//                                    }
-//                                }
-                                projects.add(new Project(id, name, major, desc, ownerID, projUsers, projRequest));
-                                System.out.println("projects: " + projects);
+                                projects.add(new Project(id, name, major, desc, ownerID, requesterID, projUsers, projRequest));
                                 names.add(name);
                                 descriptions.add(desc);
                                 adpt.notifyDataSetChanged();
@@ -201,6 +237,28 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
     }
 
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.PersBtn:
+                pageSwitch(ProfilePage.class);
+                break;
+            case R.id.ProjBtn:
+                pageSwitch(UserProject.class);
+                break;
+            case R.id.MessBtn:
+                pageSwitch(FriendList.class);
+                break;
+            case R.id.LessBtn:
+                pageSwitch(LessonPage.class);
+                break;
+            case R.id.Chat:
+                pageSwitch(GroupMessagePage.class);
+                break;
+            case R.id.Market:
+                pageSwitch(MarketPage.class);
+                break;
+        }
+    }
 
     private void pageSwitch(Class obj, Project temp) {
         Intent intent = new Intent(this, obj);

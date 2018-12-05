@@ -3,11 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="220dp"
@@ -57,11 +60,28 @@
                 android:text="Accept"/>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/request_lbl"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Requests"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/request_list"
+            android:scrollbars="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/member_lbl"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Members"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_recycle"
             android:scrollbars="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

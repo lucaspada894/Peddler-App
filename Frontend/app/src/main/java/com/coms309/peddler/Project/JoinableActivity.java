@@ -1,6 +1,7 @@
 package com.coms309.peddler.Project;
 
 import android.content.Intent;
+import android.icu.lang.UScript;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.coms309.peddler.utils.MainListAdapter;
 import com.coms309.peddler.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class JoinableActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,11 +34,11 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
     private User CurrentUser;
     private Project currentProj;
 
-    private TextView owner, major, desc;
+    private TextView owner, major, desc, memberLbl, requestLbl;
     private Button requestBtn, acceptBtn;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView mRecyclerView, request;
+    private LinearLayoutManager mLayoutManager, layoutM;
+    private RecyclerView.Adapter mAdapter, sAdapter;
 
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
 
@@ -48,6 +50,8 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
         owner = findViewById(R.id.owner_text);
         major = findViewById(R.id.major_text);
         desc = findViewById(R.id.desc_text);
+        memberLbl = findViewById(R.id.member_lbl);
+        requestLbl = findViewById(R.id.request_lbl);
         requestBtn = findViewById(R.id.requestBtn);
         requestBtn.setOnClickListener(this);
         acceptBtn = findViewById(R.id.acceptBtn);
@@ -55,7 +59,7 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
         acceptBtn.setAlpha((float) 0.0);
 
         Bundle extras = getIntent().getExtras();
-        if(extras !=null) {
+        if (extras !=null) {
             currentProj = (Project) extras.getSerializable("PROJ");
             this.setTitle(currentProj.getName());
             major.setText("Major: " + currentProj.getMajor());
@@ -67,7 +71,7 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
 
         if (currentProj.getOwnerID().equals(CurrentUser.getID())) {
             requestBtn.setAlpha((float) 0.0);
-            if (currentProj.getRequests().size() != 0) {
+            if (currentProj.requests.size() != 0) {
                 acceptBtn.setAlpha((float) 1.0);
                 acceptBtn.setText(currentProj.getRequestorId());
             }
@@ -75,19 +79,24 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
 
         mRecyclerView = findViewById(R.id.main_recycle);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MainListAdapter(currentProj.getUsers(), 1);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-            @Override public void onItemClick(View view, int position) {
-                Log.d("pooooop", currentProj.getUsers().get(position).getID());
-                pageSwitch(JoinableActivity.class, currentProj.getUsers().get(position));
-            }
-            @Override public void onLongItemClick(View view, int position) { }
-        }));
+        request = findViewById(R.id.request_list);
+        request.setHasFixedSize(true);
+        request.setLayoutManager(new LinearLayoutManager(this));
+        sAdapter = new MainListAdapter(currentProj.getRequests(), 1);
+        request.setAdapter(mAdapter);
+        sAdapter.notifyDataSetChanged();
+
+        if (currentProj.getRequests() == null) {
+            requestLbl.setHeight(0);
+        }
+        if (currentProj.getUsers() == null) {
+            memberLbl.setHeight(0);
+        }
     }
 
     public void postProjectRequest() {
@@ -110,7 +119,10 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
 
     public void acceptRequest() {
         Log.d("accept request url: ", Const.SERVER_URL + "/project/requestAction?requestStatus=" + true + "&projectId=" + currentProj.getID());
-        final StringRequest postRequest = new StringRequest(Request.Method.GET, Const.SERVER_URL + "/project/requestAction?requestStatus=" + true + "&projectId=" + currentProj.getID(),
+        final StringRequest postRequest = new StringRequest(Request.Method.GET, Const.SERVER_URL +
+                "/project/requestAction?requestStatus=" + true + "&projectId=" + currentProj.getID() +
+                "&userId=" + currentProj.getRequestorId()
+                ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

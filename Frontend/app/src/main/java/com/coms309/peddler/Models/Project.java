@@ -11,8 +11,8 @@ public class Project implements Serializable {
     private String major;
     String owner_id;
     String requestorId;
-    ArrayList<User> users;
-    ArrayList<User> requests;
+    public ArrayList<User> users;
+    public ArrayList<User> requests;
 
     public Project(String id, String name, String desc) {
         this.id = id;
@@ -29,7 +29,7 @@ public class Project implements Serializable {
         this.requestorId = requesterID;
     }
 
-    public Project(String id, String name, String major, String desc, String owner_id, ArrayList<User> users, ArrayList<User> requests) {
+    public Project(String id, String name, String major, String desc, String owner_id, String requesterID, ArrayList<User> users, ArrayList<User> requests) {
         this.id = id;
         this.name = name;
         this.major =  major;
@@ -37,6 +37,7 @@ public class Project implements Serializable {
         this.owner_id = owner_id;
         this.users = users;
         this.requests = requests;
+        this.requestorId = requesterID;
     }
 
     public String getID() {
