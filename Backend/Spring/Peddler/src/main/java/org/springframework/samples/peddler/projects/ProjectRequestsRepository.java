@@ -28,5 +28,9 @@ public interface ProjectRequestsRepository extends CrudRepository<ProjectRequest
 	@Modifying
 	@Query("DELETE FROM ProjectRequests p WHERE p.projectId =:projectId AND p.userId =:userId")
 	void deleteRequest(@Param("projectId") int projectId, @Param("userId") int userId);
+	
+	@Transactional
+	@Query("SELECT p FROM ProjectRequests p WHERE p.projectId =:projectId AND p.userId =:userId")
+	ProjectRequests getRequest(@Param("projectId") int projectId, @Param("userId") int userId);
 }
 

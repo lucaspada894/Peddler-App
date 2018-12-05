@@ -123,12 +123,15 @@ public class ProjectController {
     		newId.setProjectId(projectId);
     		newId.setUserId(userId);
     		projectUsersRepository.save(newId);
-    		projectRequestsRepository.deleteRequest(projectId, userId);
+    		ProjectRequests b = projectRequestsRepository.getRequest(projectId, userId);
+    		projectRequestsRepository.delete(b);
     	//projectUsersRepository.setNewUserId(projectId, userId);
     	}
     	else {
     		status = "declined.";
     		projectRequestsRepository.deleteRequest(projectId, userId);
+    		ProjectRequests b = projectRequestsRepository.getRequest(projectId, userId);
+    		projectRequestsRepository.delete(b);
     	}
     	
     	n.setNotification("your request to join " + p.getTitle() + " has been " + status);
