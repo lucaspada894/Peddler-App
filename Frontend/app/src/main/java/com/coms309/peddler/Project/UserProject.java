@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class UserProject extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private EditText search;
+    private EditText psearch;
     private Button psearch_btn, pcreate_btn, pmy_lessons;
     private ArrayList<Project> tutors = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -60,7 +60,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
 
         //Initializing
         update("/project/all");
-        search = findViewById(R.id.psearch_text);
+        psearch = findViewById(R.id.psearch_text);
         psearch_btn = findViewById(R.id.pbutton);
         psearch_btn.setOnClickListener(this);
 
@@ -171,17 +171,17 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.button:
-                String query = search.getText().toString();
+            case R.id.pbutton:
+                String pquery = psearch.getText().toString();
                 clear();
-                update("/project/search/?search=" + query);
+                update("/project/search/?search=" + pquery);
                 break;
 
-            case R.id.create_lesson:
-            //    pageSwitch(CreateLesson.class);
+            case R.id.pcreate_lesson:
+                pageSwitch(CreateProject.class);
                 break;
 
-            case R.id.my_lessons:
+            case R.id.pmy_lessons:
                 clear();
                 update("/project/myProjects/?userID=" + AppController.getInstance().CurrentUser.getID());
 
