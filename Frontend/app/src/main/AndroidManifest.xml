@@ -19,32 +19,32 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".Login.LoginActivity">
-
-             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
-        </activity>
-        <activity android:name=".Home.MenuPage">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Project.UserProject">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.MenuPage" />
-        </activity>
-
         <activity
             android:name=".Login.SignupActivity"
             android:label="Sign Up">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Project.UserProject" />
+        </activity>
+
+        <activity android:name=".Login.LoginActivity">
+             <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".Home.MenuPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Project.UserProject">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
         </activity>
 
         <activity android:name=".Project.JoinableActivity">

@@ -1,6 +1,8 @@
 package com.coms309.peddler.Models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String id;
     private String email;
     private String firstName;

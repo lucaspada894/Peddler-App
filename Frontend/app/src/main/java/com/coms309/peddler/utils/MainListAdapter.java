@@ -7,18 +7,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.coms309.peddler.Models.Project;
+import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
 
 import java.util.ArrayList;
 
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyViewHolder> {
     private ArrayList<Project> mDataset;
+    private ArrayList<User> mDatasetUser;
+    int type = -1;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         public TextView titleText;
         public TextView descText;
         public MyViewHolder(View v) {
@@ -28,20 +28,19 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public MainListAdapter(ArrayList<Project> myDataset) {
         mDataset = myDataset;
     }
+    public MainListAdapter(ArrayList<User> myDataset, int i) {
+        mDatasetUser = myDataset;
+        type = i;
+    }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public MainListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                            int viewType) {
-        // create a new view
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.main_list_row, parent, false);
-//        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.main_list_row, parent, false);
 
         MyViewHolder viewHolder = new MyViewHolder(itemView);
         return viewHolder;
@@ -52,13 +51,22 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.titleText.setText(mDataset.get(position).getName());
-        holder.descText.setText(mDataset.get(position).getDesc());
+        if (this.type == -1) {
+            holder.titleText.setText(mDataset.get(position).getName());
+            holder.descText.setText(mDataset.get(position).getDesc());
+        } else {
+            holder.titleText.setText(mDatasetUser.get(position).getEmail());
+            holder.descText.setText(mDatasetUser.get(position).getUniversity());
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        if (type == -1) {
+            return mDataset.size();
+        } else {
+            return mDatasetUser.size();
+        }
     }
 }

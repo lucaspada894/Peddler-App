@@ -1,9 +1,12 @@
 package com.coms309.peddler.Project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +21,8 @@ import com.coms309.peddler.Models.User;
 import com.coms309.peddler.R;
 import com.coms309.peddler.app.AppController;
 import com.coms309.peddler.utils.Const;
+import com.coms309.peddler.utils.MainListAdapter;
+import com.coms309.peddler.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 
@@ -29,6 +34,9 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
 
     private TextView owner, major, desc;
     private Button requestBtn, acceptBtn;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
 
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
 
@@ -59,11 +67,27 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
 
         if (currentProj.getOwnerID().equals(CurrentUser.getID())) {
             requestBtn.setAlpha((float) 0.0);
-            if (!currentProj.getRequestorId().equals("0")) {
+            if (currentProj.getRequests().size() != 0) {
                 acceptBtn.setAlpha((float) 1.0);
                 acceptBtn.setText(currentProj.getRequestorId());
             }
         }
+
+        mRecyclerView = findViewById(R.id.main_recycle);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new MainListAdapter(currentProj.getUsers(), 1);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+            @Override public void onItemClick(View view, int position) {
+                Log.d("pooooop", currentProj.getUsers().get(position).getID());
+                pageSwitch(JoinableActivity.class, currentProj.getUsers().get(position));
+            }
+            @Override public void onLongItemClick(View view, int position) { }
+        }));
     }
 
     public void postProjectRequest() {
@@ -112,5 +136,11 @@ public class JoinableActivity extends AppCompatActivity implements View.OnClickL
                 acceptRequest();
                 break;
         }
+    }
+
+    private void pageSwitch(Class obj, User u) {
+        Intent intent = new Intent(this, obj);
+        intent.putExtra("USER", u);
+        startActivity(intent);
     }
 }

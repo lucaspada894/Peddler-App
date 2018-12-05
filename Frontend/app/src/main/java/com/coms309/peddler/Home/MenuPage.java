@@ -66,7 +66,6 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
 
         this.CurrentUser = AppController.getInstance().CurrentUser;
 
-        makeJsonArryReq("/project/all");
         mRecyclerView = (ListView) findViewById(R.id.proj_list);
         adpt = new ProjAdapter(MenuPage.this, names, descriptions);
         mRecyclerView.setAdapter(adpt);
@@ -80,8 +79,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         if (AppController.getInstance().CurrentUser == null) {
             AppController.getInstance().CurrentUser = new User("125", "test", "test");
         }
-        this.CurrentUser = AppController.getInstance().CurrentUser;
-        makeJsonArryReq("/project/all");
+        getProjects("/project/all");
         updateUser("/user/all");
     }
 
@@ -108,7 +106,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    private void makeJsonArryReq(String path) {
+    private void getProjects(String path) {
         //showProgressDialog();
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
@@ -120,31 +118,43 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                         String major = "";
                         String ownerID = "";
                         String requesterID = "";
-                        Log.d("response", response.toString());
+                        JSONArray users;
+                        JSONArray requests;
+                        Log.d("menu project resp:", response.toString());
                         //projects.clear();
                         names.clear();
                         descriptions.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
+                                Log.d("response user project", responseObject.toString());
                                 id = responseObject.getString("id");
                                 name = responseObject.getString("title");
                                 desc = responseObject.getString("description");
                                 major = responseObject.getString("major");
-                                ownerID = responseObject.getString("userID");
+                                ownerID = responseObject.getString("ownerID");
                                 requesterID = responseObject.getString("requesterId");
+//                                users = responseObject.getJSONArray("users");
+//                                requests = responseObject.getJSONArray("requestes");
+                                ArrayList<User> projUsers = new ArrayList<>();
+                                ArrayList<User> projRequest = new ArrayList<>();
+//                                for (int k = 0; i < (users.length() > requests.length() ? users.length() : requests.length()); i++) {
+//                                    if (!(k >= users.length())) {
+//                                        Log.d("user:", users.get(k).toString());
+//                                    }
+//                                    if (!(k >= requests.length())) {
+//                                        Log.d("requests:", requests.get(k).toString());
+//                                    }
+//                                }
+                                projects.add(new Project(id, name, major, desc, ownerID, projUsers, projRequest));
+                                System.out.println("projects: " + projects);
                                 names.add(name);
                                 descriptions.add(desc);
                                 adpt.notifyDataSetChanged();
-                                projects.add(new Project(id, name, major, desc, ownerID, requesterID));
                             } catch (org.json.JSONException e) {
 
                             }
                         }
-//                        mAdapter = new MainListAdapter(projects);
-//                        mRecyclerView.setAdapter(mAdapter);
-//
-//                        mAdapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -153,12 +163,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                 Toast.makeText(getApplicationContext(), "Failed to retrieve projects", Toast.LENGTH_LONG).show();
             }
         });
-
-        // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
 
     private void updateUser(String path) {
@@ -173,6 +178,7 @@ public class MenuPage extends AppCompatActivity implements View.OnClickListener 
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject userObject = (JSONObject) response.get(i);
+                                Log.d("update user:", userObject.toString());
                                 String userId = userObject.getString("id");
                                 projectID = userObject.getString("projectID");
                                 if (CurrentUser.getID().equals(userId)) {

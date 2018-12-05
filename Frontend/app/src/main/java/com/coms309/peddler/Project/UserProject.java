@@ -57,8 +57,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_project);
         this.CurrentUser = AppController.getInstance().CurrentUser;
-        Log.d("user project current user:", CurrentUser.getID());
-
+        Log.d("userproject curr user:", CurrentUser.getID());
 
         listItem = findViewById(R.id.list_item_btn);
         listItem.setOnClickListener(this);
@@ -78,11 +77,11 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
             }
             @Override public void onLongItemClick(View view, int position) { }
         }));
-        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+        getProjects("/project/myProjects?userId=" + CurrentUser.getID());
         //getProjById("/project/fetchProject?projectId=" + CurrentUser.getProjectId());
     }
 
-    private void makeJsonArryReq(String path) {
+    private void getProjects(String path) {
         //showProgressDialog();
         final JsonArrayRequest req = new JsonArrayRequest(Const.JSON_OBJECT_URL_SERVER + path,
                 new Response.Listener<JSONArray>() {
@@ -94,6 +93,8 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                         String major = "";
                         String ownerID = "";
                         String requesterID = "";
+                        JSONArray users;
+                        JSONArray requests;
                         projects.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
@@ -105,7 +106,19 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                                 major = responseObject.getString("major");
                                 ownerID = responseObject.getString("ownerID");
                                 requesterID = responseObject.getString("requesterId");
-                                projects.add(new Project(id, name, major, desc, ownerID, requesterID));
+//                                users = responseObject.getJSONArray("users");
+//                                requests = responseObject.getJSONArray("requestes");
+                                ArrayList<User> projUsers = new ArrayList<>();
+                                ArrayList<User> projRequest = new ArrayList<>();
+//                                for (int k = 0; i < (users.length() > requests.length() ? users.length() : requests.length()); i++) {
+//                                    if (!(k >= users.length())) {
+//                                        Log.d("user:", users.get(k).toString());
+//                                    }
+//                                    if (!(k >= requests.length())) {
+//                                        Log.d("requests:", requests.get(k).toString());
+//                                    }
+//                                }
+                                projects.add(new Project(id, name, major, desc, ownerID, projUsers, projRequest));
                                 System.out.println("projects: " + projects);
                             } catch (org.json.JSONException e) {
                                 System.out.println("e: " + e);
@@ -144,7 +157,6 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                         }
                         mAdapter = new MainListAdapter(projects);
                         mRecyclerView.setAdapter(mAdapter);
-
                         mAdapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
@@ -169,7 +181,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onResponse(String response) {
                         Log.d("Response", response);
-                        makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
+                        getProjects("/project/myProjects?userId=" + CurrentUser.getID());
                         getProjById("/project/fetchMembers?projectId=" + CurrentUser.getProjectId());
                     }
                 },
