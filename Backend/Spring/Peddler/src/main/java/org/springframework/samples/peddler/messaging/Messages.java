@@ -16,23 +16,13 @@ public class Messages {
 	private int id;
 	
 	private int creatorId;
-	private Timestamp createDate;
-	private String messageBody;
-	private String actualMessage;
 	private int recipientId;
-	private int type;
-	
+	private String createDate;
+	private String actualMessage;
+
 	
 	public int getId() {
 		return id;
-	}
-	
-	public int getType() {
-		return type;
-	}
-	
-	public void setType(int type) {
-		this.type = type;
 	}
 	
 	public int getRecipientId() {
@@ -47,24 +37,16 @@ public class Messages {
 		return creatorId;
 	}
 	
-	public Timestamp getDate() {
+	public String getDate() {
 		return createDate;
 	}
 	
-	public String getMessageBody() {
-		return messageBody;
+	public void setCreatorId(int creatorId) {
+		this.creatorId = creatorId;
 	}
 	
-	public void setMessageBody(String message) {
-		this.messageBody = message;
-	}
-	
-	public void setCreatorId(int id) {
-		this.creatorId = id;
-	}
-	
-	public void setDate(Timestamp datetime) {
-		this.createDate = datetime;
+	public void setDate(String createDate) {
+		this.createDate = createDate;
 	}
 	
 	public void setActualMessage(String actualmsg) {
