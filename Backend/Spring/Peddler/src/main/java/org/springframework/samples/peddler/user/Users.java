@@ -18,7 +18,7 @@ public class Users {
 	private String year;
 	private String university;
 	private String password;	
-	private String notification;
+	private int numNotifications = 0;
 	private int projectID;
 	
 	public String getPhoneNumber() {
@@ -85,12 +85,8 @@ public class Users {
 		this.password = password;
 	}
 	
-	public void setNotification(String notification) {
-		this.notification = notification;
-	}
-	
-	public String getNotification() {
-		return this.notification;
+	public void increaseNotificationNum() {
+		this.numNotifications += 1;
 	}
 	
 	public void setProjectID(int projectID) {

@@ -9,6 +9,7 @@ public class User {
     private String phoneNumber;
     private String university;
     private String year;
+    private String projectId;
 
     public User(String id, String email, String firstName, String lastName, String password, String phoneNumber, String university, String year) {
         this.id = id;
@@ -31,6 +32,10 @@ public class User {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public User(String id) {
+        this.id = id;
     }
 
     public String getID() {
@@ -57,4 +62,7 @@ public class User {
     public String getYear() {
         return year;
     }
+    public String getProjectId() { return projectId; }
+
+    public void setProjectID(String id) { this.projectId = id; }
 }

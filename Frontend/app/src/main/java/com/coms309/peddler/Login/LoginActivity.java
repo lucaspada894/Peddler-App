@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                         for (int i = 0; i < users.size(); i++) {
-                            Log.d(TAG, "onResponse: " + users.get(i).getEmail() + " id: " + users.get(i).getID() + "pass: " + users.get(i).getPassword());
+                            Log.d(TAG, "onResponse users: " + users.get(i).getEmail() + " id: " + users.get(i).getID() + "pass: " + users.get(i).getPassword());
                         }
                         users.add(new User("poop", "poop", "poop"));
                         if (users.size() > 0) {

@@ -25,6 +25,18 @@ public class ProjectController {
 	@Autowired
 	public ProjectRepository projectRepository;
 	
+	@Autowired
+	public ProjectRequestsRepository projectRequestsRepository;
+	
+	@Autowired
+	public ProjectUsersRepository projectUsersRepository;
+	
+	@Autowired
+	public UserRepository userRepository;
+	
+	@Autowired
+	public ProjectNotificationsRepository projectNotificationsRepository;
+	
 	@GetMapping(path="/add")
 	public @ResponseBody String addNewProject(@RequestParam String title, @RequestParam String major,@RequestParam String description,@RequestParam Integer userID, @RequestParam Integer ownerID) {
 		Projects n = new Projects();
@@ -35,6 +47,15 @@ public class ProjectController {
 		n.setOwnerID(ownerID);
 		projectRepository.save(n);
 		return "Saved";
+	}
+	
+	public @ResponseBody String addNewRequest(@RequestParam int userId, @RequestParam int projectId, @RequestParam int ownerId) {
+		ProjectRequests r = new ProjectRequests();
+		r.setUserId(userId);
+		r.setOwnerId(ownerId);
+		r.setProjectId(projectId);
+		projectRequestsRepository.save(r);
+		return "saved";
 	}
 	
 
@@ -83,34 +104,80 @@ public class ProjectController {
     
     @Transactional
     @GetMapping(path="/requestAction")
-    public @ResponseBody String requestAction(@RequestParam boolean requestStatus, @RequestParam int projectId) {
+    public @ResponseBody String requestAction(@RequestParam boolean requestStatus, @RequestParam int projectId, int userId) {
     	String status;
     	if(requestStatus) {
     		status = "accepted";
     	}
     	else status = "declined";
     	
-    	projectRepository.setRequestStatus(requestStatus, projectId);
+    	projectRequestsRepository.setRequestStatus(requestStatus, projectId, userId);
     	Projects p = projectRepository.fetchProject(projectId);
-    	projectRepository.setRequestNotification("you have been " + status +  " for project " + p.getTitle() + "!", p.getRequesterId());
-    	if(requestStatus) {
-    	projectRepository.setNewProjectId(projectId, p.getRequesterId());
+    	ProjectNotifications n = new ProjectNotifications();
+    	n.setProjectId(projectId);
+    	n.setUserId(userId);
+    	userRepository.updateNumNotifications(userId);
+    	if(requestStatus == true) {
+    		status = "accepted.";
+    		ProjectUsers newId = new ProjectUsers();
+    		newId.setProjectId(projectId);
+    		newId.setUserId(userId);
+    		projectUsersRepository.save(newId);
+    	//projectUsersRepository.setNewUserId(projectId, userId);
     	}
+    	else {
+    		status = "declined.";
+    	}
+    	
+    	n.setNotification("your request to join " + p.getTitle() + " has been " + status);
+    	projectNotificationsRepository.save(n);
+    	
     	return "request has been " + status;
+    }
+    
+    @Transactional
+    @GetMapping(path="/getUserNotifications")
+    public @ResponseBody Iterable<ProjectNotifications> fetchUserNotifications(@RequestParam int userId){
+    	return projectNotificationsRepository.fetchUserNotifications(userId);
+    }
+    
+    @Transactional
+    @GetMapping(path="/getProjectUsers")
+    public @ResponseBody ArrayList<Users> fetchProjectUsers(@RequestParam int projectId) {
+    	
+    	Iterable<ProjectUsers> userIds = projectUsersRepository.fetchProjectUsers(projectId);
+    	ArrayList<Users> users = new ArrayList<Users>();
+    	
+    	for(ProjectUsers i: userIds) {
+    		Optional<Users> e = userRepository.findById(i.getUserId());
+    		Users user = e.get();
+    		users.add(user);
+    	}
+    	
+    	return users;
     }
     
     @Transactional
     @GetMapping(path="/sendRequest")
     	public @ResponseBody String sendRequest(@RequestParam int requesterId, @RequestParam int projectId) {
-    		projectRepository.setNewRequest(requesterId, projectId);
-    		Projects p = projectRepository.fetchProject(projectId);
-    		projectRepository.setRequestNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + " wishes to join your project!", p.getUserID());
-    		return "request to join sent!";
+    		ProjectRequests n = new ProjectRequests();
+    		n.setUserId(requesterId);
+    		n.setProjectId(projectId);
+    		n.setOwnerId(projectRepository.fetchProjectOwnerId(projectId));
+    		n.setStatus(false);
+    		projectRequestsRepository.save(n);
+    		ProjectNotifications m = new ProjectNotifications();
+    		m.setUserId(projectRepository.fetchProjectOwnerId(projectId));
+    		m.setProjectId(projectId);
+    		m.setNotification("" + projectRepository.fetchUser(requesterId).getFirstName() + " " + projectRepository.fetchUser(requesterId).getLastName() + "wishes to join your project!");
+    		userRepository.updateNumNotifications(projectRepository.fetchProjectOwnerId(projectId));
+    		projectNotificationsRepository.save(m);
+    		return "request to join " + projectRepository.fetchProject(projectId).getTitle() + " sent!";
     	}
-    @GetMapping(path="/fetchMembers")
-    public @ResponseBody Iterable<Users> fetchMembers(@RequestParam int projectId){
-    	return projectRepository.fetchProjectMembers(projectId);
-    }
+    //@GetMapping(path="/fetchMembers")
+    //public @ResponseBody Iterable<Users> fetchMembers(@RequestParam int projectId){
+    //	return projectRepository.fetchProjectMembers(projectId);
+    //}
     
     
 	@GetMapping(path="/search")

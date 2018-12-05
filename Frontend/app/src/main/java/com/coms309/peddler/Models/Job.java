@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Project implements Serializable {
+public class Job implements Serializable {
     private String id;
     private String name;
     private String desc;
@@ -14,7 +14,7 @@ public class Project implements Serializable {
     ArrayList<String> users;
     ArrayList<Message> requests;
 
-    public Project(String id, String name, String major, String desc, String owner, String requesterID) {
+    public Job(String id, String name, String major, String desc, String owner, String requesterID) {
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -23,13 +23,13 @@ public class Project implements Serializable {
         this.requestorId = requesterID;
     }
 
-    public Project(String id, String name, String desc) {
+    public Job(String id, String name, String desc) {
         this.id = id;
         this.name = name;
         this.desc = desc;
     }
 
-    public Project(String id, String name, String desc, String owner_id, ArrayList<String> users, ArrayList<Message> requests) {
+    public Job(String id, String name, String desc, String owner_id, ArrayList<String> users, ArrayList<Message> requests) {
         //super(owner_id, users, requests);
         this.id = id;
         this.name = name;
