@@ -19,25 +19,6 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".Login.LoginActivity">
-
-             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
-        </activity>
-        <activity android:name=".Home.MenuPage">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Project.UserProject">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.MenuPage" />
-        </activity>
         <activity
             android:name=".Login.SignupActivity"
             android:label="Sign Up">
@@ -45,11 +26,38 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Project.UserProject" />
         </activity>
+
+        <activity android:name=".Login.LoginActivity">
+             <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".Home.MenuPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Project.UserProject">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
+
         <activity android:name=".Project.JoinableActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
         </activity>
+        <activity android:name=".Project.FriendProfile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Project.JoinableActivity" />
+        </activity>
+
         <activity
             android:name=".Home.ProfilePage"
             android:windowSoftInputMode="adjustPan">
@@ -57,14 +65,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
         </activity>
+
         <activity
             android:name=".Messages.FriendList"
             android:label="Friend List">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home.MenuPage" />
-        </activity>
-        <activity android:name=".Lesson.LessonPage">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
@@ -74,9 +78,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Messages.FriendList" />
         </activity>
+
+        <activity android:name=".Market.MarketPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
+        </activity>
         <activity
-            android:name=".Messages.GroupMessagePage"
-            android:label="Messages">
+            android:name=".Market.CreateProduct"
+            android:label="Create Product"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Market.MarketPage" />
+        </activity>
+
+        <activity android:name=".Lesson.LessonPage">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.MenuPage" />
@@ -88,6 +105,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Lesson.LessonPage" />
+        </activity>
+
+        <activity
+            android:name=".Messages.GroupMessagePage"
+            android:label="Messages">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.MenuPage" />
         </activity>
     </application>
 

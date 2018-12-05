@@ -182,17 +182,19 @@ public class ProjectController {
     
     
 	@GetMapping(path="/search")
-	public @ResponseBody Iterable<Projects> searchProjects(@RequestParam String search) {
-		String[] words = search.split(" ");
+	public @ResponseBody Iterable<Projects> searchProjects(@RequestParam Boolean major, @RequestParam String search) {
+		Iterable<Integer> projectIDs = null;
 		
-		Iterable<Integer> tutorIDs =  projectRepository.findProjectsWithPartOfName(search);
 
-		return projectRepository.findAllById(tutorIDs);
-	}
-	
-	@GetMapping(path="/fetchProject")
-	public @ResponseBody Projects fetchProject(@RequestParam int projectId) {
-		return projectRepository.fetchProject(projectId);
+		if(major == true) {	
+			projectIDs =  projectRepository.findByMajor(search);
+		}
+		
+		else {  
+			projectIDs =  projectRepository.findByAll(search);
+		}
+
+		return projectRepository.findAllById(projectIDs);
 	}
     
 	@GetMapping(path="/fetchProjectRequests")

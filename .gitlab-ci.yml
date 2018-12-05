@@ -48,7 +48,7 @@ maven-test:
  # Below stage builds, deploys and executes the jar as service.
 # Make sure there is /target directory in your server, else script will fail, or use any
 # other folder you like.
-# If you are changing the folder, reflect the change in systemd-web-demo service
+# If you are changing the folder, reflect the change in systemd-web-demo servic
 autoDeploy:
  stage: autodeploy
  tags:
@@ -58,9 +58,9 @@ autoDeploy:
  - cd Spring
  - cd Peddler
  - mvn package
- - sudo mv Backend/Spring/Peddler/target/*.jar /target/web-demo.jar
- - sudo systemctl stop web-demo
- - sudo systemctl start web-demo
+ - sudo mv /builds/33529074/0/cs309/Fall2018/PP_7/Backend/Spring/Peddler/target/*.jar /var/www/html/web-demo.jar
+ - sudo systemctl stop system-web-demo2
+ - sudo systemctl start system-web-demo2
 
 # To build android projects
 # Notice that we cd into Android_test folder which contains all Android files before
@@ -79,6 +79,9 @@ android-build:
  script:
  - cd Android_test
  - ./gradlew assemble
+ artifacts: 
+    paths:
+        - Android_test/app/build/outputs/
 
  # To run Android unit tests.
 unitTests:

@@ -110,10 +110,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             }
                         }
+                        users.add(new User("poop", "poop", "poop"));
                         for (int i = 0; i < users.size(); i++) {
                             Log.d(TAG, "onResponse users: " + users.get(i).getEmail() + " id: " + users.get(i).getID() + "pass: " + users.get(i).getPassword());
                         }
-                        users.add(new User("poop", "poop", "poop"));
                         if (users.size() > 0) {
                             attemptSignIn();
                             hideProgressDialog();
@@ -137,12 +137,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(getApplicationContext(), "Failed to retrieve account credentials", Toast.LENGTH_LONG).show();
             }
         });
-
-        // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
 
     private void attemptSignIn() {
@@ -187,8 +182,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             pDialog.hide();
     }
 
-
-    //Helper Method to switch between activities.
     private void pageSwitch(Class obj) {
         Intent intent = new Intent(this, obj);
         startActivity(intent);

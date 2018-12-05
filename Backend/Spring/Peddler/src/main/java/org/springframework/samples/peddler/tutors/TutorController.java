@@ -64,11 +64,15 @@ public class TutorController {
 	
 	
 	@GetMapping(path="/search")
-	public @ResponseBody Iterable<Tutors> searchTutors(@RequestParam String search) {
-		String[] words = search.split(" ");
-		ArrayList<Iterable<Integer>> all;
+	public @ResponseBody Iterable<Tutors> searchTutors(@RequestParam Boolean subject, @RequestParam String search) {
+		Iterable<Integer> tutorIDs = null;
 		
-		Iterable<Integer> tutorIDs =  tutorRepository.findUsersWithPartOfName(search);
+		if(subject == true) {
+			tutorIDs = tutorRepository.findUsersBySubject(search);
+		}
+		else {
+			tutorIDs = tutorRepository.findAll(search);
+		}
 
 		return tutorRepository.findAllById(tutorIDs);
 	}

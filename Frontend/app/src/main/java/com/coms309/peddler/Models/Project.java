@@ -11,8 +11,14 @@ public class Project implements Serializable {
     private String major;
     String owner_id;
     String requestorId;
-    ArrayList<String> users;
-    ArrayList<Message> requests;
+    public ArrayList<User> users;
+    public ArrayList<User> requests;
+
+    public Project(String id, String name, String desc) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+    }
 
     public Project(String id, String name, String major, String desc, String owner, String requesterID) {
         this.id = id;
@@ -23,17 +29,15 @@ public class Project implements Serializable {
         this.requestorId = requesterID;
     }
 
-    public Project(String id, String name, String desc) {
+    public Project(String id, String name, String major, String desc, String owner_id, String requesterID, ArrayList<User> users, ArrayList<User> requests) {
         this.id = id;
         this.name = name;
+        this.major =  major;
         this.desc = desc;
-    }
-
-    public Project(String id, String name, String desc, String owner_id, ArrayList<String> users, ArrayList<Message> requests) {
-        //super(owner_id, users, requests);
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
+        this.owner_id = owner_id;
+        this.users = users;
+        this.requests = requests;
+        this.requestorId = requesterID;
     }
 
     public String getID() {
@@ -48,4 +52,8 @@ public class Project implements Serializable {
     public String getMajor() { return major; }
     public String getOwnerID() { return owner_id; }
     public String getRequestorId() { return requestorId; }
+    public ArrayList<User> getUsers() { return users; }
+    public ArrayList<User> getRequests() {
+        return requests;
+    }
 }

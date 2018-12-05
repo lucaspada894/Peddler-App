@@ -50,22 +50,37 @@
                 android:layout_height="70dp" />
 
             <ImageView
-                android:id="@+id/MessBtn"
-                android:src="@drawable/mess_icon"
-                android:layout_width="150dp"
-                android:layout_height="70dp" />
-
-            <ImageView
                 android:id="@+id/LessBtn"
                 android:src="@drawable/less_icon"
                 android:layout_width="150dp"
                 android:layout_height="70dp" />
 
             <ImageView
-                android:id="@+id/Chat"
-                android:src="@drawable/pers_icon"
+                android:id="@+id/Market"
+                android:src="@drawable/mark_icon"
                 android:layout_width="150dp"
                 android:layout_height="70dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/Chat"
+                    android:src="@drawable/users_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <ImageView
+                    android:id="@+id/MessBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/closed_envelope_circle" />
+            </LinearLayout>
 
         </LinearLayout>
 

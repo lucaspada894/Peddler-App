@@ -99,6 +99,7 @@ public class PM extends AppCompatActivity implements View.OnClickListener {
                         String recipientID = "";
                         String time = "";
                         String msg = "";
+                        messages.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject responseObject = (JSONObject) response.get(i);
@@ -107,7 +108,7 @@ public class PM extends AppCompatActivity implements View.OnClickListener {
                                 creatorID = responseObject.getString("creatorId");
                                 recipientID = responseObject.getString("recipientId");
                                 time = responseObject.getString("date");
-                                msg = responseObject.getString("messageBody");
+                                msg = responseObject.getString("actualMessage");
                                 boolean sent = creatorID.equals(AppController.getInstance().CurrentUser.getID());
                                 Log.d("buddy", convoBuddy.getID());
                                 if (recipientID.equals(convoBuddy.getID()) && creatorID.equals(CurrentUser.getID()) || recipientID.equals(CurrentUser.getID()) && creatorID.equals(convoBuddy.getID())) {
@@ -135,8 +136,7 @@ public class PM extends AppCompatActivity implements View.OnClickListener {
         String url = JSON_OBJECT_URL_SERVER + "/user/add?";
         url = "http://proj309-pp-07.misc.iastate.edu:8080/message/add?";
         url += "creatorId=" + CurrentUser.getID() + "&recipientId=" + convoBuddy.getID() +
-                "&message=" + msg;
-        Log.d("send url", url);
+                "&actualMessage=" + msg + "&date=" + System.currentTimeMillis();
         final StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

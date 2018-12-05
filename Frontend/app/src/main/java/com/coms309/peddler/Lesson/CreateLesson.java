@@ -34,6 +34,8 @@ public class CreateLesson extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_create_lesson);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         subject = findViewById(R.id.subject_text);
         description = findViewById(R.id.description_text);
@@ -42,7 +44,6 @@ public class CreateLesson extends AppCompatActivity implements View.OnClickListe
 
         create_btn = findViewById(R.id.create_btn);
         create_btn.setOnClickListener(this);
-
 
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +54,6 @@ public class CreateLesson extends AppCompatActivity implements View.OnClickListe
             }
         });*/
     }
-
 
     public void onClick(View v)
     {
