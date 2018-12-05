@@ -56,6 +56,9 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_project);
+        this.CurrentUser = AppController.getInstance().CurrentUser;
+        Log.d("user project current user:", CurrentUser.getID());
+
 
         listItem = findViewById(R.id.list_item_btn);
         listItem.setOnClickListener(this);
@@ -64,10 +67,7 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
         descTxt = findViewById(R.id.desc_text);
 
         mRecyclerView = findViewById(R.id.main_recycle);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -78,12 +78,8 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
             }
             @Override public void onLongItemClick(View view, int position) { }
         }));
-
-        this.CurrentUser = AppController.getInstance().CurrentUser;
-        //Log.d("user id", CurrentUser.getID());
         makeJsonArryReq("/project/myProjects?userId=" + CurrentUser.getID());
         //getProjById("/project/fetchProject?projectId=" + CurrentUser.getProjectId());
-        //postInfo();
     }
 
     private void makeJsonArryReq(String path) {
@@ -195,6 +191,10 @@ public class UserProject extends AppCompatActivity implements View.OnClickListen
                 String desc = descTxt.getText().toString();
                 if (title != null && major != null && desc != null){
                     postInfo(title, major, desc);
+                } else {
+                    titleTxt.setHint("Enter a title");
+                    majorTxt.setHint("Enter a Major");
+                    descTxt.setHint("Enter a Description");
                 }
                 break;
         }
