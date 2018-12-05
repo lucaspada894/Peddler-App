@@ -19,7 +19,7 @@ public class MessageController {
 	private MessageRepository messageRepo;
 	
 	@GetMapping(path = "/add")
-	public @ResponseBody String addNewMessage(@RequestParam int creatorId, @RequestParam int recipientId, @RequestParam String actualMessage, String date) {
+	public @ResponseBody String addNewMessage(@RequestParam int creatorId, @RequestParam int recipientId, @RequestParam String actualMessage, @RequestParam String date) {
 		Messages message = new Messages();
 		message.setActualMessage(actualMessage);
 		message.setCreatorId(creatorId);

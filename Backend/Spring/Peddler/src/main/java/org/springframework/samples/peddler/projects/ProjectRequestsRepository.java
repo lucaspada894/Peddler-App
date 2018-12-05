@@ -19,5 +19,10 @@ public interface ProjectRequestsRepository extends CrudRepository<ProjectRequest
 	@Query("UPDATE ProjectRequests p SET p.status =:request_status WHERE p.projectId =:projectId AND p.userId =:userId")
 	void setRequestStatus(@Param("request_status") boolean request_status, @Param("projectId") int projectId, @Param("userId") int userId);
 	
+	@Transactional
+	@Modifying
+	@Query("SELECT p FROM ProjectRequests p WHERE p.projectId =:projectId")
+	Iterable<ProjectRequests> findAllByProjectId(@Param("projectId") int projectId);
+	
 	
 }

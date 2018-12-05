@@ -194,7 +194,10 @@ public class ProjectController {
 		return projectRepository.fetchProject(projectId);
 	}
     
-    
+	@GetMapping(path="/fetchProjectRequests")
+	public @ResponseBody Iterable<ProjectRequests> fetchProjectRequests(@RequestParam int projectId) {
+		return projectRequestsRepository.findAllByProjectId(projectId);
+	}
     
 }	
 
