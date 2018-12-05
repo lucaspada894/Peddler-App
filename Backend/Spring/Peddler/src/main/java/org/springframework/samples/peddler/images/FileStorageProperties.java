@@ -4,10 +4,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
-    private String uploadDir = "/var/www/html/uploads";
+    private String uploadDir;
 
     public String getUploadDir() {
-    	uploadDir = "/var/www/html/uploads";
         return uploadDir;
     }
 
