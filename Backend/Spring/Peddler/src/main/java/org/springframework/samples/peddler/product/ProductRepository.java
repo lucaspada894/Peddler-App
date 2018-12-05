@@ -11,8 +11,14 @@ import org.springframework.samples.peddler.product.Products;
 public interface ProductRepository extends CrudRepository<Products, Integer> {
 	
 	
-	@Query("SELECT productID FROM Products t WHERE t.productName LIKE CONCAT('%',:query,'%') OR t.productDescription LIKE CONCAT('%',:query,'%') OR t.productCondition LIKE CONCAT('%',:query,'%')")
-	Iterable<Integer> findProductsWithPartOfName(@Param("query") String query);
+	@Query("SELECT productID FROM Products t WHERE t.productName LIKE CONCAT('%',:query,'%') OR t.productCondition LIKE CONCAT('%',:query,'%') OR t.productPrice LIKE CONCAT('%',:query,'%')")
+	Iterable<Integer> findByAll(@Param("query") String query);
+
+	@Query("SELECT productID FROM Products t WHERE t.productCondition LIKE CONCAT('%',:query,'%')")
+	Iterable<Integer> findByCondition(@Param("query") String query);
+	
+	@Query("SELECT productID FROM Products t WHERE t.productPrice LIKE CONCAT('%',:query,'%')")
+	Iterable<Integer> findByPrice(@Param("query") String query);
 	
 	
     @Query("SELECT productID FROM Products t WHERE t.userID =:userID")

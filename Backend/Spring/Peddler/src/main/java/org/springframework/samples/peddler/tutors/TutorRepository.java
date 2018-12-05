@@ -22,9 +22,15 @@ public interface TutorRepository extends CrudRepository<Tutors, Integer> {
 	
 	
 	
-	@Query("SELECT tutorID FROM Tutors t WHERE t.tutorTitle LIKE CONCAT('%',:query,'%') OR t.tutorSubject LIKE CONCAT('%',:query,'%')")
-	Iterable<Integer> findUsersWithPartOfName(@Param("query") String query);
+	@Query("SELECT tutorID FROM Tutors t WHERE t.tutorTitle LIKE CONCAT('%',:query,'%') OR t.tutorSubject LIKE CONCAT('%',:query,'%') OR t.tutorTimes LIKE CONCAT('%',:query,'%')")
+	Iterable<Integer> findAll(@Param("query") String query);
+	
+	@Query("SELECT tutorID FROM Tutors t WHERE t.tutorSubject LIKE CONCAT('%',:query,'%')")
+	Iterable<Integer> findUsersBySubject(@Param("query") String query);
+
     
+	
+	
     @Query("SELECT tutorID FROM Tutors t WHERE t.userID =:userID")
     @Transactional(readOnly = true)
     Iterable<Integer> myLessons(@Param("userID") Integer userID);

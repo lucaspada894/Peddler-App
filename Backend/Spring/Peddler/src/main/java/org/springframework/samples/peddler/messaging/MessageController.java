@@ -19,18 +19,15 @@ public class MessageController {
 	private MessageRepository messageRepo;
 	
 	@GetMapping(path = "/add")
-	public @ResponseBody String addNewMessage(@RequestParam String message) {
-		Messages messages = new Messages();
-		messages.setMessageBody(message);
-		messages.setRecipientId(Integer.parseInt(message.substring(0, 6))); //still have to check for invalidId exception.
-		messages.setCreatorId(Integer.parseInt(message.substring(6, 12))); //still have to check for invalidId exception.
-		messages.setType(Integer.parseInt(message.substring(12, 13)));
+	public @ResponseBody String addNewMessage(@RequestParam int creatorId, @RequestParam int recipientId, @RequestParam String actualMessage, @RequestParam String date) {
+		Messages message = new Messages();
+		message.setActualMessage(actualMessage);
+		message.setCreatorId(creatorId);
+		message.setRecipientId(recipientId);
+		message.setDate(date);
 		
-		
-		
-		messages.setActualMessage(message.substring(13));
-		messages.setDate(new Timestamp(System.currentTimeMillis()));
-		messageRepo.save(messages);
+		//messages.setDate(new Timestamp(System.currentTimeMillis()));
+		messageRepo.save(message);
 		
 		
 		
@@ -38,26 +35,19 @@ public class MessageController {
 	}
 	
 	@GetMapping(path = "/getBySender")
-	public @ResponseBody ArrayList<String> getAllBySender(@RequestParam int creatorId){
-		ArrayList<String> sentMessages = new ArrayList<String>();
+	public @ResponseBody Iterable<Messages> getAllBySender(@RequestParam int creatorId){
 		Iterable<Messages> messagePacket = messageRepo.findAllByCreatorId(creatorId);
 		
-		for(Messages s: messagePacket) {
-			sentMessages.add(s.getActualMessage());
-		}
 		
-		return sentMessages;
+		return messagePacket;
 	}
 	
 	@GetMapping(path = "/getByReceiver")
-	public @ResponseBody ArrayList<String> getAllByReceiver(@RequestParam int recipientId){
-		ArrayList<String> receivedMessages = new ArrayList<String>();
+	public @ResponseBody Iterable<Messages> getAllByReceiver(@RequestParam int recipientId){
 		Iterable<Messages> messagePacket = messageRepo.findAllByRecipientId(recipientId);
 		
-		for(Messages s: messagePacket) {
-			receivedMessages.add(s.getActualMessage());
-		}
-		return receivedMessages;
+
+		return messagePacket;
 	}
 	
 	@GetMapping(path = "/all")

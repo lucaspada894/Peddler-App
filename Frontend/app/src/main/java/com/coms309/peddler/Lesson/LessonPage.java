@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -28,25 +30,27 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class LessonPage extends AppCompatActivity implements View.OnClickListener {
+public class LessonPage extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private EditText search;
     private Button search_btn, create_btn, my_lessons;
-
     private ArrayList<Project> tutors = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Spinner filter;
+
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
 
     //Fields
     private User CurrentUser;
-
     int[] icons = {R.drawable.less_icon};
     static ArrayList<String> convsMark = new ArrayList<>();
     static ArrayList<String> namesMark = new ArrayList<>();
     static ArrayList<User> usersMark = new ArrayList<>();
+    static ArrayList<String> subjects = new ArrayList<>();
     static LessonAdapter adptMark;
+    static boolean useFilter = true;
     ListView userList;
 
     @Override
@@ -65,8 +69,24 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
 
         my_lessons = findViewById(R.id.my_lessons);
         my_lessons.setOnClickListener(this);
+
+        filter = (Spinner) findViewById(R.id.filter_lessons);
+        filter.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, subjects));
+        filter.setOnItemSelectedListener(this);
     }
 
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+
+        String selected = (String) parent.getItemAtPosition(pos);
+        //Initialize
+        clear();
+        update("/tutor/search?subject="+ useFilter + "&search=" + selected);
+
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
 
     public void update(String path) {
         makeJsonArryReq(path);
@@ -91,7 +111,6 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
         convsMark.clear();
         namesMark.clear();
         usersMark.clear();
-
     }
 
     private void makeJsonArryReq(String path) {
@@ -103,15 +122,18 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
                         String id = "";
                         String firstName = "";
                         String desc = "";
+                        String subject = "";
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject userObject = (JSONObject) response.get(i);
                                 id = userObject.getString("tutorID");
                                 firstName = userObject.getString("tutorTitle");
                                 desc = userObject.getString("tutorDescription");
+                                subject = userObject.getString("tutorSubject");
                                 usersMark.add(new User(firstName, desc, id, false));
                                 namesMark.add(firstName);
                                 convsMark.add(desc);
+                                subjects.add(subject);
                                 adptMark.notifyDataSetChanged();
                             } catch (org.json.JSONException e) {
 
@@ -125,7 +147,7 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("friend list:", "Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), "Failed to retrieve any friends", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Failed to retrieve any lessons", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -147,7 +169,6 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
@@ -164,10 +185,15 @@ public class LessonPage extends AppCompatActivity implements View.OnClickListene
             case R.id.my_lessons:
                 clear();
                 update("/tutor/myLessons/?userID=" + AppController.getInstance().CurrentUser.getID());
+
                 break;
         }
 
     }
+
+
+
+
 
     private void makeJsonArryReq(String path, int i) {
         //showProgressDialog();
