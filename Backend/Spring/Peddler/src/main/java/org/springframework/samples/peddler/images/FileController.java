@@ -46,7 +46,7 @@ public class FileController {
     	BufferedImage bufferedImage = ImageIO.read(temp);
     	
     	
-    	File outputfile = new File("uploads/" + fileId + "." + fileType);
+    	File outputfile = new File("/var/www/html/uploads" + fileId + "." + fileType);
     	ImageIO.write(bufferedImage, fileType , outputfile);
         logger.info(newFile);
         
