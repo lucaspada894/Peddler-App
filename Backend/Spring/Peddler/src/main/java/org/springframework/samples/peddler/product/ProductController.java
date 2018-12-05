@@ -44,12 +44,23 @@ public class ProductController {
 	
 	
 	@GetMapping(path="/search")
-	public @ResponseBody Iterable<Products> searchProducts(@RequestParam String search) {
-		String[] words = search.split(" ");
+	public @ResponseBody Iterable<Products> searchProducts(@RequestParam Integer type, @RequestParam String search) {
 		
-		Iterable<Integer> tutorIDs =  productRepository.findProductsWithPartOfName(words[0]);
+		Iterable<Integer> productIDs = null;
+		
+		if(type == 0) {
+			productIDs =  productRepository.findByAll(search);
+		}
 
-		return productRepository.findAllById(tutorIDs);
+		else if(type == 1) {
+			productIDs =  productRepository.findByCondition(search);
+		}
+		
+		else if(type == 2) {
+			productIDs =  productRepository.findByPrice(search);
+		}
+
+		return productRepository.findAllById(productIDs);
 	}
 	
 	

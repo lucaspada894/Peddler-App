@@ -80,6 +80,15 @@ Iterable<Integer> findProjectsWithPartOfName(@Param("query") String query);
 @Query("SELECT ownerID FROM Projects p WHERE p.id =:projectId")
 int fetchProjectOwnerId(@Param("projectId") int projectId);
 
+
+@Query("SELECT id FROM Projects t WHERE t.title LIKE CONCAT('%',:query,'%') OR t.description LIKE CONCAT('%',:query,'%') OR t.major LIKE CONCAT('%',:query,'%')")
+Iterable<Integer> findByAll(@Param("query") String query);
+
+
+@Query("SELECT id FROM Projects t WHERE t.major LIKE CONCAT('%',:query,'%')")
+Iterable<Integer> findByMajor(@Param("query") String query);
+
+
 }
 
 

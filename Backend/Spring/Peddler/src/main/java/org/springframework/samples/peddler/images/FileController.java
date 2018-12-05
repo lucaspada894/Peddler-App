@@ -10,67 +10,51 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.peddler.user.UserRepository;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @RestController
 public class FileController {
+	
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @Autowired
     private FileStorageService fileStorageService;
     
-   /* @RequestMapping(path= "/uploadFile", method = RequestMethod.POST)
-    public UploadFileResponse uploadFile(@RequestParam("file") String file) {
-    	byte[] imageByte=Base64.decodeBase64(file);
+    @SuppressWarnings("resource")
+	@RequestMapping(path= "/uploadFile", method = RequestMethod.POST)
+    public String uploadFile(@RequestParam("fileId") String fileId, @RequestParam("fileType") String fileType, @RequestParam("file") String file) throws FileNotFoundException, IOException {
+    	
+    	String newFile = file.replaceAll(" ", "+");
+        logger.info(fileId);
+    	
+    	byte[] imageByte=Base64.decodeBase64(newFile);
+    	ByteArrayInputStream temp = new ByteArrayInputStream(imageByte);
+    	BufferedImage bufferedImage = ImageIO.read(temp);
     	
     	
-
-    	String name = "file.png";
-    	String originalFileName = "file.png";
-    	String contentType = "file/png";
-    	byte[] content = imageByte;
-
-    	MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
-        String fileName = fileStorageService.storeFile(result);
-
+    	File outputfile = new File("uploads/" + fileId + "." + fileType);
+    	ImageIO.write(bufferedImage, fileType , outputfile);
+        logger.info(newFile);
         
         
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
-
-        return new UploadFileResponse(fileName, fileDownloadUri,
-                contentType, content.length);
+        return newFile;
+        
     }
 
-    
-    
-    /*@PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-        return Arrays.asList(files)
-                .stream()
-                .map(file -> uploadFile(file))
-                .collect(Collectors.toList());
-    }*/
 
     
     
@@ -98,6 +82,6 @@ public class FileController {
                 .body(resource);
     }
 
-   
+
     
 }

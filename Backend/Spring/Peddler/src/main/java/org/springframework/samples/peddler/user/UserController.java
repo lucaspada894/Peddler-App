@@ -25,7 +25,7 @@ public class UserController {
 	
 	
 	@GetMapping(path="/add")
-	public @ResponseBody String addNewUser(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String year, @RequestParam String university, @RequestParam String password) {
+	public @ResponseBody Integer addNewUser(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String year, @RequestParam String university, @RequestParam String password) {
 		Users n = new Users();
 		n.setFirstName(firstName);
 		n.setLastName(lastName);
@@ -35,7 +35,7 @@ public class UserController {
 		n.setUniversity(university);
 		n.setPassword(password);
 		userRepository.save(n);
-		return "User Created";
+		return login(email,password);
 	}
 	
 	
@@ -55,16 +55,9 @@ public class UserController {
     
     
 	@GetMapping(value = "/login")
-	public @ResponseBody String login(@RequestParam String email, @RequestParam String password) {
+	public @ResponseBody Integer login(@RequestParam String email, @RequestParam String password) {
 		Integer userID = userRepository.viewUser(email,password);
-		if(userID == null) {
-			return "Email or password is incorrect!";
-		}
-		else {
-			currentUser = userID;
-			loginStatus = true;
-			return "User has been logged in!";
-		}
+		return userID;
 	}
 	
 	
